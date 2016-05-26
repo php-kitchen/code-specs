@@ -1,0 +1,21 @@
+{
+    "name": "dekeysoft/pu-tester",
+    "description": "Simple tester class designed to write BDD-style PHPUnit tests. Allows to express what test intended to check in human-readable format.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dmitry Kolodko",
+            "email": "deathangel138@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require-dev": {
+        "phpunit/phpunit": "~5.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "DeKey\\Tester\\": "src"
+        }
+    }
+}
