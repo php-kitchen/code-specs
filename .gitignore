@@ -28,3 +28,6 @@ phpunit.phar
 /bootstrap.sh
 /Vagrantfile
 /vagrant_provision/
+
+# build files
+build

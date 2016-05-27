@@ -1,6 +1,7 @@
 language: php
 
 php:
+  - '5.5'
   - '5.6'
   - '7.0'
   - hhvm
@@ -13,7 +14,7 @@ before_script:
   - ls
 
 script:
- - php vendor/bin/phpunit --configuration phpunit.xml --coverage-clover build/logs/clover.xml
+ - php vendor/bin/phpunit --configuration phpunit.xml --coverage-clover build/logs/clover.xml tests
 
 after_script:
  - php vendor/bin/coveralls -v
