@@ -27,21 +27,34 @@ class AssertionsFailureCatcher {
     public function __call($name, $arguments) {
         $matcher = $this->matcher;
         if (method_exists($matcher, $name)) {
-            $this->callMatcherMethod($name, $arguments);
+            $result = $this->executeMethodIfPublic($name, $arguments);
         } else {
             $matcherClass = get_class($matcher);
             throw new \Exception($matcherClass . '::' . $name . ' does not exist!');
         }
-        return $this->matcher;
+
+        return $result;
+    }
+
+    protected function executeMethodIfPublic(&$name, &$arguments) {
+        $matcher = $this->matcher;
+        $matcherClass = get_class($matcher);
+        $reflection = new \ReflectionMethod($this->matcher, $name);
+        if (!$reflection->isPublic()) {
+            throw new \RuntimeException("Trying to access not public method {$name} of {$matcherClass}");
+        }
+        return $this->callMatcherMethod($name, $arguments);
     }
 
     protected function callMatcherMethod(&$name, &$arguments) {
         try {
-            call_user_func_array([$this->matcher, $name], $arguments);
+            $result = call_user_func_array([$this->matcher, $name], $arguments);
         } catch (\Exception $e) {
-            $result = $this->test->getTestResultObject();
+            $testResult = $this->test->getTestResultObject();
             $phpUnitFailedError = new \PHPUnit_Framework_AssertionFailedError($e->getMessage());
-            $result->addFailure(clone $this->test, $phpUnitFailedError, $result->time());
+            $testResult->addFailure(clone $this->test, $phpUnitFailedError, $testResult->time());
+            $result = $this->matcher;
         }
+        return $result;
     }
 }

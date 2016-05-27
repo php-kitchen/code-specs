@@ -55,10 +55,19 @@ class UnitTester {
         $this->name = $testerName;
     }
 
-    public function checksSpecification($specification) {
-        $this->test->setName($this->originalTesName . ' | ' . $specification);
+    public function checksScenario($scenario) {
+        $this->test->setName($this->originalTesName . ' | ' . $scenario);
 
         return $this;
+    }
+
+    /**
+     * Alias for {@link checksScenario}.
+     * @param string $specification
+     * @return UnitTester
+     */
+    public function checksSpecification($specification) {
+        return $this->checksScenario($specification);
     }
 
     public function expectsThat($expectation = '') {
