@@ -17,4 +17,4 @@ Run the following to add PHPUnit Tester to your project's `composer.json`. See [
 composer require dekeysoft/pu-tester
 ```
 
-**`>=PHP5.5.0` is required.**
+**`>=PHP5.6.0` is required.**
