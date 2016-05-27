@@ -8,7 +8,7 @@ use DeKey\Tester\Matchers\ValueMatcher;
  *
  * @coversDefaultClass \DeKey\Tester\Matchers\ValueMatcher
  *
- * @package Tests
+ * @package Tests\Matchers
  * @author Dmitry Kolodko <dangel@quartsoft.com>
  */
 class ValueMatcherTest extends \PHPUnit_Framework_TestCase {
@@ -37,6 +37,70 @@ class ValueMatcherTest extends \PHPUnit_Framework_TestCase {
     public function testIsNotInternalType() {
         $matcher = $this->createMatcherWithActualValue($this);
         $matcher->isNotInternalType('boolean');
+    }
+
+    /**
+     * @covers ::isEqualTo
+     */
+    public function testIsEqualTo() {
+        $matcher = $this->createMatcherWithActualValue($this);
+        $matcher->isEqualTo($this);
+    }
+
+    /**
+     * @covers ::isNotEqualTo
+     */
+    public function testIsNotEqualTo() {
+        $matcher = $this->createMatcherWithActualValue($this);
+        $matcher->isNotEqualTo(null);
+    }
+
+    /**
+     * @covers ::isGreaterThan
+     */
+    public function testIsGreaterThan() {
+        $matcher = $this->createMatcherWithActualValue(3);
+        $matcher->isGreaterThan(2);
+    }
+
+    /**
+     * @covers ::isLessThan
+     */
+    public function testIsLessThan() {
+        $matcher = $this->createMatcherWithActualValue(3);
+        $matcher->isLessThan(5);
+    }
+
+    /**
+     * @covers ::isGreaterOrEqualTo
+     */
+    public function testIsGreaterOrEqualToGreaterPartWork() {
+        $matcher = $this->createMatcherWithActualValue(10);
+        $matcher->isGreaterOrEqualTo(5);
+    }
+
+    /**
+     * @covers ::isGreaterOrEqualTo
+     */
+    public function testIsGreaterOrEqualToEqualPartWork() {
+        $matcher = $this->createMatcherWithActualValue(3);
+        $matcher->isGreaterOrEqualTo(3);
+    }
+
+    /**
+     * @covers ::isLessOrEqualTo
+     */
+    public function testIsLessOrEqualToEqualPartWork() {
+        $matcher = $this->createMatcherWithActualValue(3);
+        $matcher->isLessOrEqualTo(3);
+    }
+
+    /**
+     * @covers ::isLessOrEqualTo
+     */
+    public function testIsLessOrEqualToLessPartWork() {
+        $matcher = $this->createMatcherWithActualValue(5);
+        $matcher->isLessOrEqualTo(10);
     }
 
     /**

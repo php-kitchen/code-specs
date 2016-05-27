@@ -17,8 +17,18 @@ class ClassMatcher extends Matcher {
         return $this;
     }
 
+    public function isNotExist() {
+        Assert::assertFalse(class_exists($this->actual), $this->description);
+        return $this;
+    }
+
     public function isInterface() {
         Assert::assertTrue(interface_exists($this->actual), $this->description);
+        return $this;
+    }
+
+    public function isNotInterface() {
+        Assert::assertFalse(interface_exists($this->actual), $this->description);
         return $this;
     }
 

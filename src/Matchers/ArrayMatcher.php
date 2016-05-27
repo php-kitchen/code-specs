@@ -21,13 +21,23 @@ class ArrayMatcher extends ValueMatcher {
         return $this;
     }
 
-    public function containsOnlyValuesOfTye($type, $isNativeType = null) {
-        Assert::assertContainsOnly($type, $this->actual, $isNativeType, $this->description);
+    public function contains($needle) {
+        Assert::assertContains($needle, $this->actual, $this->description);
         return $this;
     }
 
-    public function doesNotContainOnlyValuesOfTye($type, $isNativeType = null) {
-        Assert::assertNotContainsOnly($type, $this->actual, $isNativeType, $this->description);
+    public function doesNotContain($needle) {
+        Assert::assertNotContains($needle, $this->actual, $this->description);
+        return $this;
+    }
+
+    public function containsOnlyValuesOfType($type) {
+        Assert::assertContainsOnly($type, $this->actual, null, $this->description);
+        return $this;
+    }
+
+    public function containsOnlyValuesOfNativeType($type) {
+        Assert::assertContainsOnly($type, $this->actual, true, $this->description);
         return $this;
     }
 
@@ -36,23 +46,23 @@ class ArrayMatcher extends ValueMatcher {
         return $this;
     }
 
-    public function isEqualCountOf($array) {
+    public function doesNotContainOnlyValuesOfType($type) {
+        Assert::assertNotContainsOnly($type, $this->actual, null, $this->description);
+        return $this;
+    }
+
+    public function doesNotContainOnlyValuesOfNativeType($type) {
+        Assert::assertNotContainsOnly($type, $this->actual, true, $this->description);
+        return $this;
+    }
+
+    public function isEqualToCountOf($array) {
         Assert::assertCount($array, $this->actual, $this->description);
         return $this;
     }
 
-    public function isNotEqualCountOf($array) {
+    public function isNotEqualToCountOf($array) {
         Assert::assertNotCount($array, $this->actual, $this->description);
-        return $this;
-    }
-
-    public function contains($needle) {
-        Assert::assertContains($needle, $this->actual, $this->description);
-        return $this;
-    }
-
-    public function doesNotContain($needle) {
-        Assert::assertNotContains($needle, $this->actual, $this->description);
         return $this;
     }
 }

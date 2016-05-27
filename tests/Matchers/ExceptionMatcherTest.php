@@ -9,7 +9,7 @@ use DeKey\Tester\Matchers\ExceptionMatcher;
  *
  * @coversDefaultClass \DeKey\Tester\Matchers\ExceptionMatcher
  *
- * @package Tests
+ * @package Tests\Matchers
  * @author Dmitry Kolodko <dangel@quartsoft.com>
  */
 class ExceptionMatcherTest extends \PHPUnit_Framework_TestCase {

@@ -8,7 +8,7 @@ use DeKey\Tester\Proxy\AssertionsFailureCatcher;
 /**
  * Unit test for {@link AssertionsFailureCatcher}
  *
- * @coversDefaultClass \dekey\tester\AssertionsFailureCatcher
+ * @coversDefaultClass \DeKey\Tester\Proxy\AssertionsFailureCatcher
  *
  * @package Tests\Proxy
  * @author Dmitry Kolodko <dangel@quartsoft.com>
@@ -68,15 +68,18 @@ class AssertionsFailureCatcherTest extends \PHPUnit_Framework_TestCase {
      * @covers ::addFailureException
      */
     public function testCallThrowsException() {
-        // Catcher should not allow access to protected or private methods
-        $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessageRegExp('/[\w\/]+::callNotExtisted does not exist!/');
-        $catcher = $this->createCatcher();
+        // Catcher should catch exception thrown in matcher and add to test result
+        $catcher = $this->getMockBuilder(AssertionsFailureCatcher::class)
+            ->setMethods(['addFailureException'])
+            ->setConstructorArgs([$this, new TestMatcher('', '')])
+            ->getMock();
+        $catcher->expects($this->once())->method('addFailureException');
+
         $catcher->throwException();
     }
 
     protected function createCatcher() {
-        return new AssertionsFailureCatcher($this, new TestMatcher('',''));
+        return new AssertionsFailureCatcher($this, new TestMatcher('', ''));
     }
 }
 
@@ -89,7 +92,8 @@ class TestMatcher extends Matcher {
         return true;
     }
 
-    protected function throwException() {
+    public function throwException() {
+        throw new \Exception('Exception that should be cached!');
         return true;
     }
 }
