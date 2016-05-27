@@ -8,8 +8,6 @@ php:
 before_script:
   - composer self-update
   - composer install --prefer-source --no-interaction --dev
-
-before_script:
   - mkdir -p build/logs
 
 script:
