@@ -58,9 +58,21 @@ class AssertionsFailureCatcherTest extends \PHPUnit_Framework_TestCase {
     public function testCallToNotExistedMethod() {
         // Catcher should not allow access to protected or private methods
         $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessageRegExp('/Trying to access not public method [\w]+ of [\w\/]+/');
+        $this->expectExceptionMessageRegExp('/[\w\/]+::callNotExtisted does not exist!/');
         $catcher = $this->createCatcher();
-        $catcher->returnFalse();
+        $catcher->callNotExtisted();
+    }
+
+    /**
+     * @covers ::__call
+     * @covers ::addFailureException
+     */
+    public function testCallThrowsException() {
+        // Catcher should not allow access to protected or private methods
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessageRegExp('/[\w\/]+::callNotExtisted does not exist!/');
+        $catcher = $this->createCatcher();
+        $catcher->throwException();
     }
 
     protected function createCatcher() {
@@ -74,6 +86,10 @@ class TestMatcher extends Matcher {
     }
 
     protected function returnFalse() {
+        return true;
+    }
+
+    protected function throwException() {
         return true;
     }
 }

@@ -3,6 +3,7 @@
 namespace DeKey\Tester\Proxy;
 
 use DeKey\Tester\Base\ExpectationMatcher;
+use RuntimeException;
 
 /**
  * AssertionsFailureCatcher is a proxy for expectation matcher that handles errors thrown by PHPUnit
@@ -30,7 +31,7 @@ class AssertionsFailureCatcher {
             $result = $this->executeMethodIfPublic($name, $arguments);
         } else {
             $matcherClass = get_class($matcher);
-            throw new \Exception($matcherClass . '::' . $name . ' does not exist!');
+            throw new RuntimeException($matcherClass . '::' . $name . ' does not exist!');
         }
 
         return $result;
@@ -41,7 +42,7 @@ class AssertionsFailureCatcher {
         $matcherClass = get_class($matcher);
         $reflection = new \ReflectionMethod($this->matcher, $name);
         if (!$reflection->isPublic()) {
-            throw new \RuntimeException("Trying to access not public method {$name} of {$matcherClass}");
+            throw new RuntimeException("Trying to access not public method {$name} of {$matcherClass}");
         }
         return $this->callMatcherMethod($name, $arguments);
     }
@@ -50,11 +51,15 @@ class AssertionsFailureCatcher {
         try {
             $result = call_user_func_array([$this->matcher, $name], $arguments);
         } catch (\Exception $e) {
-            $testResult = $this->test->getTestResultObject();
-            $phpUnitFailedError = new \PHPUnit_Framework_AssertionFailedError($e->getMessage());
-            $testResult->addFailure(clone $this->test, $phpUnitFailedError, $testResult->time());
+            $this->addFailureException($e);
             $result = $this->matcher;
         }
         return $result;
+    }
+
+    protected function addFailureException($e) {
+        $testResult = $this->test->getTestResultObject();
+        $phpUnitFailedError = new \PHPUnit_Framework_AssertionFailedError($e->getMessage());
+        $testResult->addFailure(clone $this->test, $phpUnitFailedError, $testResult->time());
     }
 }
