@@ -72,7 +72,7 @@ class ClassMatcherTest extends \PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @covers ::hasStaticAttribute
+     * @covers ::hasAttribute
      */
     public function testHasAttribute() {
         $matcher = $this->createMatcherWithActualValue(TestClass::class);
@@ -80,7 +80,7 @@ class ClassMatcherTest extends \PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @covers ::doesNotHaveStaticAttribute
+     * @covers ::doesNotHaveAttribute
      */
     public function testDoesNotHaveAttribute() {
         $matcher = $this->createMatcherWithActualValue(TestClass::class);

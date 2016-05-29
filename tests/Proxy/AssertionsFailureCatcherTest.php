@@ -4,6 +4,8 @@ namespace Tests\Proxy;
 
 use DeKey\Tester\Base\Matcher;
 use DeKey\Tester\Proxy\AssertionsFailureCatcher;
+use PHPUnit_Framework_AssertionFailedError;
+use PHPUnit_Framework_Test;
 
 /**
  * Unit test for {@link AssertionsFailureCatcher}
@@ -27,7 +29,10 @@ class AssertionsFailureCatcherTest extends \PHPUnit_Framework_TestCase {
 
     /**
      * @covers ::__call
+     * @covers ::proxyMethodCallToMatcher
+     * @covers ::executeMethodIfPublic
      * @covers ::callMatcherMethod
+     * @covers ::<protected>
      */
     public function testCallToPublicMethod() {
         $catcher = $this->createCatcher();
@@ -42,7 +47,10 @@ class AssertionsFailureCatcherTest extends \PHPUnit_Framework_TestCase {
 
     /**
      * @covers ::__call
+     * @covers ::proxyMethodCallToMatcher
      * @covers ::executeMethodIfPublic
+     * @covers ::throwExceptionWithMessage
+     * @covers ::<protected>
      */
     public function testCallToProtectedMethod() {
         // Catcher should not allow access to protected or private methods
@@ -54,6 +62,9 @@ class AssertionsFailureCatcherTest extends \PHPUnit_Framework_TestCase {
 
     /**
      * @covers ::__call
+     * @covers ::proxyMethodCallToMatcher
+     * @covers ::throwExceptionWithMessage
+     * @covers ::<protected>
      */
     public function testCallToNotExistedMethod() {
         // Catcher should not allow access to protected or private methods
@@ -65,15 +76,17 @@ class AssertionsFailureCatcherTest extends \PHPUnit_Framework_TestCase {
 
     /**
      * @covers ::__call
+     * @covers ::proxyMethodCallToMatcher
      * @covers ::addFailureException
+     * @covers ::<protected>
      */
     public function testCallThrowsException() {
         // Catcher should catch exception thrown in matcher and add to test result
-        $catcher = $this->getMockBuilder(AssertionsFailureCatcher::class)
-            ->setMethods(['addFailureException'])
-            ->setConstructorArgs([$this, new TestMatcher('', '')])
+        $test = $this->getMockBuilder(\PHPUnit_Framework_TestCase::class)
+            ->setMethods(['getTestResultObject'])
             ->getMock();
-        $catcher->expects($this->once())->method('addFailureException');
+        $test->expects($this->once())->method('getTestResultObject')->willReturn(new TestResultBuilder());
+        $catcher =  new AssertionsFailureCatcher($test, new TestMatcher('', ''));
 
         $catcher->throwException();
     }
@@ -95,5 +108,15 @@ class TestMatcher extends Matcher {
     public function throwException() {
         throw new \Exception('Exception that should be cached!');
         return true;
+    }
+}
+
+/**
+ * Result builder that checks AssertionsFailureCatcher adds exception expected to be thrown by {@link TestMatcher::throwException}
+ */
+class TestResultBuilder extends \PHPUnit_Framework_TestResult {
+    public function addFailure(PHPUnit_Framework_Test $test, PHPUnit_Framework_AssertionFailedError $e, $time) {
+        $expectedError =  new \PHPUnit_Framework_AssertionFailedError('Exception that should be cached!');
+        \PHPUnit_Framework_Assert::assertEquals($expectedError->getMessage(), $e->getMessage());
     }
 }

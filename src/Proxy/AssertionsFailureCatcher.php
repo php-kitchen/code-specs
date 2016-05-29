@@ -26,12 +26,16 @@ class AssertionsFailureCatcher {
     }
 
     public function __call($name, $arguments) {
+        return $this->proxyMethodCallToMatcher($name, $arguments);
+    }
+
+    protected function proxyMethodCallToMatcher(&$name, &$arguments) {
         $matcher = $this->matcher;
         if (method_exists($matcher, $name)) {
             $result = $this->executeMethodIfPublic($name, $arguments);
         } else {
             $matcherClass = get_class($matcher);
-            throw new RuntimeException($matcherClass . '::' . $name . ' does not exist!');
+            $this->throwExceptionWithMessage($matcherClass . '::' . $name . ' does not exist!');
         }
 
         return $result;
@@ -42,24 +46,28 @@ class AssertionsFailureCatcher {
         $matcherClass = get_class($matcher);
         $reflection = new \ReflectionMethod($this->matcher, $name);
         if (!$reflection->isPublic()) {
-            throw new RuntimeException("Trying to access not public method {$name} of {$matcherClass}");
+            $this->throwExceptionWithMessage("Trying to access not public method {$name} of {$matcherClass}");
         }
         return $this->callMatcherMethod($name, $arguments);
+    }
+
+    protected function throwExceptionWithMessage($message) {
+        throw new RuntimeException($message);
     }
 
     protected function callMatcherMethod(&$name, &$arguments) {
         try {
             $result = call_user_func_array([$this->matcher, $name], $arguments);
         } catch (\Exception $e) {
-            $this->addFailureException($e);
-            $result = $this->matcher;
+            $result = $this->addFailureException($e);
         }
         return $result;
     }
 
-    protected function addFailureException($e) {
+    protected function addFailureException(\Exception $e) {
         $testResult = $this->test->getTestResultObject();
         $phpUnitFailedError = new \PHPUnit_Framework_AssertionFailedError($e->getMessage());
         $testResult->addFailure(clone $this->test, $phpUnitFailedError, $testResult->time());
+        return $this->matcher;
     }
 }
