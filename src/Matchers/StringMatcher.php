@@ -11,12 +11,12 @@ use PHPUnit_Framework_Assert as Assert;
  * @author Dmitry Kolodko <dangel@quartsoft.com>
  */
 class StringMatcher extends ValueMatcher {
-    public function isEqualsJsonFile($file) {
+    public function isEqualToJsonFile($file) {
         Assert::assertJsonStringEqualsJsonFile($file, $this->actual, $this->description);
         return $this;
     }
 
-    public function isEqualsJsonString($string) {
+    public function isEqualToJsonString($string) {
         Assert::assertJsonStringEqualsJsonString($string, $this->actual, $this->description);
         return $this;
     }
@@ -41,7 +41,7 @@ class StringMatcher extends ValueMatcher {
         return $this;
     }
 
-    public function isEqualToXMLStructure($xml, $checkAttributes = false) {
+    public function isEqualToXmlStructure($xml, $checkAttributes = false) {
         Assert::assertEqualXMLStructure($xml, $this->actual, $checkAttributes, $this->description);
         return $this;
     }
