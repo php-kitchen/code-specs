@@ -98,5 +98,4 @@ class TestClass {
 }
 
 interface TestInterface {
-
 }

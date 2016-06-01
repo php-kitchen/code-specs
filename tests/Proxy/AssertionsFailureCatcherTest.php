@@ -86,7 +86,7 @@ class AssertionsFailureCatcherTest extends \PHPUnit_Framework_TestCase {
             ->setMethods(['getTestResultObject'])
             ->getMock();
         $test->expects($this->once())->method('getTestResultObject')->willReturn(new TestResultBuilder());
-        $catcher =  new AssertionsFailureCatcher($test, new TestMatcher('', ''));
+        $catcher = new AssertionsFailureCatcher($test, new TestMatcher('', ''));
 
         $catcher->throwException();
     }
@@ -116,7 +116,7 @@ class TestMatcher extends Matcher {
  */
 class TestResultBuilder extends \PHPUnit_Framework_TestResult {
     public function addFailure(PHPUnit_Framework_Test $test, PHPUnit_Framework_AssertionFailedError $e, $time) {
-        $expectedError =  new \PHPUnit_Framework_AssertionFailedError('Exception that should be cached!');
+        $expectedError = new \PHPUnit_Framework_AssertionFailedError('Exception that should be cached!');
         \PHPUnit_Framework_Assert::assertEquals($expectedError->getMessage(), $e->getMessage());
     }
 }

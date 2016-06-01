@@ -13,6 +13,7 @@ use DeKey\Tester\Matchers\StringMatcher;
  */
 class StringMatcherTest extends \PHPUnit_Framework_TestCase {
     const FIXTURES_DIR = __DIR__ . DIRECTORY_SEPARATOR . 'Fixtures' . DIRECTORY_SEPARATOR;
+
     /**
      * @covers ::__construct
      */

@@ -63,6 +63,7 @@ class UnitTester {
 
     /**
      * Alias for {@link checksScenario}.
+     *
      * @param string $specification
      * @return UnitTester
      */
