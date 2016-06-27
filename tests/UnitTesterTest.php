@@ -33,7 +33,11 @@ class UnitTesterTest extends PHPUnit_Framework_TestCase {
     public function testException() {
         $tester = $this->createTester();
         $exception = new \Exception('Test message', 123);
-        $tester->exception($exception)->hasMessage('Test message')->hasCode(123);
+        $tester->checksScenario('Example of basic usage')
+            ->expectsThat('everything works')
+            ->exception($exception)
+            ->hasMessage('Test message')
+            ->hasCode(123);
     }
 
     /**
@@ -55,7 +59,10 @@ class UnitTesterTest extends PHPUnit_Framework_TestCase {
     public function testTheClass() {
         $tester = $this->createTester();
         $thisClass = get_class($this);
-        $tester->expectsTo('receive existing class')->theClass($thisClass)->isExist();
+        $tester->checksScenario('Example of basic usage')
+            ->expectsThat('everything works')
+            ->theClass($thisClass)
+            ->isExist();
     }
 
     /**
@@ -100,26 +107,29 @@ class UnitTesterTest extends PHPUnit_Framework_TestCase {
      */
     public function testFile() {
         $tester = $this->createTester();
-        $tester->file(__FILE__);
+        $tester->checksScenario('Example of basic usage')
+            ->expectsThat('everything works')
+            ->file(__FILE__)
+            ->isExist()
+            ->isEqualTo(__FILE__);
     }
 
     /**
      * @covers ::checksScenario
-     * @covers ::checksSpecification
      * @covers ::__destruct
      * @covers ::restoreOriginalTestName
      */
     public function testCheckSpecification() {
-        $testClone = clone $this;
-        $testOriginalName = $testClone->getName();
-        $tester = new UnitTester($testClone);
-        $tester->checksScenario('Schecks scenarios and specifications works');
+        $tester = new UnitTester($this);
+        $tester->checksScenario('checks scenarios work');
+        try {
+            $tester->expectsThat('exception will be thrown')->boolean(true)->isFalse();
+            $message = 'Tester failed and did not throw an exception.';
+        } catch (\PHPUnit_Framework_AssertionFailedError $e) {
+            $message = $e->getMessage();
+        }
 
-        $this->assertEquals('testCheckSpecification | Schecks scenarios and specifications works', $testClone->getName(), 'Tester should apply scenario to the test name');
-
-        unset($tester);
-
-        $this->assertEquals($testOriginalName, $testClone->getName(), 'Tester should restore original test name before destruction.');
+        $this->assertStringStartsWith('Scenario: checks scenarios work', $message);
     }
 
     protected function createTester() {

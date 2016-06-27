@@ -11,7 +11,6 @@ use DeKey\Tester\Matchers\FileMatcher;
 use DeKey\Tester\Matchers\ObjectMatcher;
 use DeKey\Tester\Matchers\StringMatcher;
 use DeKey\Tester\Matchers\ValueMatcher;
-use DeKey\Tester\Proxy\AssertionsFailureCatcher;
 use PHPUnit_Framework_TestCase;
 
 /**
@@ -41,46 +40,31 @@ class UnitTester {
      */
     protected $test;
     /**
-     * @var string original name of the test backed up to restore test name after tester destruction.
-     */
-    protected $originalTesName;
-    /**
      * @var string tester name that will be used to generate expectation message
      */
     protected $name;
 
     public function __construct(PHPUnit_Framework_TestCase $test, $testerName = 'Tester') {
         $this->test = $test;
-        $this->originalTesName = $test->getName();
         $this->name = $testerName;
     }
 
     public function checksScenario($scenario) {
-        $this->test->setName($this->originalTesName . ' | ' . $scenario);
+        $this->expectation = 'Scenario: ' . $scenario . PHP_EOL;
 
         return $this;
     }
 
-    /**
-     * Alias for {@link checksScenario}.
-     *
-     * @param string $specification
-     * @return UnitTester
-     */
-    public function checksSpecification($specification) {
-        return $this->checksScenario($specification);
-    }
-
     public function expectsThat($expectation = '') {
         if ($expectation) {
-            $this->expectation = $this->name . ' expects that ' . $expectation;
+            $this->expectation .= $this->name . ' expects that ' . $expectation;
         }
         return $this;
     }
 
     public function expectsTo($expectation = '') {
         if ($expectation) {
-            $this->expectation = $this->name . ' expects to ' . $expectation;
+            $this->expectation .= $this->name . ' expects to ' . $expectation;
         }
         return $this;
     }
@@ -155,17 +139,6 @@ class UnitTester {
      * @return ExpectationMatcher matcher responsible for actual value expectations handling.
      */
     protected function createExpectationMatcher($class, $actualValue) {
-        $matcher = $this->instantiateMatcher($class, $actualValue);
-        $proxy = new AssertionsFailureCatcher($this->test, $matcher);
-        return $proxy;
-    }
-
-    /**
-     * @param string $class matcher class. Class should implement {@link ExpectationMatcher} interface.
-     * @param mixed $actualValue actual value being passed to matcher.
-     * @return ExpectationMatcher matcher responsible for actual value expectations handling.
-     */
-    protected function instantiateMatcher($class, $actualValue) {
         $matcherReflection = new \ReflectionClass($class);
         if ($this->expectation) {
             $constructorArguments = [$actualValue, $this->expectation];
@@ -173,13 +146,5 @@ class UnitTester {
             $constructorArguments = [$actualValue];
         }
         return $matcherReflection->newInstanceArgs($constructorArguments);
-    }
-
-    public function __destruct() {
-        $this->restoreOriginalTestName();
-    }
-
-    protected function restoreOriginalTestName() {
-        $this->test->setName($this->originalTesName);
     }
 }

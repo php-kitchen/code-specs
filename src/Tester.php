@@ -9,6 +9,15 @@ namespace DeKey\Tester;
  * @author Dmitry Kolodko <dangel@quartsoft.com>
  */
 trait Tester {
+    public $tester;
+
+    /**
+     * @before
+     */
+    public function initTester() {
+        $this->tester = $this->createTester();
+    }
+
     /**
      * @return UnitTester tester instance.
      */
