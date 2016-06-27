@@ -9,6 +9,9 @@ namespace DeKey\Tester;
  * @author Dmitry Kolodko <dangel@quartsoft.com>
  */
 trait Tester {
+    /**
+     * @var UnitTester instance of tester. This property refreshing before each test.
+     */
     public $tester;
 
     /**
