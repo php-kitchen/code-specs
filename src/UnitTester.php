@@ -32,6 +32,10 @@ use PHPUnit_Framework_TestCase;
  */
 class UnitTester {
     /**
+     * @var string scenario Tester currently checks. There can be only one scenario and several {@link expectation}s.
+     */
+    protected $scenario;
+    /**
      * @var string message indicates what tester expects to test.
      */
     protected $expectation;
@@ -50,21 +54,21 @@ class UnitTester {
     }
 
     public function checksScenario($scenario) {
-        $this->expectation = 'Scenario: ' . $scenario . PHP_EOL;
+        $this->scenario = 'Scenario: ' . $scenario . PHP_EOL;
 
         return $this;
     }
 
     public function expectsThat($expectation = '') {
         if ($expectation) {
-            $this->expectation .= $this->name . ' expects that ' . $expectation;
+            $this->expectation = $this->name . ' expects that ' . $expectation;
         }
         return $this;
     }
 
     public function expectsTo($expectation = '') {
         if ($expectation) {
-            $this->expectation .= $this->name . ' expects to ' . $expectation;
+            $this->expectation = $this->name . ' expects to ' . $expectation;
         }
         return $this;
     }
@@ -139,12 +143,13 @@ class UnitTester {
      * @return ExpectationMatcher matcher responsible for actual value expectations handling.
      */
     protected function createExpectationMatcher($class, $actualValue) {
-        $matcherReflection = new \ReflectionClass($class);
-        if ($this->expectation) {
-            $constructorArguments = [$actualValue, $this->expectation];
+        if (!empty($this->expectation) || !empty($this->scenario)) {
+            $constructorArguments = [$actualValue, $this->scenario . $this->expectation];
+            $this->expectation = '';
         } else {
             $constructorArguments = [$actualValue];
         }
+        $matcherReflection = new \ReflectionClass($class);
         return $matcherReflection->newInstanceArgs($constructorArguments);
     }
 }
