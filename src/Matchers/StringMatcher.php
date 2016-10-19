@@ -8,16 +8,31 @@ use PHPUnit_Framework_Assert as Assert;
  * StringMatcher is designed to check given string matches expectation.
  *
  * @package DeKey\Tester\Matchers
- * @author Dmitry Kolodko <dangel@quartsoft.com>
+ * @author Dmitry Kolodko <dangel.dekey@gmail.com>
  */
 class StringMatcher extends ValueMatcher {
+    public function isJson() {
+        Assert::assertJson($this->actual, $this->description);
+        return $this;
+    }
+
     public function isEqualToJsonFile($file) {
         Assert::assertJsonStringEqualsJsonFile($file, $this->actual, $this->description);
         return $this;
     }
 
+    public function isNotEqualToJsonFile($file) {
+        Assert::assertJsonStringNotEqualsJsonFile($file, $this->actual, $this->description);
+        return $this;
+    }
+
     public function isEqualToJsonString($string) {
         Assert::assertJsonStringEqualsJsonString($string, $this->actual, $this->description);
+        return $this;
+    }
+
+    public function isNotEqualToJsonString($string) {
+        Assert::assertJsonStringNotEqualsJsonString($string, $this->actual, $this->description);
         return $this;
     }
 
@@ -36,13 +51,18 @@ class StringMatcher extends ValueMatcher {
         return $this;
     }
 
+    public function isNotEqualToXmlFile($file) {
+        Assert::assertXmlStringNotEqualsXmlFile($file, $this->actual, $this->description);
+        return $this;
+    }
+
     public function isEqualToXmlString($xmlString) {
         Assert::assertXmlStringEqualsXmlString($xmlString, $this->actual, $this->description);
         return $this;
     }
 
-    public function isEqualToXmlStructure($xml, $checkAttributes = false) {
-        Assert::assertEqualXMLStructure($xml, $this->actual, $checkAttributes, $this->description);
+    public function isNotEqualToXmlString($xmlString) {
+        Assert::assertXmlStringNotEqualsXmlString($xmlString, $this->actual, $this->description);
         return $this;
     }
 

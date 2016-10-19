@@ -9,7 +9,7 @@ use PHPUnit_Framework_Assert as Assert;
  * ClassMatcher is designed to check given class matches expectation.
  *
  * @package DeKey\Tester\Matchers
- * @author Dmitry Kolodko
+ * @author Dmitry Kolodko <dangel.dekey@gmail.com>
  */
 class ClassMatcher extends Matcher {
     public function isExist() {

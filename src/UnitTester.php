@@ -2,154 +2,87 @@
 
 namespace DeKey\Tester;
 
-use DeKey\Tester\Base\ExpectationMatcher;
-use DeKey\Tester\Matchers\ArrayMatcher;
-use DeKey\Tester\Matchers\BooleanMatcher;
-use DeKey\Tester\Matchers\ClassMatcher;
-use DeKey\Tester\Matchers\ExceptionMatcher;
-use DeKey\Tester\Matchers\FileMatcher;
-use DeKey\Tester\Matchers\ObjectMatcher;
-use DeKey\Tester\Matchers\StringMatcher;
-use DeKey\Tester\Matchers\ValueMatcher;
-use PHPUnit_Framework_TestCase;
+
+use DeKey\Tester\Contract\TestGuy;
+use PHPUnit_Framework_TestCase as TestCase; // using this awful class for backward compatibility with. In text major release  will be replaced with {@link PHPUnit\Framework\TestCase}
 
 /**
  * UnitTester is a simple class designed to make PHPUnit tests more readable using BDD-style
  * syntax. UnitTester represents a test-guy who is testing your code, so tests writes as a story
  * of what tester is doing. Example:
  * <pre>
- * // do some stuff
+ * // do stuff
  * .......
  * $tester = $this->tester;
- * $tester->checksSpecification('Some processor generates some files and and returns execution result.')
- *      ->expectsThat('processor return valid content of some data.')
+ * $tester->checksSpecification('user activates processor for PDF transformation to HTML')
+ *      ->expectsThat('processor converts PDF to HTML and return HTML representation of given PDF.')
  *      ->variable($processedContent)
  *      ->isEqualTo(self::EXPECTED_CONTENT);
  * </pre>
  *
  * @package DeKey\Tester
- * @author Dmitry Kolodko
+ * @author Dmitry Kolodko <dangel.dekey@gmail.com>
  */
-class UnitTester {
+class UnitTester implements TestGuy {
     /**
      * @var string scenario Tester currently checks. There can be only one scenario and several {@link expectation}s.
      */
     protected $scenario;
     /**
-     * @var string message indicates what tester expects to test.
-     */
-    protected $expectation;
-    /**
-     * @var PHPUnit_Framework_TestCase test case tester being used in.
-     */
-    protected $test;
-    /**
      * @var string tester name that will be used to generate expectation message
      */
     protected $name;
+    /**
+     * @var string expectation class being used in {@link createExpectation()}
+     */
+    protected $expectationClass;
+    /**
+     * @var TestCase test case tester being used in.
+     */
+    protected $test;
 
-    public function __construct(PHPUnit_Framework_TestCase $test, $testerName = 'Tester') {
+    public function __construct(TestCase $test, $testerName = 'Tester', $expectationClass = TesterExpectation::class) {
         $this->test = $test;
         $this->name = $testerName;
+        $this->expectationClass = $expectationClass;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function checksScenario($scenario) {
         $this->scenario = 'Scenario: ' . $scenario . PHP_EOL;
 
         return $this;
     }
-
+    /**
+     * @inheritdoc
+     * @return TesterExpectation
+     */
     public function expectsThat($expectation = '') {
         if ($expectation) {
-            $this->expectation = $this->name . ' expects that ' . $expectation;
+            $expectation = $this->name . ' expects that ' . $expectation;
         }
-        return $this;
+        return $this->createExpectation($expectation);
     }
-
+    /**
+     * @inheritdoc
+     * @return TesterExpectation
+     */
     public function expectsTo($expectation = '') {
         if ($expectation) {
-            $this->expectation = $this->name . ' expects to ' . $expectation;
+            $expectation = $this->name . ' expects to ' . $expectation;
         }
-        return $this;
+        return $this->createExpectation($expectation);
     }
 
-    /**
-     * @param mixed $value actual value
-     * @return ValueMatcher matcher responsible for value expectations handling.
-     */
-    public function valueOf($value) {
-        return $this->createExpectationMatcher(ValueMatcher::class, $value);
-    }
-
-    /**
-     * @param mixed $variable actual variable
-     * @return BooleanMatcher matcher responsible for variable expectations handling.
-     */
-    public function boolean($variable) {
-        return $this->createExpectationMatcher(BooleanMatcher::class, $variable);
-    }
-
-    /**
-     * @param mixed $variable actual variable
-     * @return StringMatcher matcher responsible for variable expectations handling.
-     */
-    public function string($variable) {
-        return $this->createExpectationMatcher(StringMatcher::class, $variable);
-    }
-
-    /**
-     * @param mixed $variable actual variable
-     * @return ArrayMatcher matcher responsible for variable expectations handling.
-     */
-    public function theArray($variable) {
-        return $this->createExpectationMatcher(ArrayMatcher::class, $variable);
-    }
-
-    /**
-     * @param object $object actual object
-     * @return ObjectMatcher matcher responsible for object expectations handling.
-     */
-    public function object($object) {
-        return $this->createExpectationMatcher(ObjectMatcher::class, $object);
-    }
-
-    /**
-     * @param \Exception $exception actual exception
-     * @return ExceptionMatcher matcher responsible for exception expectations handling.
-     */
-    public function exception($exception) {
-        return $this->createExpectationMatcher(ExceptionMatcher::class, $exception);
-    }
-
-    /**
-     * @param object $class actual class
-     * @return ClassMatcher matcher responsible for object expectations handling.
-     */
-    public function theClass($class) {
-        return $this->createExpectationMatcher(ClassMatcher::class, $class);
-    }
-
-    /**
-     * @param mixed $file actual file
-     * @return FileMatcher matcher responsible for file expectations handling.
-     */
-    public function file($file) {
-        return $this->createExpectationMatcher(FileMatcher::class, $file);
-    }
-
-    /**
-     * @param string $class matcher class. Class should implement {@link ExpectationMatcher} interface.
-     * @param mixed $actualValue actual value being passed to matcher.
-     * @return ExpectationMatcher matcher responsible for actual value expectations handling.
-     */
-    protected function createExpectationMatcher($class, $actualValue) {
-        if (!empty($this->expectation) || !empty($this->scenario)) {
-            $constructorArguments = [$actualValue, $this->scenario . $this->expectation];
-            $this->expectation = '';
+    protected function createExpectation($expectationMessage) {
+        if (!empty($expectationMessage) || !empty($this->scenario)) {
+            $constructorArguments = [$this->test, $this->scenario . $expectationMessage];
         } else {
-            $constructorArguments = [$actualValue];
+            $constructorArguments = [$this->test];
         }
-        $matcherReflection = new \ReflectionClass($class);
+        $matcherReflection = new \ReflectionClass($this->expectationClass);
         return $matcherReflection->newInstanceArgs($constructorArguments);
     }
 }

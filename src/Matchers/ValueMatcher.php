@@ -9,7 +9,7 @@ use PHPUnit_Framework_Assert as Assert;
  * ValueMatcher is designed to check given value matches expectation.
  *
  * @package DeKey\Tester\Matchers
- * @author Dmitry Kolodko
+ * @author Dmitry Kolodko <dangel.dekey@gmail.com>
  */
 class ValueMatcher extends Matcher {
     public function isInternalType($type) {
