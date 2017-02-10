@@ -19,9 +19,9 @@ Tester also decorates errors output so, for example, if "IncomeService" service 
 
 ## Package information
 
-Latest stable version |  Latest unstable version | Total downloads | Licensing 
---------------------- |  ----------------------- |  -------------- | --------- 
-[![Latest Stable Version](https://poser.pugx.org/dekeysoft/pu-tester/v/stable)](https://packagist.org/packages/dekeysoft/pu-tester) | [![Latest Unstable Version](https://poser.pugx.org/dekeysoft/pu-tester/v/unstable)](https://packagist.org/packages/dekeysoft/pu-tester) | [![Total Downloads](https://poser.pugx.org/dekeysoft/pu-tester/downloads)](https://packagist.org/packages/dekeysoft/pu-tester) | [![License](https://poser.pugx.org/dekeysoft/pu-tester/license)](https://github.com/dekeysoft/pu-tester/blob/master/LICENSE)
+Latest Stable Version |  Latest Unstable Version | Total Downloads | Monthly Downloads | Licensing 
+--------------------- |  ----------------------- |  -------------- | ----------------  |--------- 
+[![Latest Stable Version](https://poser.pugx.org/dekeysoft/pu-tester/v/stable)](https://packagist.org/packages/dekeysoft/pu-tester) | [![Latest Unstable Version](https://poser.pugx.org/dekeysoft/pu-tester/v/unstable)](https://packagist.org/packages/dekeysoft/pu-tester) | [![Total Downloads](https://poser.pugx.org/dekeysoft/pu-tester/downloads)](https://packagist.org/packages/dekeysoft/pu-tester) | [![Monthly Downloads](https://poser.pugx.org/dekeysoft/pu-tester/d/monthly)](https://packagist.org/packages/dekeysoft/pu-tester) | [![License](https://poser.pugx.org/dekeysoft/pu-tester/license)](https://github.com/dekeysoft/pu-tester/blob/master/LICENSE)
 
 ## Requirements
 
