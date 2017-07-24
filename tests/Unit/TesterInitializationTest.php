@@ -19,7 +19,6 @@ class TesterInitializationTest extends TestCase {
 
     /**
      * @covers ::createTester
-     * @covers ::getTesterName
      */
     public function testCreate() {
         $tester = $this->createTester();
