@@ -7,7 +7,7 @@ use DeKey\Tester\Specification\Specification;
 /**
  * Unit test for {@link \DeKey\Tester\Specification\Tester}
  *
- * @coversDefaultClass \DeKey\CodeSpecs\Specification\Tester
+ * @coversDefaultClass \DeKey\Tester\Specification\Tester
  *
  * @author Dmitry Kolodko <prowwid@gmail.com>
  */
