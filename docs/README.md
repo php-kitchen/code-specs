@@ -4,7 +4,7 @@ See by yourself:
 use DeKey\Tester\Specification\Specification;
 
 /**
- * Specification of {@link IncomeService}
+ * Specification of {@link IncomeCalculator}
  * 
  * @author Dmitry Kolodko <prowwid@gmail.com>
  */
@@ -19,7 +19,7 @@ class IncomeCalculatorTest extends Specification {
     public function calculateTaxSpec() {
         $clientsPayments = [];
         $hoursSpentWorking = 160;
-        $service = new IncomeService($clientsPayments, $hoursSpentWorking);
+        $service = new IncomeCalculator($clientsPayments, $hoursSpentWorking);
         $I = $this->tester;
         $I->describe('income tax calculations');
 

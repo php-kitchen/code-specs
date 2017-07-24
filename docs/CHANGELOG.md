@@ -1,4 +1,4 @@
-##2.0.0
+## 2.0.0
 
 ### New features
 * Added `DeKey\Tester\Specification\Specification` class that can be used as a base class for your tests

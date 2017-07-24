@@ -5,7 +5,7 @@ namespace Tests\Unit\Example;
 use DeKey\Tester\Specification\Specification;
 
 /**
- * Specification of {@link IncomeService}
+ * Specification of {@link IncomeCalculator}
  *
  * @author Dmitry Kolodko <prowwid@gmail.com>
  */
@@ -21,7 +21,7 @@ class IncomeCalculatorTest extends Specification {
         $this->markTestSkipped();
         $clientsPayments = [];
         $hoursSpentWorking = 160;
-        $service = new IncomeService($clientsPayments, $hoursSpentWorking);
+        $service = new IncomeCalculator($clientsPayments, $hoursSpentWorking);
         $I = $this->tester;
         $I->describe('income tax calculations');
 
@@ -44,7 +44,7 @@ class IncomeCalculatorTest extends Specification {
     }
 }
 
-class IncomeService {
+class IncomeCalculator {
     public function __construct($clientsPayments, $workingHours) {
     }
 
