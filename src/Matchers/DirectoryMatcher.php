@@ -1,46 +1,27 @@
 <?php
+
 namespace DeKey\Tester\Matchers;
 
-use DeKey\Tester\Base\Matcher;
-use PHPUnit_Framework_Assert as Assert;
+use DeKey\Tester\Matchers\Base\Matcher;
+use DeKey\Tester\Matchers\Mixins\FileStateExpectations;
 
 /**
  * DirectoryMatcher is designed to check given directory matches expectation.
  *
- * @author Dmitry Kolodko <dangel.dekey@gmail.com>
+ * @author Dmitry Kolodko <prowwid@gmail.com>
  */
 class DirectoryMatcher extends Matcher {
-    public function isExist() {
-        Assert::assertDirectoryExists($this->actual, $this->description);
+    use FileStateExpectations;
+
+    public function isExist(): self {
+        $this->registerExpectation('is exist');
+        $this->test->assertDirectoryExists($this->actual, $this->getMessageForAssert());
         return $this;
     }
 
-    public function isNotExist() {
-        Assert::assertDirectoryNotExists($this->actual, $this->description);
-        return $this;
-    }
-
-    public function isReadable() {
-        $this->isExist();
-        Assert::assertIsReadable($this->actual, $this->description);
-        return $this;
-    }
-
-    public function isNotReadable() {
-        $this->isExist();
-        Assert::assertNotIsReadable($this->actual, $this->description);
-        return $this;
-    }
-
-    public function isWritable() {
-        $this->isExist();
-        Assert::assertIsWritable($this->actual, $this->description);
-        return $this;
-    }
-
-    public function isNotWritable() {
-        $this->isExist();
-        Assert::assertNotIsWritable($this->actual, $this->description);
+    public function isNotExist(): self {
+        $this->registerExpectation('is not exist');
+        $this->test->assertDirectoryNotExists($this->actual, $this->getMessageForAssert());
         return $this;
     }
 }

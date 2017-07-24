@@ -3,11 +3,14 @@
 In the following example we check that given object is not empty an is an instance of expected class.
 
 ```php
-public function testObject() {
-        $tester = $this->tester;
-        $tester->checksScenario('Example of basic usage')
-            ->expectsThat('everything works')
-            ->object($this)
+/**
+ * @test
+ */
+public function objectExampleSpec() {
+        $I = $this->tester;
+        $I->describe('basic usage of object expectations');
+        $I->expectThat('everything works');
+        $I->seeThatObject($this)
             ->isNotEmpty()
             ->isInstanceOf(get_class($this));
 }
@@ -16,6 +19,9 @@ public function testObject() {
 In the following example we check that MyClass instance throws exception once 'throwException' method being invoked.
 
 ```php
+/**
+ * @test
+ */
 /**
  * Our class that throw exceptions.
  */
@@ -27,14 +33,14 @@ class MyClass {
 
 //..............
 
-public function testObject() {
-        $tester = $this->tester;
+public function objectExceptionExampleSpec() {
+        $I = $this->tester;
         $myObject = new MyClass();
-        $tester->checksScenario('Example of basic usage')
-            ->expectsThat('everything works')
-            ->object($myObject)
+        $I->describe('how to test exceptions')
+        $I->expectThat('everything works(really stupid expectation - I know=D)');
+        $I->seeThatObject($myObject)
             ->throwsException(\InvalidArgumentException::class)
             ->withMessage('test exception')
-            ->whenInvokedMethod('throwException');
+            ->when(function(MyClass $object) {$object->throwException();});
 }
 ```

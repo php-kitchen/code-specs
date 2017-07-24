@@ -1,11 +1,12 @@
-Goal of this library is to introduce an "Actor" role in the test (like in [Codeception](https://github.com/Codeception/Codeception)) with a bunch of cool methods to "Actor" for unit testing and show a way of representing unit tests as a behavior specifications of a specific class and a test of specific method as a specification of the method.
-See by yourself:
-```php
+<?php
+
+namespace Tests\Unit\Example;
+
 use DeKey\Tester\Specification\Specification;
 
 /**
  * Specification of {@link IncomeService}
- * 
+ *
  * @author Dmitry Kolodko <prowwid@gmail.com>
  */
 class IncomeCalculatorTest extends Specification {
@@ -17,6 +18,7 @@ class IncomeCalculatorTest extends Specification {
      * @test
      */
     public function calculateTaxSpec() {
+        $this->markTestSkipped();
         $clientsPayments = [];
         $hoursSpentWorking = 160;
         $service = new IncomeService($clientsPayments, $hoursSpentWorking);
@@ -41,13 +43,20 @@ class IncomeCalculatorTest extends Specification {
             ->isEqualTo(self::EXPECTED_TAX_FOR_THIRD_LEVEL_TAX_RULE);
     }
 }
-```
 
-Tester also decorates errors output so, for example, if "IncomeCalculator" service from example above will incorrectly calculate income the error output will include following message(example of output in PHPStorm):
+class IncomeService {
+    public function __construct($clientsPayments, $workingHours) {
+    }
 
-![picture alt](failed-test.png "Error output")
+    public function calculateWithoutTax() {
+        return 478;
+    }
 
-Documentation contains following paragraphs:
-* [Installation](installation.md)
-* [Getting started](getting-started.md)
-* [Examples](examples-list.md)
+    public function calculateWithTax() {
+        return 478;
+    }
+
+    public function calculateTax() {
+        return 4500;
+    }
+}

@@ -1,7 +1,9 @@
 <?php
+
 namespace Tests\DeKey\Tester\Unit\Matchers;
 
 use DeKey\Tester\Matchers\ObjectMatcher;
+use PHPUnit\Framework\TestCase;
 use PHPUnit_Framework_TestCase;
 use Tests\DeKey\Tester\Base\BaseMatcherTest;
 
@@ -13,7 +15,7 @@ use Tests\DeKey\Tester\Base\BaseMatcherTest;
  * @coversDefaultClass \DeKey\Tester\Matchers\ObjectMatcher
  *
  * @package Tests\Matchers
- * @author Dmitry Kolodko <dangel.dekey@gmail.com>
+ * @author Dmitry Kolodko <prowwid@gmail.com>
  */
 class ObjectMatcherTest extends BaseMatcherTest {
     protected function initMatcherClass() {
@@ -26,9 +28,11 @@ class ObjectMatcherTest extends BaseMatcherTest {
     public function testCreate() {
         try {
             $this->createMatcherWithActualValue(new \stdClass());
+            $matcherCreated = true;
         } catch (\Exception $e) {
-            $this->fail('Unable to instantiate ' . ObjectMatcher::class);
+            $matcherCreated = false;
         }
+        $this->assertTrue($matcherCreated, 'Unable to instantiate ' . ObjectMatcher::class);
     }
 
     /**
@@ -36,7 +40,7 @@ class ObjectMatcherTest extends BaseMatcherTest {
      */
     public function testIsInstanceOf() {
         $object = $this->createMatcherWithActualValue($this);
-        $object->isInstanceOf(PHPUnit_Framework_TestCase::class);
+        $object->isInstanceOf(TestCase::class);
     }
 
     /**
@@ -115,7 +119,9 @@ XML;
         $object = $this->createMatcherWithActualValue(new TestDataClass());
         $object->throwsException(\InvalidArgumentException::class)
             ->withMessage('test exception')
-            ->whenInvokedMethod('throwException');
+            ->when(function (TestDataClass $object) {
+                $object->throwException();
+            });
     }
 }
 

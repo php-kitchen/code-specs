@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\DeKey\Tester\Unit\Matchers;
 
 use DeKey\Tester\Matchers\NumberMatcher;
@@ -12,7 +13,7 @@ use Tests\DeKey\Tester\Base\BaseMatcherTest;
  * @coversDefaultClass \DeKey\Tester\Matchers\NumberMatcher
  *
  * @package Tests\Matchers
- * @author Dmitry Kolodko <dangel.dekey@gmail.com>
+ * @author Dmitry Kolodko <prowwid@gmail.com>
  */
 class NumberMatcherTest extends BaseMatcherTest {
     protected function initMatcherClass() {
@@ -25,9 +26,11 @@ class NumberMatcherTest extends BaseMatcherTest {
     public function testCreate() {
         try {
             $this->createMatcherWithActualValue(true);
+            $matcherCreated = true;
         } catch (\Exception $e) {
-            $this->fail('Unable to instantiate ' . NumberMatcher::class);
+            $matcherCreated = false;
         }
+        $this->assertTrue($matcherCreated, 'Unable to instantiate ' . NumberMatcher::class);
     }
 
     /**

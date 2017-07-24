@@ -3,10 +3,12 @@
 In the following example we check that given value is true not false.
 
 ```php
-public function testBoolean() {
-        $tester = $this->tester;
-        $tester->expectsThat()
-            ->boolean(true)
+/**
+ * @test
+ */
+public function booleanTroothExampleSpec() {
+        $I = $this->tester;
+        $I->seeThatBoolean('result of execution', true)
             ->isTrue();
 }
 ```
@@ -14,10 +16,12 @@ public function testBoolean() {
 In the following example we check that given value is not false.
 
 ```php
-public function testBoolean() {
-        $tester = $this->tester;
-        $tester->expectsThat()
-            ->boolean(1)
+/**
+ * @test
+ */
+public function  booleanNegativeAssertExampleSpec() {
+        $I = $this->tester;
+        $I->seeThatBoolean('result of execution', 1)
             ->isNotFalse();
 }
 ```

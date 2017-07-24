@@ -2,13 +2,13 @@
 
 ## Requirements
 
-**`PHP >= 5.6.0` is required.**
+**`PHP >= 7.1` is required.**
 
-**`PHPUnit >= 5.6.0` is required.**
+**`PHPUnit >= 6.0` is required.**
 
-## Installation
+## Getting Started
 
-To install this library in your project run following command in the terminal:
+Run the following command to add PHPUnit Tester to your project's `composer.json`. See [Packagist](https://packagist.org/packages/dekeysoft/pu-tester) for specific versions.
 
 ```bash
 composer require dekeysoft/pu-tester
@@ -18,20 +18,34 @@ Or you can copy this library from:
 - [Packagist](https://packagist.org/packages/dekeysoft/pu-tester)
 - [Github](https://github.com/dekeysoft/pu-tester)
 
-Then you can use PHPUnit Tester simply by using "TesterInitialization" trait in your test case. Example:
+Then you can use PHPUnit Tester in your test simply extending from `Specification` class. Example:
+```php
+use DeKey\Tester\Specification\Specification;
+
+class YourTest extends Specification {
+
+    public function testSomeMethod() {
+        $I = $this->tester;
+        ......
+        $I->seeThatBoolean('my dummy variable', true)->isFalse();
+    }
+}
+
+```
+
+or by using "TesterInitialization" trait in your test case
+
 ```php
 use PHPUnit\Framework\TestCase;
 use DeKey\Tester\TesterInitialization;
 
-class YourTestCase extends TestCase {
+class YourTest extends TestCase {
     use TesterInitialization;
 
     public function testSomeMethod() {
-        $tester = $this->tester;
+        $I = $this->tester;
         ......
+        $I->seeThatBoolean('my dummy variable', true)->isFalse();
     }
 }
 ```
-
-"TesterInitialization" trait inject your test case with "tester" property being initiated before each test so you'll have clean Tester for each of your tests.
-It's better to use "TesterInitialization" in your base test case sou you'll have Tester in all of your tests without explicit usage of "TesterInitialization" trait( if you don't have base test it's time to create one=) ). 

@@ -3,10 +3,12 @@
 In the following example we check that given number is finite.
 
 ```php
-public function testNumber() {
-        $tester = $this->tester;
-        $tester->expectsThat()
-            ->number(1)
+/**
+ * @test
+ */
+public function numberFiniteExampleSpec() {
+        $I = $this->tester;
+        $I->seeThatNumber(1)
             ->isFinite();
 }
 ```
@@ -14,10 +16,12 @@ public function testNumber() {
 In the following example we check that given number is infinite.
 
 ```php
-public function testNumber() {
-        $tester = $this->tester;
-        $tester->expectsThat()
-            ->number(INF)
+/**
+ * @test
+ */
+public function numberInfiniteEExampleSpec() {
+        $I = $this->tester;
+        $I->seeThatNumber(INF)
             ->isInfinite();
 }
 ```
@@ -25,10 +29,9 @@ public function testNumber() {
 In the following example we check that given number is NAN.
 
 ```php
-public function testNumber() {
-        $tester = $this->tester;
-        $tester->expectsThat()
-            ->number(NAN)
+public function numberNanExampleSpec() {
+        $I = $this->tester;
+        $I->seeThatNumber(NAN)
             ->isNan();
 }
 ```

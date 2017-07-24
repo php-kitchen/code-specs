@@ -2,77 +2,63 @@
 
 namespace DeKey\Tester\Matchers;
 
-use DeKey\Tester\Base\Matcher;
-use PHPUnit_Framework_Assert as Assert;
+use DeKey\Tester\Matchers\Base\Matcher;
+use DeKey\Tester\Matchers\Mixins\FileStateExpectations;
 
 /**
  * FileMatcher is designed to check given file matches expectation.
  *
  * @package DeKey\Tester\Matchers
- * @author Dmitry Kolodko <dangel.dekey@gmail.com>
+ * @author Dmitry Kolodko <prowwid@gmail.com>
  */
 class FileMatcher extends Matcher {
-    public function isExist() {
-        Assert::assertFileExists($this->actual, $this->description);
+    use FileStateExpectations;
+
+    public function isExist(): self {
+        $this->registerExpectation('is exist');
+        $this->test->assertFileExists($this->actual, $this->getMessageForAssert());
         return $this;
     }
 
-    public function isNotExist() {
-        Assert::assertFileNotExists($this->actual, $this->description);
+    public function isNotExist(): self {
+        $this->registerExpectation('is not exist');
+        $this->test->assertFileNotExists($this->actual, $this->getMessageForAssert());
         return $this;
     }
 
-    public function isEqualTo($file) {
-        Assert::assertFileEquals($file, $this->actual, $this->description);
+    public function isEqualTo($file): self {
+        $this->registerExpectation('is equal to file "' . $file . '"');
+        $this->test->assertFileEquals($file, $this->actual, $this->getMessageForAssert());
         return $this;
     }
 
-    public function isNotEqualTo($file) {
-        Assert::assertFileNotEquals($file, $this->actual, $this->description);
+    public function isNotEqualTo($file): self {
+        $this->registerExpectation('is not equal to file "' . $file . '"');
+        $this->test->assertFileNotEquals($file, $this->actual, $this->getMessageForAssert());
         return $this;
     }
 
-    public function isEqualToJsonFile($file) {
-        Assert::assertJsonFileEqualsJsonFile($file, $this->actual, $this->description);
+    public function isEqualToJsonFile($file): self {
+        $this->registerExpectation('is equal to json file "' . $file . '"');
+        $this->test->assertJsonFileEqualsJsonFile($file, $this->actual, $this->getMessageForAssert());
         return $this;
     }
 
-    public function isNotEqualToJsonFile($file) {
-        Assert::assertJsonFileNotEqualsJsonFile($file, $this->actual, $this->description);
+    public function isNotEqualToJsonFile($file): self {
+        $this->registerExpectation('is not equal to json file "' . $file . '"');
+        $this->test->assertJsonFileNotEqualsJsonFile($file, $this->actual, $this->getMessageForAssert());
         return $this;
     }
 
-    public function isEqualToXmlFile($file) {
-        Assert::assertXmlFileEqualsXmlFile($file, $this->actual, $this->description);
+    public function isEqualToXmlFile($file): self {
+        $this->registerExpectation('is equal to xml file "' . $file . '"');
+        $this->test->assertXmlFileEqualsXmlFile($file, $this->actual, $this->getMessageForAssert());
         return $this;
     }
 
-    public function isNotEqualToXmlFile($file) {
-        Assert::assertXmlFileNotEqualsXmlFile($file, $this->actual, $this->description);
-        return $this;
-    }
-
-    public function isReadable() {
-        $this->isExist();
-        Assert::assertIsReadable($this->actual, $this->description);
-        return $this;
-    }
-
-    public function isNotReadable() {
-        $this->isExist();
-        Assert::assertNotIsReadable($this->actual, $this->description);
-        return $this;
-    }
-
-    public function isWritable() {
-        $this->isExist();
-        Assert::assertIsWritable($this->actual, $this->description);
-        return $this;
-    }
-
-    public function isNotWritable() {
-        $this->isExist();
-        Assert::assertNotIsWritable($this->actual, $this->description);
+    public function isNotEqualToXmlFile($file): self {
+        $this->registerExpectation('is not equal to xml file "' . $file . '"');
+        $this->test->assertXmlFileNotEqualsXmlFile($file, $this->actual, $this->getMessageForAssert());
         return $this;
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\DeKey\Tester\Unit\Matchers;
 
 use DeKey\Tester\Matchers\ValueMatcher;
@@ -12,7 +13,7 @@ use Tests\DeKey\Tester\Base\BaseMatcherTest;
  * @coversDefaultClass \DeKey\Tester\Matchers\ValueMatcher
  *
  * @package Tests\Matchers
- * @author Dmitry Kolodko <dangel.dekey@gmail.com>
+ * @author Dmitry Kolodko <prowwid@gmail.com>
  */
 class ValueMatcherTest extends BaseMatcherTest {
     protected function initMatcherClass() {
@@ -25,9 +26,12 @@ class ValueMatcherTest extends BaseMatcherTest {
     public function testCreate() {
         try {
             $this->createMatcherWithActualValue([]);
+
+            $matcherCreated = true;
         } catch (\Exception $e) {
-            $this->fail('Unable to instantiate ' . ValueMatcher::class);
+            $matcherCreated = false;
         }
+        $this->assertTrue($matcherCreated, 'Unable to instantiate ' . ValueMatcher::class);
     }
 
     /**
@@ -36,6 +40,7 @@ class ValueMatcherTest extends BaseMatcherTest {
     public function testIsInternalType() {
         $matcher = $this->createMatcherWithActualValue(true);
         $matcher->isInternalType('boolean');
+        $this->addToAssertionCount(1);
     }
 
     /**

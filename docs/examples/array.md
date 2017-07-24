@@ -3,13 +3,16 @@
 In the following example we check that given array not empty, has expected key and value.
 
 ```php
-public function testTheArray() {
-        $tester = $this->tester;
-        $tester->checksScenario('working wih associative array')
-            ->expectsThat('array has both key and value')
-            ->theArray(['key' => 'value'])
+/**
+ * @test
+ */
+public function arrayExampleSpec() {
+        $I = $this->tester;
+        $I->describe('working wih associative array');
+        $I->expectThat('array has both key and value');
+        $I->seeThatArray('admin record', ['name' => 'Alex'])
             ->isNotEmpty()
-            ->hasKey('key')
-            ->contains('value');
+            ->hasKey('name')
+            ->contains('Alex');
 }
 ```

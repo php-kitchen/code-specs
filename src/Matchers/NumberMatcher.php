@@ -1,26 +1,28 @@
 <?php
-namespace DeKey\Tester\Matchers;
 
-use PHPUnit_Framework_Assert as Assert;
+namespace DeKey\Tester\Matchers;
 
 /**
  * NumberMatcher is designed to check given number matches expectation.
  *
- * @author Dmitry Kolodko <dangel.dekey@gmail.com>
+ * @author Dmitry Kolodko <prowwid@gmail.com>
  */
 class NumberMatcher extends ValueMatcher {
-    public function isFinite() {
-        Assert::assertFinite($this->actual, $this->description);
+    public function isFinite(): self {
+        $this->registerExpectation('is finite');
+        $this->test->assertFinite($this->actual, $this->getMessageForAssert());
         return $this;
     }
 
-    public function isInfinite() {
-        Assert::assertInfinite($this->actual, $this->description);
+    public function isInfinite(): self {
+        $this->registerExpectation('is infinite');
+        $this->test->assertInfinite($this->actual, $this->getMessageForAssert());
         return $this;
     }
 
-    public function isNan() {
-        Assert::assertNan($this->actual, $this->description);
+    public function isNan(): self {
+        $this->registerExpectation('is nan');
+        $this->test->assertNan($this->actual, $this->getMessageForAssert());
         return $this;
     }
 }

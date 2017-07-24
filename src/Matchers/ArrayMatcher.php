@@ -2,27 +2,28 @@
 
 namespace DeKey\Tester\Matchers;
 
-use PHPUnit_Framework_Assert as Assert;
-
 /**
  * ArrayMatcher is designed to check given array matches expectation.
  *
  * @package DeKey\Tester\Matchers
- * @author Dmitry Kolodko <dangel.dekey@gmail.com>
+ * @author Dmitry Kolodko <prowwid@gmail.com>
  */
 class ArrayMatcher extends ValueMatcher {
     public function hasKey($key) {
-        Assert::assertArrayHasKey($key, $this->actual, $this->description);
+        $this->registerExpectation('has key "' . $key . '"');
+        $this->test->assertArrayHasKey($key, $this->actual, $this->getMessageForAssert());
         return $this;
     }
 
     public function doesNotHaveKey($key) {
-        Assert::assertArrayNotHasKey($key, $this->actual, $this->description);
+        $this->registerExpectation('does not have key "' . $key . '"');
+        $this->test->assertArrayNotHasKey($key, $this->actual, $this->getMessageForAssert());
         return $this;
     }
 
     public function hasSubset($subset) {
-        Assert::assertArraySubset($subset, $this->actual, false, $this->description);
+        $this->registerExpectation('has subset "' . print_r($subset, true) . '"');
+        $this->test->assertArraySubset($subset, $this->actual, false, $this->getMessageForAssert());
         return $this;
     }
 
@@ -33,62 +34,73 @@ class ArrayMatcher extends ValueMatcher {
      * @return $this
      */
     public function hasExactlyTheSameSubset($subset) {
-        Assert::assertArraySubset($subset, $this->actual, true, $this->description);
+        $this->registerExpectation('has exactly the same subset "' . print_r($subset, true) . '"');
+        $this->test->assertArraySubset($subset, $this->actual, true, $this->getMessageForAssert());
         return $this;
     }
 
     public function hasSameSizeAs($expected) {
-        Assert::assertSameSize($expected, $this->actual, $this->description);
+        $this->registerExpectation('has same size as expected');
+        $this->test->assertSameSize($expected, $this->actual, $this->getMessageForAssert());
         return $this;
     }
 
     public function doesNotHaveSameSizeAs($expected) {
-        Assert::assertNotSameSize($expected, $this->actual, $this->description);
+        $this->registerExpectation('does not have same size as expected');
+        $this->test->assertNotSameSize($expected, $this->actual, $this->getMessageForAssert());
         return $this;
     }
 
     public function contains($needle) {
-        Assert::assertContains($needle, $this->actual, $this->description);
+        $this->test->assertContains($needle, $this->actual, $this->getMessageForAssert());
         return $this;
     }
 
     public function doesNotContain($needle) {
-        Assert::assertNotContains($needle, $this->actual, $this->description);
+        $this->registerExpectation('contains "' . print_r($needle, true) . '"');
+        $this->test->assertNotContains($needle, $this->actual, $this->getMessageForAssert());
         return $this;
     }
 
     public function containsOnlyValuesOfType($type) {
-        Assert::assertContainsOnly($type, $this->actual, null, $this->description);
+        $this->registerExpectation('contains only values of type "' . $type . '"');
+        $this->test->assertContainsOnly($type, $this->actual, null, $this->getMessageForAssert());
         return $this;
     }
 
     public function containsOnlyValuesOfNativeType($type) {
-        Assert::assertContainsOnly($type, $this->actual, true, $this->description);
+        $this->registerExpectation('contains only values of native type "' . $type . '"');
+        $this->test->assertContainsOnly($type, $this->actual, true, $this->getMessageForAssert());
         return $this;
     }
 
     public function containsOnlyInstancesOf($class) {
-        Assert::assertContainsOnlyInstancesOf($class, $this->actual, $this->description);
+        $this->registerExpectation('contains only instances of "' . $class . '"');
+        $this->test->assertContainsOnlyInstancesOf($class, $this->actual, $this->getMessageForAssert());
         return $this;
     }
 
     public function doesNotContainOnlyValuesOfType($type) {
-        Assert::assertNotContainsOnly($type, $this->actual, null, $this->description);
+        $this->registerExpectation('does not contain only values of type "' . $type . '"');
+        $this->test->assertNotContainsOnly($type, $this->actual, null, $this->getMessageForAssert());
         return $this;
     }
 
     public function doesNotContainOnlyValuesOfNativeType($type) {
-        Assert::assertNotContainsOnly($type, $this->actual, true, $this->description);
+        $this->registerExpectation('does not contain only values of native type "' . $type . '"');
+        $this->test->assertNotContainsOnly($type, $this->actual, true, $this->getMessageForAssert());
         return $this;
     }
 
     public function countIsEqualToCountOf($countOrCountable) {
-        Assert::assertCount($this->convertToCount($countOrCountable), $this->actual, $this->description);
+        $this->registerExpectation('has count equal to expected');
+        $this->test->assertCount($this->convertToCount($countOrCountable), $this->actual, $this->getMessageForAssert());
         return $this;
     }
 
     public function countIsNotEqualToCountOf($countOrCountable) {
-        Assert::assertNotCount($this->convertToCount($countOrCountable), $this->actual, $this->description);
+        $this->registerExpectation('has count not equal to expected');
+        $this->test->assertNotCount($this->convertToCount($countOrCountable), $this->actual, $this->getMessageForAssert());
         return $this;
     }
 

@@ -2,122 +2,142 @@
 
 namespace DeKey\Tester\Matchers;
 
-use PHPUnit_Framework_Assert as Assert;
-
 /**
  * StringMatcher is designed to check given string matches expectation.
  *
  * @package DeKey\Tester\Matchers
- * @author Dmitry Kolodko <dangel.dekey@gmail.com>
+ * @author Dmitry Kolodko <prowwid@gmail.com>
  */
 class StringMatcher extends ValueMatcher {
-    public function isJson() {
-        Assert::assertJson($this->actual, $this->description);
+    public function isJson(): self {
+        $this->registerExpectation('is JSON');
+        $this->test->assertJson($this->actual, $this->getMessageForAssert());
         return $this;
     }
 
-    public function isEqualToJsonFile($file) {
-        Assert::assertJsonStringEqualsJsonFile($file, $this->actual, $this->description);
+    public function isEqualToJsonFile($file): self {
+        $this->registerExpectation('is equal to JSON file "' . $file . '"');
+        $this->test->assertJsonStringEqualsJsonFile($file, $this->actual, $this->getMessageForAssert());
         return $this;
     }
 
-    public function isNotEqualToJsonFile($file) {
-        Assert::assertJsonStringNotEqualsJsonFile($file, $this->actual, $this->description);
+    public function isNotEqualToJsonFile($file): self {
+        $this->registerExpectation('is not equal to JSON file "' . $file . '"');
+        $this->test->assertJsonStringNotEqualsJsonFile($file, $this->actual, $this->getMessageForAssert());
         return $this;
     }
 
-    public function isEqualToJsonString($string) {
-        Assert::assertJsonStringEqualsJsonString($string, $this->actual, $this->description);
+    public function isEqualToJsonString($string): self {
+        $this->registerExpectation('is equal to JSON string "' . $string . '"');
+        $this->test->assertJsonStringEqualsJsonString($string, $this->actual, $this->getMessageForAssert());
         return $this;
     }
 
-    public function isNotEqualToJsonString($string) {
-        Assert::assertJsonStringNotEqualsJsonString($string, $this->actual, $this->description);
+    public function isNotEqualToJsonString($string): self {
+        $this->registerExpectation('is not equal to JSON string "' . $string . '"');
+        $this->test->assertJsonStringNotEqualsJsonString($string, $this->actual, $this->getMessageForAssert());
         return $this;
     }
 
-    public function isEqualToFile($file) {
-        Assert::assertStringEqualsFile($file, $this->actual, $this->description);
+    public function isEqualToFile($file): self {
+        $this->registerExpectation('is equal to file "' . $file . '"');
+        $this->test->assertStringEqualsFile($file, $this->actual, $this->getMessageForAssert());
         return $this;
     }
 
-    public function isNotEqualToFile($file) {
-        Assert::assertStringNotEqualsFile($file, $this->actual, $this->description);
+    public function isNotEqualToFile($file): self {
+        $this->registerExpectation('is not equal to file "' . $file . '"');
+        $this->test->assertStringNotEqualsFile($file, $this->actual, $this->getMessageForAssert());
         return $this;
     }
 
-    public function isEqualToXmlFile($file) {
-        Assert::assertXmlStringEqualsXmlFile($file, $this->actual, $this->description);
+    public function isEqualToXmlFile($file): self {
+        $this->registerExpectation('is equal to XML file "' . $file . '"');
+        $this->test->assertXmlStringEqualsXmlFile($file, $this->actual, $this->getMessageForAssert());
         return $this;
     }
 
-    public function isNotEqualToXmlFile($file) {
-        Assert::assertXmlStringNotEqualsXmlFile($file, $this->actual, $this->description);
+    public function isNotEqualToXmlFile($file): self {
+        $this->registerExpectation('is not equal to XML file "' . $file . '"');
+        $this->test->assertXmlStringNotEqualsXmlFile($file, $this->actual, $this->getMessageForAssert());
         return $this;
     }
 
-    public function isEqualToXmlString($xmlString) {
-        Assert::assertXmlStringEqualsXmlString($xmlString, $this->actual, $this->description);
+    public function isEqualToXmlString($xmlString): self {
+        $this->registerExpectation('is equal to XML string "' . $xmlString . '"');
+        $this->test->assertXmlStringEqualsXmlString($xmlString, $this->actual, $this->getMessageForAssert());
         return $this;
     }
 
-    public function isNotEqualToXmlString($xmlString) {
-        Assert::assertXmlStringNotEqualsXmlString($xmlString, $this->actual, $this->description);
+    public function isNotEqualToXmlString($xmlString): self {
+        $this->registerExpectation('is not equal to XML string "' . $xmlString . '"');
+        $this->test->assertXmlStringNotEqualsXmlString($xmlString, $this->actual, $this->getMessageForAssert());
         return $this;
     }
 
-    public function startsWith($prefix) {
-        Assert::assertStringStartsWith($prefix, $this->actual, $this->description);
+    public function startsWith($prefix): self {
+        $this->registerExpectation('starts with "' . $prefix . '"');
+        $this->test->assertStringStartsWith($prefix, $this->actual, $this->getMessageForAssert());
         return $this;
     }
 
-    public function doesNotStartWith($prefix) {
-        Assert::assertStringStartsNotWith($prefix, $this->actual, $this->description);
+    public function doesNotStartWith($prefix): self {
+        $this->registerExpectation('does not start with "' . $prefix . '"');
+        $this->test->assertStringStartsNotWith($prefix, $this->actual, $this->getMessageForAssert());
         return $this;
     }
 
-    public function endsWith($suffix) {
-        Assert::assertStringEndsWith($suffix, $this->actual, $this->description);
+    public function endsWith($suffix): self {
+        $this->registerExpectation('ends with "' . $suffix . '"');
+        $this->test->assertStringEndsWith($suffix, $this->actual, $this->getMessageForAssert());
         return $this;
     }
 
-    public function doesNotEndWith($suffix) {
-        Assert::assertStringEndsNotWith($suffix, $this->actual, $this->description);
+    public function doesNotEndWith($suffix): self {
+        $this->registerExpectation('does not end with "' . $suffix . '"');
+        $this->test->assertStringEndsNotWith($suffix, $this->actual, $this->getMessageForAssert());
         return $this;
     }
 
-    public function matchesRegExp($expression) {
-        Assert::assertRegExp($expression, $this->actual, $this->description);
+    public function matchesRegExp($expression): self {
+        $this->registerExpectation('matches regular expression "' . $expression . '"');
+        $this->test->assertRegExp($expression, $this->actual, $this->getMessageForAssert());
         return $this;
     }
 
-    public function matchesFormat($format) {
-        Assert::assertStringMatchesFormat($format, $this->actual, $this->description);
+    public function matchesFormat($format): self {
+        $this->registerExpectation('matches format "' . $format . '"');
+        $this->test->assertStringMatchesFormat($format, $this->actual, $this->getMessageForAssert());
         return $this;
     }
 
-    public function doesNotMatchFormat($format) {
-        Assert::assertStringNotMatchesFormat($format, $this->actual, $this->description);
+    public function doesNotMatchFormat($format): self {
+        $this->registerExpectation('does not match format "' . $format . '"');
+        $this->test->assertStringNotMatchesFormat($format, $this->actual, $this->getMessageForAssert());
         return $this;
     }
 
-    public function matchesFormatFromFile($formatFile) {
-        Assert::assertStringMatchesFormatFile($formatFile, $this->actual, $this->description);
+    public function matchesFormatFromFile($formatFile): self {
+        $this->registerExpectation('matches format from file "' . $formatFile . '"');
+        $this->test->assertStringMatchesFormatFile($formatFile, $this->actual, $this->getMessageForAssert());
         return $this;
     }
 
-    public function doesNotMatchFormatFromFile($formatFile) {
-        Assert::assertStringNotMatchesFormatFile($formatFile, $this->actual, $this->description);
+    public function doesNotMatchFormatFromFile($formatFile): self {
+        $this->registerExpectation('does not match format from file "' . $formatFile . '"');
+        $this->test->assertStringNotMatchesFormatFile($formatFile, $this->actual, $this->getMessageForAssert());
         return $this;
     }
 
-    public function contains($needle) {
-        Assert::assertContains($needle, $this->actual, $this->description);
+    public function contains($needle): self {
+        $this->registerExpectation('contains "' . $needle . '"');
+        $this->test->assertContains($needle, $this->actual, $this->getMessageForAssert());
         return $this;
     }
 
-    public function doesNotContain($needle) {
-        Assert::assertNotContains($needle, $this->actual, $this->description);
+    public function doesNotContain($needle): self {
+        $this->registerExpectation('does not contain "' . $needle . '"');
+        $this->test->assertNotContains($needle, $this->actual, $this->getMessageForAssert());
         return $this;
     }
 }

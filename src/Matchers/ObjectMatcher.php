@@ -4,34 +4,33 @@ namespace DeKey\Tester\Matchers;
 
 use DeKey\Tester\Matchers\Internal\ObjectExceptionMatcher;
 use DOMElement;
-use PHPUnit_Framework_Assert as Assert;
 
 /**
  * ObjectMatcher is designed to check given object matches expectation.
  *
  * @package DeKey\Tester\Matchers
- * @author Dmitry Kolodko <dangel.dekey@gmail.com>
+ * @author Dmitry Kolodko <prowwid@gmail.com>
  */
 class ObjectMatcher extends ValueMatcher {
-    public function isInstanceOf($class) {
-        Assert::assertInstanceOf($class, $this->actual, $this->description);
+    public function isInstanceOf($class): self {
+        $this->registerExpectation('is instance of "' . $class . '"');
+        $this->test->assertInstanceOf($class, $this->actual, $this->getMessageForAssert());
         return $this;
     }
 
-    public function isNotInstanceOf($class) {
-        Assert::assertNotInstanceOf($class, $this->actual, $this->description);
+    public function isNotInstanceOf($class): self {
+        $this->registerExpectation('is not instance of "' . $class . '"');
+        $this->test->assertNotInstanceOf($class, $this->actual, $this->getMessageForAssert());
         return $this;
     }
 
     /**
      * Asserts that a hierarchy of DOMElements matches.
-     *
-     * @param DOMElement $expectedElement
-     * @return $this
      */
-    public function isEqualToXmlStructure(DOMElement $expectedElement) {
+    public function isEqualToXmlStructure(DOMElement $expectedElement): self {
         $this->isInstanceOf(DOMElement::class);
-        Assert::assertEqualXMLStructure($expectedElement, $this->actual, false, $this->description);
+        $this->registerExpectation('is equal to expected DOMElement');
+        $this->test->assertEqualXMLStructure($expectedElement, $this->actual, false, $this->getMessageForAssert());
         return $this;
     }
 
@@ -41,24 +40,28 @@ class ObjectMatcher extends ValueMatcher {
      * @param DOMElement $expectedElement
      * @return $this
      */
-    public function isEqualToXmlStructureAndItsAttributes(DOMElement $expectedElement) {
+    public function isEqualToXmlStructureAndItsAttributes($expectedElement): self {
+        $this->registerExpectation('is equal to xml structure and it\'s attributes in DOMElement');
         $this->isInstanceOf(DOMElement::class);
-        Assert::assertEqualXMLStructure($expectedElement, $this->actual, true, $this->description);
+        $this->test->assertEqualXMLStructure($expectedElement, $this->actual, true, $this->getMessageForAssert());
         return $this;
     }
 
-    public function hasAttribute($attribute) {
-        Assert::assertObjectHasAttribute($attribute, $this->actual, $this->description);
+    public function hasAttribute($attribute): self {
+        $this->registerExpectation('has attribute "' . $attribute . '"');
+        $this->test->assertObjectHasAttribute($attribute, $this->actual, $this->getMessageForAssert());
         return $this;
     }
 
-    public function doesNotHaveAttribute($attribute) {
-        Assert::assertObjectNotHasAttribute($attribute, $this->actual, $this->description);
+    public function doesNotHaveAttribute($attribute): self {
+        $this->registerExpectation('does not have attribute "' . $attribute . '"');
+        $this->test->assertObjectNotHasAttribute($attribute, $this->actual, $this->getMessageForAssert());
         return $this;
     }
 
-    public function throwsException($exceptionClass) {
-        $this->expectation->getTest()->expectException($exceptionClass);
-        return new ObjectExceptionMatcher($this->expectation, $this->actual, $this->description);
+    public function throwsException($exceptionClass): ObjectExceptionMatcher {
+        $this->registerExpectation('throws exception "' . $exceptionClass . '"');
+        $this->test->expectException($exceptionClass);
+        return new ObjectExceptionMatcher($this->actor, $this->test, $this->actual, 'I see that exception "' . $exceptionClass . '"');
     }
 }

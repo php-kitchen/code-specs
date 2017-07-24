@@ -3,11 +3,14 @@
 In the following example we check that given directory exists and is readable.
 
 ```php
-public function testDirectory() {
-        $tester = $this->tester;
-        $tester->checksScenario('working wih directories')
-            ->expectsThat('given directory is accessible')
-            ->directory(__DIR__)
+/**
+ * @test
+ */
+public function directoryExampleSpec() {
+        $I = $this->tester;
+        $I->describe('process of testing directories');
+        $I->expectThat('given directory is accessible');
+        $I->seeThatDirectory(__DIR__)
             ->isExist()
             ->isReadable();
 }

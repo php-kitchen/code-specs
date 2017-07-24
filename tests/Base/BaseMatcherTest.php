@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\DeKey\Tester\Base;
 
 use DeKey\Tester\TesterExpectation;
@@ -7,7 +8,7 @@ use DeKey\Tester\TesterExpectation;
  * Represents base test for all of the matcher tests.
  * Provides common functionality of creating matcher instance.
  *
- * @author Dmitry Kolodko <dangel.dekey@gmail.com>
+ * @author Dmitry Kolodko <prowwid@gmail.com>
  */
 abstract class BaseMatcherTest extends TestCase {
     /**
@@ -31,13 +32,6 @@ abstract class BaseMatcherTest extends TestCase {
 
     protected function createMatcherWithActualValue($value) {
         $reflection = new \ReflectionClass($this->matcherClass);
-        return $reflection->newInstanceArgs([$this->getExpectation(), $value, 'matcher does not work']);
-    }
-
-    protected function getExpectation() {
-        if (!isset($this->expectation)) {
-            $this->expectation = new TesterExpectation($this);
-        }
-        return $this->expectation;
+        return $reflection->newInstanceArgs([$this->tester, $this, $value, 'matcher does not work']);
     }
 }

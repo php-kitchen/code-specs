@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\DeKey\Tester\Unit;
 
 use DeKey\Tester\TesterExpectation;
@@ -7,21 +8,24 @@ use Tests\DeKey\Tester\Base\TestCase;
 /**
  * Unit test for {@link TesterExpectation}
  *
+ * @deprecated
  * @coversDefaultClass \DeKey\Tester\TesterExpectation
  *
- * @author Dmitry Kolodko <dangel.dekey@gmail.com>
+ * @author Dmitry Kolodko <prowwid@gmail.com>
  */
 class TesterExpectationTest extends TestCase {
     /**
      * @covers ::__construct
      */
     public function testCreate() {
-        $mock = $this->createMock(TestCase::class);
+
         try {
-            (new TesterExpectation($mock));
+            (new TesterExpectation($this->tester, $this));
+            $expectationCreated = true;
         } catch (\Exception $e) {
-            $this->fail('Unable to instantiate Expectation. Error message is: ' . $e->getMessage());
+            $expectationCreated = false;
         }
+        $this->assertTrue($expectationCreated, 'Unable to create tester expectation ' . TesterExpectation::class);
     }
 
     /**
@@ -108,6 +112,6 @@ class TesterExpectationTest extends TestCase {
     }
 
     protected function createExpectation() {
-        return new TesterExpectation($this);
+        return new TesterExpectation($this->tester, $this);
     }
 }
