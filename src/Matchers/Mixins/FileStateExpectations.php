@@ -9,32 +9,32 @@ namespace DeKey\Tester\Matchers\Mixins;
  * @author Dmitry Kolodko <prowwid@gmail.com>
  */
 trait FileStateExpectations {
-    abstract public function isExist(): self;
+    abstract public function isExist();
 
-    abstract public function isNotExist(): self;
+    abstract public function isNotExist();
 
-    public function isReadable(): self {
+    public function isReadable() {
         $this->registerExpectation('is readable');
         $this->isExist();
         $this->test->assertIsReadable($this->actual, $this->description);
         return $this;
     }
 
-    public function isNotReadable(): self {
+    public function isNotReadable() {
         $this->registerExpectation('is not readable');
         $this->isExist();
         $this->test->assertNotIsReadable($this->actual, $this->description);
         return $this;
     }
 
-    public function isWritable(): self {
+    public function isWritable() {
         $this->registerExpectation('is writable');
         $this->isExist();
         $this->test->assertIsWritable($this->actual, $this->description);
         return $this;
     }
 
-    public function isNotWritable(): self {
+    public function isNotWritable() {
         $this->registerExpectation('is not writable');
         $this->isExist();
         $this->test->assertNotIsWritable($this->actual, $this->description);

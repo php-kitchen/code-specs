@@ -12,13 +12,13 @@ use DOMElement;
  * @author Dmitry Kolodko <prowwid@gmail.com>
  */
 class ObjectMatcher extends ValueMatcher {
-    public function isInstanceOf($class): self {
+    public function isInstanceOf($class) {
         $this->registerExpectation('is instance of "' . $class . '"');
         $this->test->assertInstanceOf($class, $this->actual, $this->getMessageForAssert());
         return $this;
     }
 
-    public function isNotInstanceOf($class): self {
+    public function isNotInstanceOf($class) {
         $this->registerExpectation('is not instance of "' . $class . '"');
         $this->test->assertNotInstanceOf($class, $this->actual, $this->getMessageForAssert());
         return $this;
@@ -27,7 +27,7 @@ class ObjectMatcher extends ValueMatcher {
     /**
      * Asserts that a hierarchy of DOMElements matches.
      */
-    public function isEqualToXmlStructure(DOMElement $expectedElement): self {
+    public function isEqualToXmlStructure(DOMElement $expectedElement) {
         $this->isInstanceOf(DOMElement::class);
         $this->registerExpectation('is equal to expected DOMElement');
         $this->test->assertEqualXMLStructure($expectedElement, $this->actual, false, $this->getMessageForAssert());
@@ -40,20 +40,20 @@ class ObjectMatcher extends ValueMatcher {
      * @param DOMElement $expectedElement
      * @return $this
      */
-    public function isEqualToXmlStructureAndItsAttributes($expectedElement): self {
+    public function isEqualToXmlStructureAndItsAttributes($expectedElement) {
         $this->registerExpectation('is equal to xml structure and it\'s attributes in DOMElement');
         $this->isInstanceOf(DOMElement::class);
         $this->test->assertEqualXMLStructure($expectedElement, $this->actual, true, $this->getMessageForAssert());
         return $this;
     }
 
-    public function hasAttribute($attribute): self {
+    public function hasAttribute($attribute) {
         $this->registerExpectation('has attribute "' . $attribute . '"');
         $this->test->assertObjectHasAttribute($attribute, $this->actual, $this->getMessageForAssert());
         return $this;
     }
 
-    public function doesNotHaveAttribute($attribute): self {
+    public function doesNotHaveAttribute($attribute) {
         $this->registerExpectation('does not have attribute "' . $attribute . '"');
         $this->test->assertObjectNotHasAttribute($attribute, $this->actual, $this->getMessageForAssert());
         return $this;

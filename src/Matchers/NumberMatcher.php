@@ -8,19 +8,19 @@ namespace DeKey\Tester\Matchers;
  * @author Dmitry Kolodko <prowwid@gmail.com>
  */
 class NumberMatcher extends ValueMatcher {
-    public function isFinite(): self {
+    public function isFinite() {
         $this->registerExpectation('is finite');
         $this->test->assertFinite($this->actual, $this->getMessageForAssert());
         return $this;
     }
 
-    public function isInfinite(): self {
+    public function isInfinite() {
         $this->registerExpectation('is infinite');
         $this->test->assertInfinite($this->actual, $this->getMessageForAssert());
         return $this;
     }
 
-    public function isNan(): self {
+    public function isNan() {
         $this->registerExpectation('is nan');
         $this->test->assertNan($this->actual, $this->getMessageForAssert());
         return $this;

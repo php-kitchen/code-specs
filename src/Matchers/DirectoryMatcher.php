@@ -13,13 +13,13 @@ use DeKey\Tester\Matchers\Mixins\FileStateExpectations;
 class DirectoryMatcher extends Matcher {
     use FileStateExpectations;
 
-    public function isExist(): self {
+    public function isExist() {
         $this->registerExpectation('is exist');
         $this->test->assertDirectoryExists($this->actual, $this->getMessageForAssert());
         return $this;
     }
 
-    public function isNotExist(): self {
+    public function isNotExist() {
         $this->registerExpectation('is not exist');
         $this->test->assertDirectoryNotExists($this->actual, $this->getMessageForAssert());
         return $this;

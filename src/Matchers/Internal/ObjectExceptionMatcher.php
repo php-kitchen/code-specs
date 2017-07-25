@@ -14,19 +14,19 @@ use DeKey\Tester\Matchers\Base\Matcher;
  * @author Dmitry Kolodko <prowwid@gmail.com>
  */
 class ObjectExceptionMatcher extends Matcher {
-    public function withMessage($message): self {
+    public function withMessage($message) {
         $this->registerExpectation('has message "' . $message . '"');
         $this->test->expectExceptionMessage($message);
         return $this;
     }
 
-    public function withMessageMatchesPattern($messagePattern): self {
+    public function withMessageMatchesPattern($messagePattern) {
         $this->registerExpectation('has message matching pattern "' . $messagePattern . '"');
         $this->test->expectExceptionMessage($messagePattern);
         return $this;
     }
 
-    public function withCode($code): self {
+    public function withCode($code) {
         $this->registerExpectation('has code "' . $code . '"');
         $this->test->expectExceptionCode($code);
         return $this;
@@ -37,13 +37,13 @@ class ObjectExceptionMatcher extends Matcher {
      * Supposed to executes method of the object.
      * This methods should to be used after {@link throwsException} and "with*" methods to gain expression like:
      * <pre>
-     * $I->seeThatObject($a)->throwsException(Exception::class)->when(function($object): self {$object->doParty();});
+     * $I->seeThatObject($a)->throwsException(Exception::class)->when(function($object) {$object->doParty();});
      * // or
-     * $I->seeThatObject($a)->throwsException(IronyException::class)->withCode(500)->when(function($object): self {$object->doParty();});
+     * $I->seeThatObject($a)->throwsException(IronyException::class)->withCode(500)->when(function($object) {$object->doParty();});
      * <pre/>
      * and finish scenario.
      */
-    public function when(callable $callback): self {
+    public function when(callable $callback) {
         call_user_func_array($callback, [$this->actual]);
     }
 

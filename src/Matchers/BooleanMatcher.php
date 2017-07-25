@@ -9,25 +9,25 @@ namespace DeKey\Tester\Matchers;
  * @author Dmitry Kolodko <prowwid@gmail.com>
  */
 class BooleanMatcher extends ValueMatcher {
-    public function isTrue(): self {
+    public function isTrue() {
         $this->registerExpectation('is true');
         $this->test->assertTrue($this->actual, $this->getMessageForAssert());
         return $this;
     }
 
-    public function isNotTrue(): self {
+    public function isNotTrue() {
         $this->registerExpectation('is not true');
         $this->test->assertNotTrue($this->actual, $this->getMessageForAssert());
         return $this;
     }
 
-    public function isFalse(): self {
+    public function isFalse() {
         $this->registerExpectation('is false');
         $this->test->assertFalse($this->actual, $this->getMessageForAssert());
         return $this;
     }
 
-    public function isNotFalse(): self {
+    public function isNotFalse() {
         $this->registerExpectation('is not false');
         $this->test->assertNotFalse($this->actual, $this->getMessageForAssert());
         return $this;

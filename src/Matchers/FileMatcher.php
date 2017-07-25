@@ -14,49 +14,49 @@ use DeKey\Tester\Matchers\Mixins\FileStateExpectations;
 class FileMatcher extends Matcher {
     use FileStateExpectations;
 
-    public function isExist(): self {
+    public function isExist() {
         $this->registerExpectation('is exist');
         $this->test->assertFileExists($this->actual, $this->getMessageForAssert());
         return $this;
     }
 
-    public function isNotExist(): self {
+    public function isNotExist() {
         $this->registerExpectation('is not exist');
         $this->test->assertFileNotExists($this->actual, $this->getMessageForAssert());
         return $this;
     }
 
-    public function isEqualTo($file): self {
+    public function isEqualTo($file) {
         $this->registerExpectation('is equal to file "' . $file . '"');
         $this->test->assertFileEquals($file, $this->actual, $this->getMessageForAssert());
         return $this;
     }
 
-    public function isNotEqualTo($file): self {
+    public function isNotEqualTo($file) {
         $this->registerExpectation('is not equal to file "' . $file . '"');
         $this->test->assertFileNotEquals($file, $this->actual, $this->getMessageForAssert());
         return $this;
     }
 
-    public function isEqualToJsonFile($file): self {
+    public function isEqualToJsonFile($file) {
         $this->registerExpectation('is equal to json file "' . $file . '"');
         $this->test->assertJsonFileEqualsJsonFile($file, $this->actual, $this->getMessageForAssert());
         return $this;
     }
 
-    public function isNotEqualToJsonFile($file): self {
+    public function isNotEqualToJsonFile($file) {
         $this->registerExpectation('is not equal to json file "' . $file . '"');
         $this->test->assertJsonFileNotEqualsJsonFile($file, $this->actual, $this->getMessageForAssert());
         return $this;
     }
 
-    public function isEqualToXmlFile($file): self {
+    public function isEqualToXmlFile($file) {
         $this->registerExpectation('is equal to xml file "' . $file . '"');
         $this->test->assertXmlFileEqualsXmlFile($file, $this->actual, $this->getMessageForAssert());
         return $this;
     }
 
-    public function isNotEqualToXmlFile($file): self {
+    public function isNotEqualToXmlFile($file) {
         $this->registerExpectation('is not equal to xml file "' . $file . '"');
         $this->test->assertXmlFileNotEqualsXmlFile($file, $this->actual, $this->getMessageForAssert());
         return $this;
