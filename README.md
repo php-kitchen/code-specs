@@ -1,10 +1,10 @@
-# PHPUnit Tester 
+# Code Specs
 
-PHPUnit Tester (Tester) ia a PHPUnit plugin for BDD style Unit tests that allows to writes test in a specification way using human-readable format. 
+Code Specs ia a PHPUnit plugin for BDD style Unit tests that allows to writes test in a specification way using human-readable format. 
 Goal of this module is to add a bunch of cool methods for unit testing and show a way of representing unit tests as a behavior specifications of a specific class and a test of specific method as a specification of the method.
 Tester represents an actor who test you code(yes, like in [Codeception](https://github.com/Codeception/Codeception) - because of Codeception this library exists). See by yourself:
 ```php
-use DeKey\Tester\Specification\Specification;
+use PHPKitchen\CodeSpecs\Specification\Specification;
 
 /**
  * Specification of {@link IncomeCalculator}
@@ -46,7 +46,7 @@ class IncomeCalculatorTest extends Specification {
 }
 ```
 
-Tester also decorates errors output so, for example, if "IncomeCalculator" service from example above will incorrectly calculate income the error output will include following message(example of output in PHPStorm):
+Code Specs also decorates errors output so, for example, if "IncomeCalculator" service from example above will incorrectly calculate income the error output will include following message(example of output in PHPStorm):
 
 ![picture alt](docs/failed-test.png "Error output")
 
@@ -54,7 +54,7 @@ Tester also decorates errors output so, for example, if "IncomeCalculator" servi
 
 Latest Stable Version |  Latest Unstable Version | Total Downloads | Monthly Downloads | Licensing 
 --------------------- |  ----------------------- |  -------------- | ----------------  |--------- 
-[![Latest Stable Version](https://poser.pugx.org/dekeysoft/pu-tester/v/stable)](https://packagist.org/packages/dekeysoft/pu-tester) | [![Latest Unstable Version](https://poser.pugx.org/dekeysoft/pu-tester/v/unstable)](https://packagist.org/packages/dekeysoft/pu-tester) | [![Total Downloads](https://poser.pugx.org/dekeysoft/pu-tester/downloads)](https://packagist.org/packages/dekeysoft/pu-tester) | [![Monthly Downloads](https://poser.pugx.org/dekeysoft/pu-tester/d/monthly)](https://packagist.org/packages/dekeysoft/pu-tester) | [![License](https://poser.pugx.org/dekeysoft/pu-tester/license)](https://github.com/dekeysoft/pu-tester/blob/master/LICENSE)
+[![Latest Stable Version](https://poser.pugx.org/php-kitchen/code-specs/v/stable)](https://packagist.org/packages/php-kitchen/code-specs) | [![Latest Unstable Version](https://poser.pugx.org/php-kitchen/code-specs/v/unstable)](https://packagist.org/packages/php-kitchen/code-specs) | [![Total Downloads](https://poser.pugx.org/php-kitchen/code-specs/downloads)](https://packagist.org/packages/php-kitchen/code-specs) | [![Monthly Downloads](https://poser.pugx.org/php-kitchen/code-specs/d/monthly)](https://packagist.org/packages/php-kitchen/code-specs) | [![License](https://poser.pugx.org/php-kitchen/code-specs/license)](https://github.com/php-kitchen/code-specs/blob/master/LICENSE)
 
 ## Requirements
 
@@ -64,19 +64,19 @@ Latest Stable Version |  Latest Unstable Version | Total Downloads | Monthly Dow
 
 ## Getting Started
 
-Run the following command to add PHPUnit Tester to your project's `composer.json`. See [Packagist](https://packagist.org/packages/dekeysoft/pu-tester) for specific versions.
+Run the following command to add PHPUnit Tester to your project's `composer.json`. See [Packagist](https://packagist.org/packages/php-kitchen/code-specsr) for specific versions.
 
 ```bash
-composer require dekeysoft/pu-tester
+composer require php-kitchen/code-specs
 ```
 
 Or you can copy this library from:
-- [Packagist](https://packagist.org/packages/dekeysoft/pu-tester)
-- [Github](https://github.com/dekeysoft/pu-tester)
+- [Packagist](https://packagist.org/packages/php-kitchen/code-specs)
+- [Github](https://github.com/php-kitchen/code-specs)
 
-Then you can use PHPUnit Tester in your test simply extending from `Specification` class. Example:
+Then you can use Code Specs in your test simply extending from `Specification` class. Example:
 ```php
-use DeKey\Tester\Specification\Specification;
+use PHPKitchen\CodeSpecs\Specification\Specification;
 
 class YourTest extends Specification {
 
@@ -109,8 +109,12 @@ class YourTest extends TestCase {
 For additional information and guides go to the [project documentation](docs/README.md)
 See [changes log](docs/CHANGELOG.md) for information about upgrade from 1.0 to 2.0
 
+## Contributing
+
+If you want to ask any questions, suggest improvements or just to talk with community and developers, [join our server at Discord](https://discord.gg/Ez5VZhC) 
+
 ## Build status
 
 CI status    | Code coverage | Code quality
 ------------ | ------------- | ------------
-[![Build Status](https://travis-ci.org/dekeysoft/pu-tester.svg?branch=master)](https://travis-ci.org/dekeysoft/pu-tester) | [![Coverage Status](https://coveralls.io/repos/github/dekeysoft/pu-tester/badge.svg?branch=master)](https://coveralls.io/github/dekeysoft/pu-tester?branch=master) | [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/dekeysoft/pu-tester/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/dekeysoft/pu-tester/?branch=master)
+[![Build Status](https://travis-ci.org/php-kitchen/code-specs.svg?branch=master)](https://travis-ci.org/php-kitchen/code-specs) | [![Coverage Status](https://coveralls.io/repos/github/php-kitchen/code-specs/badge.svg?branch=master)](https://coveralls.io/github/php-kitchen/code-specs?branch=master) | [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/php-kitchen/code-specs/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/php-kitchen/code-specs/?branch=master)
