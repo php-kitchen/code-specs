@@ -8,7 +8,7 @@ In the following example we check that given value is true not false.
  */
 public function booleanTroothExampleSpec() {
         $I = $this->tester;
-        $I->seeThatBoolean('result of execution', true)
+        $I->seeBool('result of execution', true)
             ->isTrue();
 }
 ```
@@ -21,7 +21,7 @@ In the following example we check that given value is not false.
  */
 public function  booleanNegativeAssertExampleSpec() {
         $I = $this->tester;
-        $I->seeThatBoolean('result of execution', 1)
+        $I->seeBool('result of execution', 1)
             ->isNotFalse();
 }
 ```

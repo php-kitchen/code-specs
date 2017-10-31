@@ -1,16 +1,16 @@
 <?php
 
-namespace DeKey\Tester\Specification;
-
-use DeKey\Tester\TesterInitialization;
-use PHPUnit\Framework\TestCase;
+namespace PHPKitchen\CodeSpecs\Specification;
 
 /**
- * Represents a base class for all of the class behavior specifications(test cases).
+ * @inheritdoc
  *
- * @package DeKey\Tester
+ * @deprecated use {@link \PHPKitchen\CodeSpecs\Base\Specification} instead.
+ * This class would be removed in next major release.
+ *
+ * @package PHPKitchen\CodeSpecs
  * @author Dmitry Kolodko <prowwid@gmail.com>
  */
-abstract class Specification extends TestCase {
-    use TesterInitialization;
+abstract class Specification extends \PHPKitchen\CodeSpecs\Base\Specification {
+
 }

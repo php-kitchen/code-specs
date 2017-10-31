@@ -8,7 +8,7 @@ In the following example we check that given number is finite.
  */
 public function numberFiniteExampleSpec() {
         $I = $this->tester;
-        $I->seeThatNumber(1)
+        $I->seeNumber(1)
             ->isFinite();
 }
 ```
@@ -21,7 +21,7 @@ In the following example we check that given number is infinite.
  */
 public function numberInfiniteEExampleSpec() {
         $I = $this->tester;
-        $I->seeThatNumber(INF)
+        $I->seeNumber(INF)
             ->isInfinite();
 }
 ```
@@ -31,7 +31,7 @@ In the following example we check that given number is NAN.
 ```php
 public function numberNanExampleSpec() {
         $I = $this->tester;
-        $I->seeThatNumber(NAN)
+        $I->seeNumber(NAN)
             ->isNan();
 }
 ```

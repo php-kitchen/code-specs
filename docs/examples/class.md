@@ -11,7 +11,7 @@ public function classExampleSpec() {
         $thisClass = get_class($this);
         $I->describe('process of class testing');
         $I->expectThat('my class is a valid existing class');
-        $I->seeThatClass($thisClass)
+        $I->seeClass($thisClass)
             ->isExist()
             ->isNotInterface();
 }

@@ -1,7 +1,7 @@
 Goal of this library is to introduce an "Actor" role in the test (like in [Codeception](https://github.com/Codeception/Codeception)) with a bunch of cool methods to "Actor" for unit testing and show a way of representing unit tests as a behavior specifications of a specific class and a test of specific method as a specification of the method.
 See by yourself:
 ```php
-use DeKey\Tester\Specification\Specification;
+use PHPKitchen\CodeSpecs\Specification\Specification;
 
 /**
  * Specification of {@link IncomeCalculator}

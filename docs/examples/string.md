@@ -10,7 +10,7 @@ public function stringExamplesSpec() {
         $I = $this->tester;
         $I->describe('process of testing strings');
         $I->expectThat('received expected string with required characters');
-        $I->seeThatString('abcdefg')
+        $I->seeString('abcdefg')
             ->isNotEmpty()
             ->isNotNull()
             ->isNotTheSameAs('gfedcba')

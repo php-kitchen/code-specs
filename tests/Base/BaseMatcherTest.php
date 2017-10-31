@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\DeKey\Tester\Base;
+namespace Tests\Base;
 
-use DeKey\Tester\TesterExpectation;
+use PHPKitchen\CodeSpecs\TesterExpectation;
 
 /**
  * Represents base test for all of the matcher tests.

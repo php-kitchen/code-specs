@@ -10,7 +10,7 @@ public function arrayExampleSpec() {
         $I = $this->tester;
         $I->describe('working wih associative array');
         $I->expectThat('array has both key and value');
-        $I->seeThatArray('admin record', ['name' => 'Alex'])
+        $I->seeArray('admin record', ['name' => 'Alex'])
             ->isNotEmpty()
             ->hasKey('name')
             ->contains('Alex');

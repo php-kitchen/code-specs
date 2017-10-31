@@ -10,7 +10,7 @@ public function directoryExampleSpec() {
         $I = $this->tester;
         $I->describe('process of testing directories');
         $I->expectThat('given directory is accessible');
-        $I->seeThatDirectory(__DIR__)
+        $I->seeDirectory(__DIR__)
             ->isExist()
             ->isReadable();
 }

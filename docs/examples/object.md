@@ -10,7 +10,7 @@ public function objectExampleSpec() {
         $I = $this->tester;
         $I->describe('basic usage of object expectations');
         $I->expectThat('everything works');
-        $I->seeThatObject($this)
+        $I->seeObject($this)
             ->isNotEmpty()
             ->isInstanceOf(get_class($this));
 }
@@ -38,7 +38,7 @@ public function objectExceptionExampleSpec() {
         $myObject = new MyClass();
         $I->describe('how to test exceptions')
         $I->expectThat('everything works(really stupid expectation - I know=D)');
-        $I->seeThatObject($myObject)
+        $I->seeObject($myObject)
             ->throwsException(\InvalidArgumentException::class)
             ->withMessage('test exception')
             ->when(function(MyClass $object) {$object->throwException();});

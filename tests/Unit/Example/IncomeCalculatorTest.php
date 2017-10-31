@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Example;
 
-use DeKey\Tester\Specification\Specification;
+use PHPKitchen\CodeSpecs\Specification\Specification;
 
 /**
  * Specification of {@link IncomeCalculator}

@@ -93,7 +93,7 @@ or by using "TesterInitialization" trait in your test case
 
 ```php
 use PHPUnit\Framework\TestCase;
-use DeKey\Tester\TesterInitialization;
+use PHPKitchen\CodeSpecs\TesterInitialization;
 
 class YourTest extends TestCase {
     use TesterInitialization;

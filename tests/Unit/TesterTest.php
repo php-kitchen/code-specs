@@ -2,97 +2,97 @@
 
 namespace Tests\Unit;
 
-use DeKey\Tester\Specification\Specification;
+use PHPKitchen\CodeSpecs\Base\Specification;
 
 /**
- * Unit test for {@link \DeKey\Tester\Specification\Tester}
+ * Unit test for {@link \PHPKitchen\CodeSpecs\Specification\Tester}
  *
- * @coversDefaultClass \DeKey\Tester\Specification\Tester
+ * @coversDefaultClass \PHPKitchen\CodeSpecs\Specification\Tester
  *
  * @author Dmitry Kolodko <prowwid@gmail.com>
  */
 class TesterTest extends Specification {
     /**
-     * @covers ::seeThatBoolean
+     * @covers ::seeBool
      * @covers ::<protected>
      */
-    public function testSeeThatBoolean() {
+    public function testSeeBool() {
         $I = $this->tester;
-        $I->seeThatBoolean(true)->isTrue();
-        $I->seeThatBoolean(false)->isFalse();
+        $I->seeBool(true)->isTrue();
+        $I->seeBool(false)->isFalse();
     }
 
     /**
-     * @covers ::seeThatClass
+     * @covers ::seeClass
      * @covers ::<protected>
      */
-    public function testSeeThatTheClass() {
+    public function testSeeTheClass() {
         $I = $this->tester;
         $thisClass = get_class($this);
-        $I->seeThatClass($thisClass)->isExist();
+        $I->seeClass($thisClass)->isExist();
     }
 
     /**
-     * @covers ::seeThatValueOf
+     * @covers ::see
      * @covers ::<protected>
      */
-    public function testSeeThatValueOf() {
+    public function testSee() {
         $I = $this->tester;
-        $I->seeThatValueOf(1)->isNotEmpty();
+        $I->see(1)->isNotEmpty();
     }
 
     /**
-     * @covers ::seeThatString
+     * @covers ::seeString
      * @covers ::<protected>
      */
-    public function testSeeThatString() {
+    public function testSeeString() {
         $I = $this->tester;
-        $I->seeThatString('')->isEmpty();
+        $I->seeString('')->isEmpty();
     }
 
     /**
-     * @covers ::seeThatArray
+     * @covers ::seeArray
      * @covers ::<protected>
      */
-    public function testSeeThatTheArray() {
+    public function testSeeTheArray() {
         $I = $this->tester;
-        $I->seeThatArray([])->isEmpty();
+        $I->seeArray([])->isEmpty();
     }
 
     /**
-     * @covers ::seeThatObject
+     * @covers ::seeObject
      * @covers ::<protected>
      */
-    public function testSeeThatObject() {
+    public function testSeeObject() {
         $I = $this->tester;
-        $I->seeThatObject($this)->isNotEmpty();
+        $I->seeObject($this)->isNotEmpty();
     }
 
     /**
-     * @covers ::seeThatFile
+     * @covers ::seeFile
      * @covers ::<protected>
      */
-    public function testSeeThatFile() {
+    public function testSeeFile() {
         $I = $this->tester;
-        $I->seeThatFile(__FILE__)->isExist()->isEqualTo(__FILE__);
+        $I->seeFile(__FILE__)->isExist()->isEqualTo(__FILE__);
     }
 
     /**
-     * @covers ::seeThatDirectory
+     * @covers ::seeDirectory
      * @covers ::<protected>
      */
-    public function testSeeThatDirectory() {
+    public function testSeeDirectory() {
         $I = $this->tester;
-        $I->seeThatDirectory(__DIR__)->isExist();
+        $I->seeDirectory(__DIR__)->isExist();
     }
 
     /**
-     * @covers ::seeThatNumber
+     * @covers ::seeNumber
      * @covers ::<protected>
      */
-    public function testSeeThatNumber() {
+    public function testSeeNumber() {
         $I = $this->tester;
-        $I->seeThatNumber(1)->isFinite();
+        $I->seeNumber(1)->isFinite();
     }
 
     /**
@@ -104,7 +104,7 @@ class TesterTest extends Specification {
         $message = 'nothing cached';
         try {
             $I->expectThat('output contains all of the steps and mark checked expectations as succeeded');
-            $I->seeThatNumber(1)->isNotEmpty()->isNull();
+            $I->seeNumber(1)->isNotEmpty()->isNull();
         } catch (\Exception $e) {
             $message = $e->getMessage();
         }

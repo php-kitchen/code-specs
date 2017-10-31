@@ -1,21 +1,20 @@
 <?php
 
-namespace Tests\DeKey\Tester\Unit;
+namespace Tests\Unit;
 
-use DeKey\Tester\Specification\Tester;
-use DeKey\Tester\TesterInitialization;
-use Tests\DeKey\Tester\Base\TestCase;
+use PHPKitchen\CodeSpecs\Specification\Tester;
+use Tests\Base\TestCase;
 
 /**
  * Unit test for {@link Tester}
  *
- * @coversDefaultClass \DeKey\Tester\TesterInitialization
+ * @coversDefaultClass \PHPKitchen\CodeSpecs\Mixin\TesterInitialization
  *
  * @package Tests
  * @author Dmitry Kolodko <prowwid@gmail.com>
  */
 class TesterInitializationTest extends TestCase {
-    use TesterInitialization;
+    use PHPKitchen\CodeSpecs\Mixin\TesterInitialization;
 
     /**
      * @covers ::createTester

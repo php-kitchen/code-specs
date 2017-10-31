@@ -10,7 +10,7 @@ public function fileExampleSpec() {
         $I = $this->tester;
         $I->describe('working wih files');
         $I->expectThat('given file is accessible');
-        $I->seeThatFile(__FILE__)
+        $I->seeFile(__FILE__)
             ->isExist()
             ->isReadable()
             ->isEqualTo(__FILE__);

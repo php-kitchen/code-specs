@@ -17,8 +17,6 @@
         </whitelist>
     </filter>
     <testsuites>
-        <testsuite name="matchers">
-            <directory>tests\Matchers</directory>
-        </testsuite>
+
     </testsuites>
 </phpunit>
