@@ -1,4 +1,4 @@
-# Object expectations
+# Object matcher usage
 
 In the following example we check that given object is not empty an is an instance of expected class.
 

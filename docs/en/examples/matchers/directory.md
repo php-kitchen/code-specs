@@ -1,4 +1,4 @@
-# Directory expectations
+# Directory matcher usage
 
 In the following example we check that given directory exists and is readable.
 

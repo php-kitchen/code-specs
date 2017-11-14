@@ -1,4 +1,4 @@
-# Boolean expectations
+# Boolean matcher usage
 
 In the following example we check that given value is true not false.
 

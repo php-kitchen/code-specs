@@ -26,7 +26,7 @@ class TesterTest extends Specification {
      * @covers ::seeClass
      * @covers ::<protected>
      */
-    public function testSeeTheClass() {
+    public function testSeeClass() {
         $I = $this->tester;
         $thisClass = get_class($this);
         $I->seeClass($thisClass)->isExist();
@@ -95,17 +95,13 @@ class TesterTest extends Specification {
         $I->seeNumber(1)->isFinite();
     }
 
-    /**
-     * @covers ::getStepsListAsString
-     * @covers ::<protected>
-     */
-    public function testGetStepsListAsString() {
+    public function testErrorOutput() {
         $I = $this->tester;
         $message = 'nothing cached';
         try {
             $I->expectThat('output contains all of the steps and mark checked expectations as succeeded');
             $I->seeNumber(1)->isNotEmpty()->isNull();
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $message = $e->getMessage();
         }
 
@@ -118,5 +114,29 @@ Failed asserting that 1 is null.
 TEXT;
 
         $this->assertEquals($expectedOutput, $message);
+    }
+
+    /**
+     * @covers ::match
+     * @covers ::<protected>
+     */
+    public function testMatch() {
+        $I = $this->tester;
+
+        try {
+            $matchArrayHasName = $I->match('dummy variable')->isArray()->hasKey('name');
+        } catch (\Throwable $e) {
+            $this->fail('Failed to create runtime matcher. Error is:' . $e->getMessage());
+        }
+
+        $expectedOutput = "- I see that dummy variable has key \"name\".\n\nFailed asserting that an array has the key 'name'.";
+        $message = 'Matcher did not executed correctly.';
+        try {
+            $matchArrayHasName([]);
+        } catch (\Throwable $e) {
+            $message = $e->getMessage();
+        }
+
+        $this->assertEquals($expectedOutput, $message, 'Runtime matcher should execute previously defined asserts and throw exception with defined steps');
     }
 }

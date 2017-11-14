@@ -8,11 +8,9 @@ before_script:
   - composer global require hirak/prestissimo
   - composer install --prefer-source --no-interaction --dev
   - mkdir -p build/logs
-  - pwd
-  - ls
 
 script:
- - php vendor/bin/phpunit --configuration phpunit.xml --coverage-clover build/logs/clover.xml tests
+ - php vendor/bin/phpunit --configuration tests/phpunit.xml --coverage-clover build/logs/clover.xml tests
 
 after_script:
  - php vendor/bin/coveralls -v

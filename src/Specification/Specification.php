@@ -12,5 +12,4 @@ namespace PHPKitchen\CodeSpecs\Specification;
  * @author Dmitry Kolodko <prowwid@gmail.com>
  */
 abstract class Specification extends \PHPKitchen\CodeSpecs\Base\Specification {
-
 }

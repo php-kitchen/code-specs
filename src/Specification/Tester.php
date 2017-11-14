@@ -17,7 +17,7 @@ use PHPUnit\Framework\Test;
  * $I = $this->tester;
  * $I->describe('how user activates processor for PDF transformation to HTML');
  * $I->expectsThat('processor converts PDF to HTML and return HTML representation of given PDF.');
- * $I->seeThatString($processedContent)
+ * $I->seeString($processedContent)
  *      ->isEqualTo(self::EXPECTED_CONTENT);
  * </pre>
  *

@@ -27,7 +27,7 @@ class YourTest extends Specification {
     public function testSomeMethod() {
         $I = $this->tester;
         ......
-        $I->seeThatBoolean('my dummy variable', true)->isFalse();
+        $I->seeBoolean('my dummy variable', true)->isFalse();
     }
 }
 
@@ -45,7 +45,7 @@ class YourTest extends TestCase {
     public function testSomeMethod() {
         $I = $this->tester;
         ......
-        $I->seeThatBoolean('my dummy variable', true)->isFalse();
+        $I->seeBoolean('my dummy variable', true)->isFalse();
     }
 }
 ```

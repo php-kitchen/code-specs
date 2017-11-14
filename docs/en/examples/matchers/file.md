@@ -1,4 +1,4 @@
-# File expectations
+# File matcher usage
 
 In the following example we check that given file exists, is readable and equal to expected file(for example to itself).
 

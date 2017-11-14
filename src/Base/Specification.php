@@ -2,8 +2,8 @@
 
 namespace PHPKitchen\CodeSpecs\Base;
 
-use PHPUnit\Framework\TestCase;
 use PHPKitchen\CodeSpecs\Mixin\TesterInitialization;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Represents a base class for all of the class behavior specifications(test cases).

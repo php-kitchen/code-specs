@@ -1,4 +1,4 @@
-# Array expectations examples
+# Array matcher usage examples
 
 In the following example we check that given array not empty, has expected key and value.
 

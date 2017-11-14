@@ -1,4 +1,4 @@
-# Number expectations
+# Number matcher usage
 
 In the following example we check that given number is finite.
 

@@ -1,4 +1,4 @@
-# String expectations
+# String matcher usage
 
 In the following example we check that given string contains information(not empty and not null), contains expected characters, starts and ends with expected characters and does not equal to other string.
 

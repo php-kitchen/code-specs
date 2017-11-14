@@ -1,4 +1,4 @@
-# Class expectations
+# Class matcher usage
 
 In the following example we check that given class exists and not an interface.
 

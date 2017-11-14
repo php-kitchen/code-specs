@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use PHPKitchen\CodeSpecs\Mixin\TesterInitialization;
 use PHPKitchen\CodeSpecs\Specification\Tester;
 use Tests\Base\TestCase;
 
@@ -14,7 +15,7 @@ use Tests\Base\TestCase;
  * @author Dmitry Kolodko <prowwid@gmail.com>
  */
 class TesterInitializationTest extends TestCase {
-    use PHPKitchen\CodeSpecs\Mixin\TesterInitialization;
+    use TesterInitialization;
 
     /**
      * @covers ::createTester

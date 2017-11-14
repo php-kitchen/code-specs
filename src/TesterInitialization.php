@@ -13,6 +13,6 @@ use PHPKitchen\CodeSpecs\Mixin\TesterInitialization as MainTesterInitialization;
  * @package PHPKitchen\CodeSpecs
  * @author Dmitry Kolodko <prowwid@gmail.com>
  */
-trait TesterInitialization  {
+trait TesterInitialization {
     use MainTesterInitialization;
 }

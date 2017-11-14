@@ -1,11 +1,13 @@
 {
-    "name": "dekeysoft/pu-tester",
-    "description": "Simple tester class designed to write PHPUnit tests in BDD-style. Allows to express what test intended to check in human-readable format.",
+    "name": "php-kitchen/code-specs",
+    "description": "BDD extension for PHPUnit that allows to write tests as a specifications in a human-readable format.",
     "type": "library",
     "license": "MIT",
     "keywords": [
         "PHPUnit",
         "BDD",
+        "specification",
+        "spec",
         "tests",
         "tester",
         "extension",
@@ -19,7 +21,8 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "php": "^7.1"
+        "php": "^7.1",
+        "php-kitchen/code-specs-core": "3.0.*"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.2",
