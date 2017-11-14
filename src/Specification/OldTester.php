@@ -26,6 +26,8 @@ use PHPKitchen\CodeSpecsCore\Expectation\Matcher\ValueMatcher;
  *      ->isEqualTo(self::EXPECTED_CONTENT);
  * </pre>
  *
+ * @codeCoverageIgnore
+ *
  * @deprecated use {@link Tester} instead. This class would be removed in next major update.
  *
  * @package PHPKitchen\CodeSpecs

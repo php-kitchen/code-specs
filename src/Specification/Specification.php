@@ -5,6 +5,8 @@ namespace PHPKitchen\CodeSpecs\Specification;
 /**
  * @inheritdoc
  *
+ * @codeCoverageIgnore
+ *
  * @deprecated use {@link \PHPKitchen\CodeSpecs\Base\Specification} instead.
  * This class would be removed in next major release.
  *

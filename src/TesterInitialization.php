@@ -10,6 +10,8 @@ use PHPKitchen\CodeSpecs\Mixin\TesterInitialization as MainTesterInitialization;
  * @deprecated use {@link PHPKitchen\CodeSpecs\Mixin\TesterInitialization} instead.
  * This version kept for BC and would be removed in next major release.
  *
+ * @codeCoverageIgnore
+ *
  * @package PHPKitchen\CodeSpecs
  * @author Dmitry Kolodko <prowwid@gmail.com>
  */

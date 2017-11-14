@@ -8,6 +8,8 @@ use PHPUnit\Framework\TestCase;
 /**
  * Represents a base class for all of the class behavior specifications(test cases).
  *
+ * @codeCoverageIgnore
+ *
  * @package PHPKitchen\CodeSpecs\Base
  * @author Dmitry Kolodko <prowwid@gmail.com>
  */
