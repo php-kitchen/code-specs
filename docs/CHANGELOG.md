@@ -7,7 +7,7 @@
 * Added `PHPKitchen\CodeSpecs\Specification\OldTester` to use it during migration to a new `PHPKitchen\CodeSpecs\Specification\Tester`. Will be removed in 4.0.
 * Added [Runtime Matchers](https://github.com/php-kitchen/code-specs/blob/master/docs/en/runtime-matchers.md)
 * Added [Directives](https://github.com/php-kitchen/code-specs/blob/master/docs/en/directives.md)
-* Added [Wait Directive](https://github.com/php-kitchen/code-specs/blob/master/docs/en/examples/wait.md)
+* Added [Wait Directive](https://github.com/php-kitchen/code-specs/blob/master/docs/en/examples/directives/wait.md)
 
 ### BC breaks and deprecations
 * Moved to a new organization with a new brand so root namespace changed to `PHPKitchen\CodeSpecs`.
