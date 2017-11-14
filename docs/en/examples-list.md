@@ -14,7 +14,7 @@ Here you can find a list of examples of Tester usage. Examples grouped by type.
 * [Directory matcher examples](examples/matchers/directory.md)
 
 ## Directives:
-* [Wait directive example](examples/tests/IncomeCalculatorTest.php)
+* [Wait directive example](examples/directives/wait.md)
 
 ## Tests:
 * [Test example](examples/tests/IncomeCalculatorTest.php)

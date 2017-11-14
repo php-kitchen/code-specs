@@ -4,7 +4,7 @@
 
 **`PHP >= 7.1` is required.**
 
-**`PHPUnit >= 6.0` is required.**
+**`PHPUnit >= 6.0` is required but `PHPUnit >= 6.2` is recommended.**
 
 ## Getting Started
 
@@ -20,14 +20,15 @@ Or you can copy this library from:
 
 Then you can use PHPUnit Tester in your test simply extending from `Specification` class. Example:
 ```php
-use PHPKitchen\CodeSpecs\Specification\Specification;
+use PHPKitchen\CodeSpecs\Base\Specification;
 
 class YourTest extends Specification {
 
     public function testSomeMethod() {
         $I = $this->tester;
         ......
-        $I->seeBoolean('my dummy variable', true)->isFalse();
+        $I->lookAt('my dummy variable');
+        $I->seeBool(true)->isFalse();
     }
 }
 
@@ -37,7 +38,7 @@ or by using "TesterInitialization" trait in your test case
 
 ```php
 use PHPUnit\Framework\TestCase;
-use PHPKitchen\CodeSpecs\TesterInitialization;
+use PHPKitchen\CodeSpecs\Mixin\TesterInitialization;
 
 class YourTest extends TestCase {
     use TesterInitialization;
@@ -45,7 +46,8 @@ class YourTest extends TestCase {
     public function testSomeMethod() {
         $I = $this->tester;
         ......
-        $I->seeBoolean('my dummy variable', true)->isFalse();
+        $I->lookAt('my dummy variable');
+        $I->seeBool(true)->isFalse();
     }
 }
 ```

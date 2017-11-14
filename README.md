@@ -1,6 +1,6 @@
 # Code Specs
 
-Code Specs ia a PHPUnit plugin for BDD style Unit tests that allows to writes test in a specification way using human-readable format. 
+Code Specs is a PHPUnit plugin for BDD style Unit tests that allows to writes test in a specification way using human-readable format. 
 Goal of this library is to add a bunch of cool methods for unit testing and show a way of representing unit tests as a behavior specifications of a specific class and a test of specific method as a specification of the method.
 Tester represents an actor who test you code(yes, like in [Codeception](https://github.com/Codeception/Codeception) - because of Codeception this library exists). See by yourself:
 ```php
@@ -95,11 +95,11 @@ Latest Stable Version |  Latest Unstable Version | Total Downloads | Monthly Dow
 
 **`PHP >= 7.1` is required.**
 
-**`PHPUnit >= 6.2` is required.**
+**`PHPUnit >= 6.0` is required but `PHPUnit >= 6.2` is recommended.**
 
 ## Getting Started
 
-Run the following command to add PHPUnit Tester to your project's `composer.json`. See [Packagist](https://packagist.org/packages/php-kitchen/code-specsr) for specific versions.
+Run the following command to add PHPUnit Tester to your project's `composer.json`. See [Packagist](https://packagist.org/packages/php-kitchen/code-specs) for specific versions.
 
 ```bash
 composer require php-kitchen/code-specs
