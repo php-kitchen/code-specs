@@ -63,7 +63,7 @@ class IncomeCalculatorTest extends Specification {
 
         $I->lookAt('income tax');
 
-        $I->expectThat('for income less that 50 000 calculator use 10% tax rule');
+        $I->expectThat('calculator calculates income with tax using 10% tax rule for income less that 50 000');
 
         $I->seeNumber($service->calculateWithTax())
             ->isNotEmpty()
