@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "3fdd12557562c243064a63af2a5e6e8f",
+    "content-hash": "995d0416306b22d6167c8276f625ce21",
     "packages": [
         {
             "name": "php-kitchen/code-specs-core",
-            "version": "3.0.0",
+            "version": "3.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-kitchen/code-specs-core.git",
-                "reference": "e977a55a59033ba35310bf7226d888661368558e"
+                "reference": "b7516ab47978d3b36af42bb59990210efdc24a6d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-kitchen/code-specs-core/zipball/e977a55a59033ba35310bf7226d888661368558e",
-                "reference": "e977a55a59033ba35310bf7226d888661368558e",
+                "url": "https://api.github.com/repos/php-kitchen/code-specs-core/zipball/b7516ab47978d3b36af42bb59990210efdc24a6d",
+                "reference": "b7516ab47978d3b36af42bb59990210efdc24a6d",
                 "shasum": ""
             },
             "require": {
@@ -54,7 +54,7 @@
                 "tests",
                 "unit tests"
             ],
-            "time": "2017-11-14T13:04:58+00:00"
+            "time": "2017-11-17T15:27:21+00:00"
         }
     ],
     "packages-dev": [
@@ -1626,7 +1626,7 @@
         },
         {
             "name": "symfony/config",
-            "version": "v3.3.12",
+            "version": "v3.3.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/config.git",
@@ -1688,16 +1688,16 @@
         },
         {
             "name": "symfony/console",
-            "version": "v3.3.12",
+            "version": "v3.3.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "099302cc53e57cbb7414fd9f3ace40e5e2767c0b"
+                "reference": "63cd7960a0a522c3537f6326706d7f3b8de65805"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/099302cc53e57cbb7414fd9f3ace40e5e2767c0b",
-                "reference": "099302cc53e57cbb7414fd9f3ace40e5e2767c0b",
+                "url": "https://api.github.com/repos/symfony/console/zipball/63cd7960a0a522c3537f6326706d7f3b8de65805",
+                "reference": "63cd7960a0a522c3537f6326706d7f3b8de65805",
                 "shasum": ""
             },
             "require": {
@@ -1752,11 +1752,11 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2017-11-12T16:53:41+00:00"
+            "time": "2017-11-16T15:24:32+00:00"
         },
         {
             "name": "symfony/debug",
-            "version": "v3.3.12",
+            "version": "v3.3.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/debug.git",
@@ -1812,7 +1812,7 @@
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v2.8.30",
+            "version": "v2.8.31",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
@@ -1872,7 +1872,7 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v3.3.12",
+            "version": "v3.3.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
@@ -1980,7 +1980,7 @@
         },
         {
             "name": "symfony/stopwatch",
-            "version": "v3.3.12",
+            "version": "v3.3.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/stopwatch.git",
@@ -2029,7 +2029,7 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.3.12",
+            "version": "v3.3.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
