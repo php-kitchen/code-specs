@@ -3,7 +3,7 @@
 namespace Tests\Unit\Example;
 
 use PHPKitchen\CodeSpecs\Base\Specification;
-use PHPKitchen\CodeSpecsCore\Contract\TestGuy;
+use PHPKitchen\CodeSpecs\Contract\TestGuy;
 
 /**
  * Specification of {@link IncomeCalculator}

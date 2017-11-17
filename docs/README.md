@@ -5,7 +5,7 @@ Tester represents an actor who test you code(yes, like in [Codeception](https://
 namespace Tests\Unit;
 
 use PHPKitchen\CodeSpecs\Base\Specification;
-use PHPKitchen\CodeSpecsCore\Contract\TestGuy;
+use PHPKitchen\CodeSpecs\Contract\TestGuy;
 
 /**
  * Specification of {@link IncomeCalculator}

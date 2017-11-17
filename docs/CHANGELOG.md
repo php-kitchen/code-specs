@@ -13,7 +13,7 @@
 * Moved to a new organization with a new brand so root namespace changed to `PHPKitchen\CodeSpecs`.
 * Removed `Matchers` as of `php-kitchen/code-specs-core` support.
 * Removed `Contract` as of `php-kitchen/code-specs-core` support.
-* Removed `whenInvoked` from `PHPKitchen\CodeSpecsCore\Expectation\Internal\ObjectExceptionMatcher`(`seeObject($obj)->throwsException($exceptionClass)`) as it was deprecated in 2.0
+* Removed `whenInvoked` from `PHPKitchen\CodeSpecs\Expectation\Internal\ObjectExceptionMatcher`(`seeObject($obj)->throwsException($exceptionClass)`) as it was deprecated in 2.0
 * All of `see` prefixes of matchers changed to `see`
 * `seeBoolean`  matcher renamed to a short version `seeBool`
 * `seeValueOf` renamed to `see`

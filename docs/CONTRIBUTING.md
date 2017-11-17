@@ -10,7 +10,7 @@ We have a [Discord server](https://discordapp.com/) where you can ask any questi
 If you found a bug and want to report it, want to change something in codebase or have great idea fo improvement - create GitHub issue.
 There are two places you can create issue:
 - [CodeSpecs](https://github.com/php-kitchen/code-specs/issues) issue tracker - for PHPUnit integration issues
-- [CodeSpecsCore](https://github.com/php-kitchen/code-specs-core/issues) issue tracker - for all of the issues
+- [CodeSpecs](https://github.com/php-kitchen/code-specs-core/issues) issue tracker - for all of the issues
 
 We encourage pull requests, not just bug reports and feature requests. "Bug reports" may also be sent in the form of a pull request containing a failing test.
 

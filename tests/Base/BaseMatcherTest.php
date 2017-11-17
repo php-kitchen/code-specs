@@ -2,7 +2,8 @@
 
 namespace Tests\Base;
 
-use PHPKitchen\CodeSpecs\TesterExpectation;
+use PHPKitchen\CodeSpecs\Expectation\Internal\Assert;
+use PHPKitchen\CodeSpecs\Expectation\Internal\StepsList;
 
 /**
  * Represents base test for all of the matcher tests.
@@ -15,10 +16,6 @@ abstract class BaseMatcherTest extends TestCase {
      * @var string class of a matcher being tested.
      */
     protected $matcherClass;
-    /**
-     * @var TesterExpectation instance of expectation simply for matcher testing purpoces.
-     */
-    protected $expectation;
 
     /**
      * Should be implemented to initialize {@link matcherClass}. Otherwise instantiation of a new matcher will fail.
@@ -32,6 +29,7 @@ abstract class BaseMatcherTest extends TestCase {
 
     protected function createMatcherWithActualValue($value) {
         $reflection = new \ReflectionClass($this->matcherClass);
-        return $reflection->newInstanceArgs([$this->tester, $this, $value, 'matcher does not work']);
+        $assert = new Assert(StepsList::getInstance(), $this, $value, 'matcher does not work');
+        return $reflection->newInstanceArgs([$assert]);
     }
 }

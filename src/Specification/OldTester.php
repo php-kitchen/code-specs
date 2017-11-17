@@ -2,15 +2,15 @@
 
 namespace PHPKitchen\CodeSpecs\Specification;
 
-use PHPKitchen\CodeSpecsCore\Expectation\Matcher\ArrayMatcher;
-use PHPKitchen\CodeSpecsCore\Expectation\Matcher\BooleanMatcher;
-use PHPKitchen\CodeSpecsCore\Expectation\Matcher\ClassMatcher;
-use PHPKitchen\CodeSpecsCore\Expectation\Matcher\DirectoryMatcher;
-use PHPKitchen\CodeSpecsCore\Expectation\Matcher\FileMatcher;
-use PHPKitchen\CodeSpecsCore\Expectation\Matcher\NumberMatcher;
-use PHPKitchen\CodeSpecsCore\Expectation\Matcher\ObjectMatcher;
-use PHPKitchen\CodeSpecsCore\Expectation\Matcher\StringMatcher;
-use PHPKitchen\CodeSpecsCore\Expectation\Matcher\ValueMatcher;
+use PHPKitchen\CodeSpecs\Expectation\Matcher\ArrayMatcher;
+use PHPKitchen\CodeSpecs\Expectation\Matcher\BooleanMatcher;
+use PHPKitchen\CodeSpecs\Expectation\Matcher\ClassMatcher;
+use PHPKitchen\CodeSpecs\Expectation\Matcher\DirectoryMatcher;
+use PHPKitchen\CodeSpecs\Expectation\Matcher\FileMatcher;
+use PHPKitchen\CodeSpecs\Expectation\Matcher\NumberMatcher;
+use PHPKitchen\CodeSpecs\Expectation\Matcher\ObjectMatcher;
+use PHPKitchen\CodeSpecs\Expectation\Matcher\StringMatcher;
+use PHPKitchen\CodeSpecs\Expectation\Matcher\ValueMatcher;
 
 /**
  * Tester is a simple class designed to make PHPUnit tests more readable using BDD-style

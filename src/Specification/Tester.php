@@ -2,9 +2,8 @@
 
 namespace PHPKitchen\CodeSpecs\Specification;
 
-use PHPKitchen\CodeSpecsCore\Contract\TestGuy;
-use PHPKitchen\CodeSpecsCore\Expectation\Internal\StepsList;
-use PHPKitchen\CodeSpecsCore\Mixin\TestGuyMethods;
+use PHPKitchen\CodeSpecs\Contract\TestGuy;
+use PHPKitchen\CodeSpecs\Mixin\TestGuyMethods;
 use PHPUnit\Framework\Test;
 
 /**
@@ -30,10 +29,5 @@ class Tester implements TestGuy {
     public function __construct(Test $test) {
         $this->context = $test;
         $this->initStepsList();
-    }
-
-    protected function initStepsList() {
-        $this->steps = StepsList::getInstance();
-        $this->steps->clear();
     }
 }
