@@ -15,5 +15,5 @@ before_script:
   - mkdir -p build/logs
 
 script:
- - if [ "$TO_TEST" = "PHPUNIT" ]; then php vendor/bin/phpunit --configuration tests/phpunit.xml --coverage-clover build/logs/clover.xml tests; fi
+ - if [ "$TO_TEST" = "PHPUNIT" ]; then php vendor/bin/phpunit --configuration tests/phpunit.xml --coverage-clover build/logs/clover.xml tests/Unit; fi
  - if [ "$TO_TEST" = "CODECEPTION" ]; then cd tests/Integrational && php ../../vendor/bin/codecept run Unit; fi
