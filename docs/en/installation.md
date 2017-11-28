@@ -51,3 +51,5 @@ class YourTest extends TestCase {
     }
 }
 ```
+
+If you want to use CodeSpecs with Codeception, read [Codeception installation guide](integrations/codeception.md). 

@@ -1,3 +1,8 @@
+## 4.0.0
+
+* Replace all of the `use PHPKitchen\CodeSpecsCore\Contract\TestGuy;` occurrences to `use PHPKitchen\CodeSpecs\Contract\TestGuy;`
+* In case you used some of core files, replace all of the `use PHPKitchen\CodeSpecsCore` occurrences to `use PHPKitchen\CodeSpecs`
+
 ## 3.0.0
 
 * Replace all of the `DeKey\Tester` occurrences to `PHPKitchen\CodeSpecs`

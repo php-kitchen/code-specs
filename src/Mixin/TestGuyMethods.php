@@ -35,7 +35,6 @@ trait TestGuyMethods {
      */
     protected $context;
     protected $variableName = '';
-
     //region ----------------------- SPECIFICATION METHODS -----------------------
 
     /**

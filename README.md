@@ -1,6 +1,6 @@
 # Code Specs
 
-Code Specs is a PHPUnit plugin for BDD style Unit tests that allows to writes test in a specification way using human-readable format. 
+Code Specs is a PHPUnit plugin with support of Codeception for BDD style Unit tests that allows to writes test in a specification way using human-readable format. 
 Goal of this library is to add a bunch of cool methods for unit testing and show a way of representing unit tests as a behavior specifications of a specific class and a test of specific method as a specification of the method.
 Tester represents an actor who test you code(yes, like in [Codeception](https://github.com/Codeception/Codeception) - because of Codeception this library exists). See by yourself:
 ```php
@@ -142,6 +142,7 @@ class YourTest extends TestCase {
     }
 }
 ```
+**Note:** *If you want to use CodeSpecs with Codeception read [Codeception integration guide](docs/en/integrations/codeception.md)*
 
 For additional information and guides go to the [project documentation](docs/README.md)
 See [changes log](docs/CHANGELOG.md) for information about changes in releases and [update guide](docs/UPDATE-GUIDE.md) for information about upgrading to a next major version.
@@ -149,5 +150,5 @@ See [changes log](docs/CHANGELOG.md) for information about changes in releases a
 ## Contributing
 
 If you want to ask any questions, suggest improvements or just to talk with community and developers, [join our server at Discord](https://discord.gg/Ez5VZhC) 
-Read [contributing guide](docs/CONTRIBUTING.md) for additional information.
+Read [organization contributing rules](https://github.com/php-kitchen/conventions/blob/master/CONTRIBUTING.md) for additional information.
 

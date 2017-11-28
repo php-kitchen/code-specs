@@ -1,3 +1,15 @@
+## 4.0.0
+
+### New features and updates
+* Moved `PHPKitchen\CodeSpecs\TesterInitialization` to `PHPKitchen\CodeSpecs\Mixin\TesterInitialization` (BC kept by leaving old trait in place). New namespace world be used public mixins.
+* Added [Codeception module](en/integrations/codeception.md)
+
+### BC breaks and deprecations
+* Core moved to current repository as splitting to two repositories caused confusion and made it more complicated to work. Namespace `PHPKitchen\CodeSpecsCore' changed to `PHPKitchen\CodeSpecs'
+* Removed `PHPKitchen\CodeSpecs\TesterInitialization` as it was deprecated in 3.0
+* Removed `PHPKitchen\CodeSpecs\Specification\Specification` as it was deprecated in 3.0
+* Removed `PHPKitchen\CodeSpecs\Specification\OldTester` as it was deprecated in 3.0
+
 ## 3.0.0
 
 ### New features and updates
@@ -5,9 +17,9 @@
 * Moved `PHPKitchen\CodeSpecs\Specification\Specification` to `\PHPKitchen\CodeSpecs\Base\Specification` (BC kept by leaving old class in place). New namespace world be used for base classes that users can extend in their own codebase.
 * Added `php-kitchen/code-specs-core` as a dependency that would have all of the core code of CodeSpecs shared between PHPUnit and Codeception versions.
 * Added `PHPKitchen\CodeSpecs\Specification\OldTester` to use it during migration to a new `PHPKitchen\CodeSpecs\Specification\Tester`. Will be removed in 4.0.
-* Added [Runtime Matchers](https://github.com/php-kitchen/code-specs/blob/master/docs/en/runtime-matchers.md)
-* Added [Directives](https://github.com/php-kitchen/code-specs/blob/master/docs/en/directives.md)
-* Added [Wait Directive](https://github.com/php-kitchen/code-specs/blob/master/docs/en/examples/directives/wait.md)
+* Added [Runtime Matchers](en/runtime-matchers.md)
+* Added [Directives](en/directives.md)
+* Added [Wait Directive](en/examples/directives/wait.md)
 
 ### BC breaks and deprecations
 * Moved to a new organization with a new brand so root namespace changed to `PHPKitchen\CodeSpecs`.

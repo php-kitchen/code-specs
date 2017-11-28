@@ -12,6 +12,9 @@ use PHPKitchen\CodeSpecs\Mixin\TestGuyMethods;
  * and show a way of representing unit tests as a behavior specifications of a specific class
  * and a test of specific method as a specification of the method.
  *
+ * @see TestGuyMethods
+ * @codeCoverageIgnore
+ *
  * @package PHPKitchen\CodeSpecs\Integration\Codeception
  * @author Dmitry Kolodko <prowwid@gmail.com>
  */
@@ -26,6 +29,5 @@ class CodeSpecs extends Module implements TestGuy {
 
         parent::_before($test);
     }
-
     //endregion
 }

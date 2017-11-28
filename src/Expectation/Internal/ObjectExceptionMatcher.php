@@ -15,7 +15,8 @@ use PHPKitchen\CodeSpecs\Expectation\Matcher\Base\Matcher;
  */
 class ObjectExceptionMatcher extends Matcher {
     public function withMessage($message) {
-        $this->startStep('has message "' . $message . '"')->expectExceptionMessage($message);
+        $this->startStep('has message "' . $message . '"')
+            ->expectExceptionMessage($message);
         return $this;
     }
 
@@ -26,7 +27,8 @@ class ObjectExceptionMatcher extends Matcher {
     }
 
     public function withCode($code) {
-        $this->startStep('has code "' . $code . '"')->expectExceptionCode($code);
+        $this->startStep('has code "' . $code . '"')
+            ->expectExceptionCode($code);
         return $this;
     }
 

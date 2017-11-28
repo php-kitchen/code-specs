@@ -3,7 +3,6 @@
 namespace PHPKitchen\CodeSpecs\Expectation\Internal;
 
 use ArrayAccess;
-use Codeception\TestInterface;
 use PHPKitchen\CodeSpecs\Module\CodeSpecs;
 use PHPUnit\Framework\Test;
 
