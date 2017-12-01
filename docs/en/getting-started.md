@@ -13,7 +13,7 @@ $I->{type of a variable}->{expectations of a variable}
 Explanation for the format parts:
 * describe - optional method that defines scenario tester checks. If test fails scenario would be displayed at the top of error message beginning with "I describe " 
 * verifyThat - defines a group of expectations. You can either use a simple form with message only - `$I->verifyThat('remote service is acceptable');` or full form with callable that organize expectations([see test example](examples/tests/IncomeCalculatorTest.php). If a test fails this message will be put to console output beginning with "I verify that ".
-* expectsThat|expectsTo|verifyThat - defines the expectations of a tester. If a test fails this message will be put to console output beginning with "I expect that ", "I expect to " 
+* expectsThat|expectsTo|verifyThat - defines the expectations of a tester. If a test fails this message will be put to console output beginning with "I expect that ", "I expect to ". Note: `expectTo` available only in PHPUnit as Codeception already have such method. 
 * lookAt - defines a name of a variable that would be tested. If a test fails this name would be used to print step message, for example  "I see that user is not empty ", "I see that response has key 'data'" etc. 
 * type of a variable - defines a type of variable being examined. Type of a variable defines what matcher to use. Following matchers are available:
   * see - means no type is specified. Starts a chain of basic "value" expectations.

@@ -72,20 +72,6 @@ trait TestGuyMethods {
      * @param string $expectation expectation text.
      * Expectation should be a logical ending of "I expect to ". For example: "see user in the DB".
      * Such scenario would result in "I expect to see user in the DB" output in console.
-     * @return $this
-     */
-    public function expectTo(string $expectation): TestGuy {
-        $this->steps->add('I expect to ' . $expectation);
-        return $this;
-    }
-
-    /**
-     * Specifies what test guy expects from a set of matchers that would be defined next in the
-     * specification.
-     *
-     * @param string $expectation expectation text.
-     * Expectation should be a logical ending of "I expect to ". For example: "see user in the DB".
-     * Such scenario would result in "I expect to see user in the DB" output in console.
      * @param callable $verificationSteps callable function with following definition "function (TestGuy $I) { ..." that contains a group of
      * expectations united by one verification topic. All of the expectations would be executed once they
      * are defined.

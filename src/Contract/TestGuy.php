@@ -17,6 +17,8 @@ use PHPKitchen\CodeSpecs\Expectation\Matcher\ValueMatcher;
 /**
  * Represents a test-guy who is testing your code, so tests writes as a story of what tester is doing.
  *
+ * @method TestGuy expectTo(string $expectation)
+ *
  * @author Dmitry Kolodko <prowwid@gmail.com>
  */
 interface TestGuy {
@@ -41,16 +43,6 @@ interface TestGuy {
      */
     public function expectThat(string $expectation): TestGuy;
 
-    /**
-     * Specifies what test guy expects from a set of matchers that would be defined next in the
-     * specification.
-     *
-     * @param string $expectation expectation text.
-     * Expectation should be a logical ending of "I expect to ". For example: "see user in the DB".
-     * Such scenario would result in "I expect to see user in the DB" output in console.
-     * @return $this
-     */
-    public function expectTo(string $expectation): TestGuy;
 
     /**
      * Specifies what test guy expects from a set of matchers that would be defined next in the

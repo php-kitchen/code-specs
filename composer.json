@@ -3,6 +3,7 @@
     "description": "BDD extension for PHPUnit that allows to write tests as a specifications in a human-readable format.",
     "type": "library",
     "license": "MIT",
+    "homepage": "https://github.com/php-kitchen/code-specs",
     "keywords": [
         "PHPUnit",
         "BDD",
@@ -13,6 +14,12 @@
         "extension",
         "unit tests"
     ],
+    "support": {
+        "issues": "https://github.com/php-kitchen/code-specs/issues?state=open",
+        "forum": "https://discord.gg/Ez5VZhC",
+        "docs": "https://github.com/php-kitchen/code-specs/tree/master/docs",
+        "source": "https://github.com/php-kitchen/code-specs"
+    },
     "authors": [
         {
             "name": "Dmitry Kolodko",
@@ -30,7 +37,11 @@
     },
     "autoload": {
         "psr-4": {
-            "PHPKitchen\\CodeSpecs\\": "src",
+            "PHPKitchen\\CodeSpecs\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
             "Tests\\": "tests"
         }
     }

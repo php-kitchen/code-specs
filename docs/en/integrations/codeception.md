@@ -1,6 +1,6 @@
 # Codeception integration
 
-CodeSpecs works in Codeception unit tests the same way as in PHPUnit tests even with the same interface.
+CodeSpecs works in Codeception unit tests the same way as in PHPUnit tests even with the same interface(the only thing not available in Codeception is `expectTo` method as Codeception already has such method).
 
 To enable CodeSpecs module you just need to add following line to enabled modules:
 ```yaml

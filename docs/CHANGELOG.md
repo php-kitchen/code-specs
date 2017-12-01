@@ -1,5 +1,10 @@
 ## 4.0.0
 
+### Fixed:
+* Method name collision with Codeception ([#7](https://github.com/php-kitchen/code-specs/issues/7))
+
+## 4.0.0
+
 ### New features and updates
 * Moved `PHPKitchen\CodeSpecs\TesterInitialization` to `PHPKitchen\CodeSpecs\Mixin\TesterInitialization` (BC kept by leaving old trait in place). New namespace world be used public mixins.
 * Added [Codeception module](en/integrations/codeception.md)
