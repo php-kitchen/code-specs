@@ -6,7 +6,7 @@ In the following example we check that given directory exists and is readable.
 /**
  * @test
  */
-public function directoryExampleSpec() {
+public function directoryExampleBehavior() {
         $I = $this->tester;
         $I->describe('process of testing directories');
         $I->expectThat('given directory is accessible');

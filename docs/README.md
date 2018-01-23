@@ -2,7 +2,7 @@ Code Specs is a PHPUnit plugin for BDD style Unit tests that allows to writes te
 Goal of this library is to add a bunch of cool methods for unit testing and show a way of representing unit tests as a behavior specifications of a specific class and a test of specific method as a specification of the method.
 Tester represents an actor who test you code(yes, like in [Codeception](https://github.com/Codeception/Codeception) - because of Codeception this library exists). See by yourself:
 ```php
-namespace Tests\Unit;
+namespace Specs\Unit;
 
 use PHPKitchen\CodeSpecs\Base\Specification;
 use PHPKitchen\CodeSpecs\Contract\TestGuy;
@@ -16,12 +16,12 @@ class IncomeCalculatorTest extends Specification {
     private const EXPECTED_TAX_FOR_FIRST_LEVEL_TAX_RULE = 4500;
     private const EXPECTED_TAX_FOR_SECOND_LEVEL_TAX_RULE = 7200;
     private const EXPECTED_TAX_FOR_THIRD_LEVEL_TAX_RULE = 30000;
-    private const EXPECTED_INCOME = 300000;
+    private const INCOME_AFTER_APPLYING_FIRST_LEVEL_TAX_RULE = 300000;
 
     /**
      * @test
      */
-    public function calculateTaxSpec() {
+    public function calculateTaxBehavior() {
         $clientsPayments = []; // dummy variable, just for example
         $hoursSpentWorking = 160; // dummy variable, just for example
         $service = new IncomeCalculator($clientsPayments, $hoursSpentWorking);
@@ -53,7 +53,7 @@ class IncomeCalculatorTest extends Specification {
     /**
      * @test
      */
-    public function calculateWithTaxSpec() {
+    public function calculateWithTaxBehavior() {
         $clientsPayments = []; // dummy variable, just for example
         $hoursSpentWorking = 160; // dummy variable, just for example
         $service = new IncomeCalculator($clientsPayments, $hoursSpentWorking);
@@ -67,7 +67,7 @@ class IncomeCalculatorTest extends Specification {
 
         $I->seeNumber($service->calculateWithTax())
             ->isNotEmpty()
-            ->isEqualTo(self::EXPECTED_INCOME);
+            ->isEqualTo(self::INCOME_AFTER_APPLYING_FIRST_LEVEL_TAX_RULE);
     }
 }
 ```

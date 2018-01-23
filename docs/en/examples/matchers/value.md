@@ -6,7 +6,7 @@ In the following displayed basic usage of tester library to compare two values a
 /**
  * @test
  */
-public function seeExampleSpec() {
+public function seeExampleBehavior() {
         $I = $this->tester;
         $I->describe('process of testing values without any requirements for type-specific expectations');
         $I->expectThat('everything works');

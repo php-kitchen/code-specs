@@ -14,7 +14,7 @@ class IncomeCalculatorTest extends Specification {
     private const EXPECTED_TAX_FOR_FIRST_LEVEL_TAX_RULE = 4500;
     private const EXPECTED_TAX_FOR_SECOND_LEVEL_TAX_RULE = 7200;
     private const EXPECTED_TAX_FOR_THIRD_LEVEL_TAX_RULE = 30000;
-    private const EXPECTED_INCOME = 300000;
+    private const INCOME_AFTER_APPLYING_FIRST_LEVEL_TAX_RULE = 300000;
 
     /**
      * @test
@@ -64,7 +64,7 @@ class IncomeCalculatorTest extends Specification {
 
         $I->seeNumber($service->calculateWithTax())
             ->isNotEmpty()
-            ->isEqualTo(self::EXPECTED_INCOME);
+            ->isEqualTo(self::INCOME_AFTER_APPLYING_FIRST_LEVEL_TAX_RULE);
     }
 }
 

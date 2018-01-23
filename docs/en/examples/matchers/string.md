@@ -6,7 +6,7 @@ In the following example we check that given string contains information(not emp
 /**
  * @test
  */
-public function stringExamplesSpec() {
+public function stringExamplesBehavior() {
         $I = $this->tester;
         $I->describe('process of testing strings');
         $I->expectThat('received expected string with required characters');

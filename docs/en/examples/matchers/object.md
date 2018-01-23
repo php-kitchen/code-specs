@@ -6,7 +6,7 @@ In the following example we check that given object is not empty an is an instan
 /**
  * @test
  */
-public function objectExampleSpec() {
+public function objectExampleBehavior() {
         $I = $this->tester;
         $I->describe('basic usage of object expectations');
         $I->expectThat('everything works');
@@ -33,7 +33,7 @@ class MyClass {
 
 //..............
 
-public function objectExceptionExampleSpec() {
+public function objectExceptionExampleBehavior() {
         $I = $this->tester;
         $myObject = new MyClass();
         $I->describe('how to test exceptions')

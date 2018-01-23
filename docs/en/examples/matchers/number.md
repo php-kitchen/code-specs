@@ -6,7 +6,7 @@ In the following example we check that given number is finite.
 /**
  * @test
  */
-public function numberFiniteExampleSpec() {
+public function numberFiniteExampleBehavior() {
         $I = $this->tester;
         $I->seeNumber(1)
             ->isFinite();
@@ -19,7 +19,7 @@ In the following example we check that given number is infinite.
 /**
  * @test
  */
-public function numberInfiniteEExampleSpec() {
+public function numberInfiniteEExampleBehavior() {
         $I = $this->tester;
         $I->seeNumber(INF)
             ->isInfinite();
@@ -29,7 +29,7 @@ public function numberInfiniteEExampleSpec() {
 In the following example we check that given number is NAN.
 
 ```php
-public function numberNanExampleSpec() {
+public function numberNanExampleBehavior() {
         $I = $this->tester;
         $I->seeNumber(NAN)
             ->isNan();

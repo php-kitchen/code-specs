@@ -6,7 +6,7 @@ In the following example we check that given file exists, is readable and equal 
 /**
  * @test
  */
-public function fileExampleSpec() {
+public function fileExampleBehavior() {
         $I = $this->tester;
         $I->describe('working wih files');
         $I->expectThat('given file is accessible');

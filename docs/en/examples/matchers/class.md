@@ -6,7 +6,7 @@ In the following example we check that given class exists and not an interface.
 /**
  * @test
  */
-public function classExampleSpec() {
+public function classExampleBehavior() {
         $I = $this->tester;
         $thisClass = get_class($this);
         $I->describe('process of class testing');

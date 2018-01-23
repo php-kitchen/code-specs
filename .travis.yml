@@ -6,12 +6,27 @@ matrix:
       env: TO_TEST=PHPUNIT
     - php: 7.1
       env: TO_TEST=CODECEPTION
+    - php: 7.2
+      env: TO_TEST=PHPUNIT
+    - php: 7.2
+      env: TO_TEST=CODECEPTION
   fast_finish: true
 
+# faster builds on new travis setup not using sudo
+sudo: false
+
+# cache vendor dirs
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+install:
+  - travis_retry composer self-update && composer --version
+  - export PATH="$HOME/.composer/vendor/bin:$PATH"
+  - travis_retry composer global require hirak/prestissimo
+  - travis_retry composer install --prefer-dist --no-interaction
+
 before_script:
-  - composer self-update
-  - composer global require hirak/prestissimo
-  - composer install --prefer-source --no-interaction --dev
   - mkdir -p build/logs
 
 script:

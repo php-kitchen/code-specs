@@ -6,7 +6,7 @@ In the following example we check that given array not empty, has expected key a
 /**
  * @test
  */
-public function arrayExampleSpec() {
+public function arrayExampleBehavior() {
         $I = $this->tester;
         $I->describe('working wih associative array');
         $I->expectThat('array has both key and value');
