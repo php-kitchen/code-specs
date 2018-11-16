@@ -16,7 +16,8 @@ class ValueMatcher extends Matcher {
      */
     public function isInternalType($type): self {
         $this->startStep('is internal type "' . $type . '"')
-            ->assertInternalType($type);
+             ->assertInternalType($type);
+
         return $this;
     }
 
@@ -25,7 +26,8 @@ class ValueMatcher extends Matcher {
      */
     public function isNotInternalType($type): self {
         $this->startStep('is not internal type "' . $type . '"')
-            ->assertNotInternalType($type);
+             ->assertNotInternalType($type);
+
         return $this;
     }
 
@@ -36,7 +38,8 @@ class ValueMatcher extends Matcher {
         $stepName = $expectedValueName ? "is equal to {$expectedValueName}" : "is equal to expected";
 
         $this->startStep($stepName)
-            ->assertEquals($expected);
+             ->assertEquals($expected);
+
         return $this;
     }
 
@@ -46,7 +49,8 @@ class ValueMatcher extends Matcher {
     public function isNotEqualTo($expected, $expectedValueName = '') {
         $stepName = $expectedValueName ? "is not equal to {$expectedValueName}" : "is not equal to expected";
         $this->startStep($stepName)
-            ->assertNotEquals($expected);
+             ->assertNotEquals($expected);
+
         return $this;
     }
 
@@ -55,7 +59,8 @@ class ValueMatcher extends Matcher {
      */
     public function isGreaterThan($expected): self {
         $this->startStep('is greater than "' . $expected . '"')
-            ->assertGreaterThan($expected);
+             ->assertGreaterThan($expected);
+
         return $this;
     }
 
@@ -64,7 +69,8 @@ class ValueMatcher extends Matcher {
      */
     public function isLessThan($expected): self {
         $this->startStep('is less than "' . $expected . '"')
-            ->assertLessThan($expected);
+             ->assertLessThan($expected);
+
         return $this;
     }
 
@@ -73,7 +79,8 @@ class ValueMatcher extends Matcher {
      */
     public function isGreaterOrEqualTo($expected): self {
         $this->startStep('is greater or equal to "' . $expected . '"')
-            ->assertGreaterThanOrEqual($expected);
+             ->assertGreaterThanOrEqual($expected);
+
         return $this;
     }
 
@@ -82,7 +89,8 @@ class ValueMatcher extends Matcher {
      */
     public function isLessOrEqualTo($expected): self {
         $this->startStep('is less or equal to "' . $expected . '"')
-            ->assertLessThanOrEqual($expected);
+             ->assertLessThanOrEqual($expected);
+
         return $this;
     }
 
@@ -91,7 +99,8 @@ class ValueMatcher extends Matcher {
      */
     public function isNull(): self {
         $this->startStep('is null')
-            ->assertNull();
+             ->assertNull();
+
         return $this;
     }
 
@@ -100,7 +109,8 @@ class ValueMatcher extends Matcher {
      */
     public function isNotNull(): self {
         $this->startStep('is not null')
-            ->assertNotNull();
+             ->assertNotNull();
+
         return $this;
     }
 
@@ -109,7 +119,8 @@ class ValueMatcher extends Matcher {
      */
     public function isEmpty(): self {
         $this->startStep('is empty')
-            ->assertEmpty();
+             ->assertEmpty();
+
         return $this;
     }
 
@@ -118,7 +129,8 @@ class ValueMatcher extends Matcher {
      */
     public function isNotEmpty(): self {
         $this->startStep('is not empty')
-            ->assertNotEmpty();
+             ->assertNotEmpty();
+
         return $this;
     }
 
@@ -128,7 +140,8 @@ class ValueMatcher extends Matcher {
     public function isTheSameAs($expected, $expectedValueName = '') {
         $stepName = $expectedValueName ? "is the same as {$expectedValueName}" : "is the same as expected";
         $this->startStep($stepName)
-            ->assertSame($expected);
+             ->assertSame($expected);
+
         return $this;
     }
 
@@ -139,7 +152,8 @@ class ValueMatcher extends Matcher {
         $stepName = $expectedValueName ? "is not the same as {$expectedValueName}" : "is not the same as expected";
 
         $this->startStep($stepName)
-            ->assertNotSame($expected);
+             ->assertNotSame($expected);
+
         return $this;
     }
 }

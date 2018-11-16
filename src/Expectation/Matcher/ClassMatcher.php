@@ -16,7 +16,8 @@ class ClassMatcher extends Matcher {
      */
     public function isExist(): self {
         $this->startStep('is exist')
-            ->assertClassExists();
+             ->assertClassExists();
+
         return $this;
     }
 
@@ -25,7 +26,8 @@ class ClassMatcher extends Matcher {
      */
     public function isNotExist(): self {
         $this->startStep('is not exist')
-            ->assertClassDoesNotExist();
+             ->assertClassDoesNotExist();
+
         return $this;
     }
 
@@ -34,7 +36,8 @@ class ClassMatcher extends Matcher {
      */
     public function isInterface(): self {
         $this->startStep('is interface')
-            ->assertClassIsInterface();
+             ->assertClassIsInterface();
+
         return $this;
     }
 
@@ -43,7 +46,8 @@ class ClassMatcher extends Matcher {
      */
     public function isNotInterface(): self {
         $this->startStep('is not interface')
-            ->assertClassIsNotInterface();
+             ->assertClassIsNotInterface();
+
         return $this;
     }
 
@@ -52,7 +56,8 @@ class ClassMatcher extends Matcher {
      */
     public function hasStaticAttribute($attribute): self {
         $this->startStep("has static attribute \"{$attribute}\"")
-            ->assertClassHasStaticAttribute($attribute);
+             ->assertClassHasStaticAttribute($attribute);
+
         return $this;
     }
 
@@ -61,7 +66,8 @@ class ClassMatcher extends Matcher {
      */
     public function doesNotHaveStaticAttribute($attribute): self {
         $this->startStep("does not have static attribute \"{$attribute}\"")
-            ->assertClassNotHasStaticAttribute($attribute);
+             ->assertClassNotHasStaticAttribute($attribute);
+
         return $this;
     }
 
@@ -70,7 +76,8 @@ class ClassMatcher extends Matcher {
      */
     public function hasAttribute($attribute): self {
         $this->startStep("has attribute \"{$attribute }\"")
-            ->assertClassHasAttribute($attribute);
+             ->assertClassHasAttribute($attribute);
+
         return $this;
     }
 
@@ -79,7 +86,8 @@ class ClassMatcher extends Matcher {
      */
     public function doesNotHaveAttribute($attribute): self {
         $this->startStep("does not have attribute \"{$attribute}\"")
-            ->assertClassNotHasAttribute($attribute);
+             ->assertClassNotHasAttribute($attribute);
+
         return $this;
     }
 }

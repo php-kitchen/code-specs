@@ -34,6 +34,7 @@ class Step {
 
     public function toString() {
         $stepResult = $this->isChecked() ? "\u{2713} " : '- ';
+
         return $stepResult . $this->name;
     }
 

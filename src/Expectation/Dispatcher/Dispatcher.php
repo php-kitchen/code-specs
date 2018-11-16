@@ -97,6 +97,7 @@ class Dispatcher {
         if ($this->useDelayedAsserts) {
             $assert->switchToDelayedExecutionStrategy();
         }
+
         return new $className($assert);
     }
 }

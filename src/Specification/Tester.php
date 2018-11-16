@@ -33,10 +33,12 @@ class Tester implements TestGuy {
      * @param string $expectation expectation text.
      * Expectation should be a logical ending of "I expect to ". For example: "see user in the DB".
      * Such scenario would result in "I expect to see user in the DB" output in console.
+     *
      * @return $this
      */
     public function expectTo(string $expectation): TestGuy {
         $this->steps->add('I expect to ' . $expectation);
+
         return $this;
     }
 

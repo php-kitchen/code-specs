@@ -30,6 +30,7 @@ abstract class BaseMatcherTest extends TestCase {
     protected function createMatcherWithActualValue($value) {
         $reflection = new \ReflectionClass($this->matcherClass);
         $assert = new Assert(StepsList::getInstance(), $this, $value, 'matcher does not work');
+
         return $reflection->newInstanceArgs([$assert]);
     }
 }

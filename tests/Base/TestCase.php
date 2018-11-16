@@ -2,7 +2,7 @@
 
 namespace Tests\Base;
 
-use \PHPKitchen\CodeSpecs\Mixin\TesterInitialization;
+use PHPKitchen\CodeSpecs\Mixin\TesterInitialization;
 
 /**
  * Represents base class for all of the test cases.

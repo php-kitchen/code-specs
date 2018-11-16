@@ -43,10 +43,12 @@ trait TestGuyMethods {
      * @param string $scenario scenario name.
      * Scenario should be a logical ending of "I describe ". For example: "process of user registration".
      * Such scenario would result in "I describe process of user registration" output in console.
+     *
      * @return $this
      */
     public function describe(string $scenario): TestGuy {
         $this->steps->add('I describe ' . $scenario);
+
         return $this;
     }
 
@@ -57,6 +59,7 @@ trait TestGuyMethods {
      * @param string $expectation expectation text.
      * Expectation should be a logical ending of "I expect that ". For example: "user is added to the DB".
      * Such scenario would result in "I expect that user is added to the DB" output in console.
+     *
      * @return $this
      */
     public function expectThat(string $expectation): TestGuy {
@@ -75,6 +78,7 @@ trait TestGuyMethods {
      * @param callable $verificationSteps callable function with following definition "function (TestGuy $I) { ..." that contains a group of
      * expectations united by one verification topic. All of the expectations would be executed once they
      * are defined.
+     *
      * @return $this
      */
     public function verifyThat(string $expectation, callable $verificationSteps = null): TestGuy {
@@ -90,10 +94,12 @@ trait TestGuyMethods {
      * Specifies name of a variable test guy would check.
      *
      * @param string $variableName name of a variable to look at.
+     *
      * @return TestGuy
      */
     public function lookAt(string $variableName): TestGuy {
         $this->variableName = $variableName;
+
         return $this;
     }
 
@@ -111,10 +117,12 @@ trait TestGuyMethods {
      * </code>
      *
      * @param string $variableName name of a variable to look at.
+     *
      * @return \PHPKitchen\CodeSpecs\Expectation\Dispatcher\DelayedDispatcher
      */
     public function match(string $variableName): DelayedDispatcher {
         $this->variableName = $variableName;
+
         return $this->createDispatcher(DelayedDispatcher::class, null);
     }
 
@@ -134,99 +142,108 @@ trait TestGuyMethods {
      * Starts a chain of asserts from {@link ValueMatcher}.
      *
      * @param mixed $variable variable to be tested
+     *
      * @return \PHPKitchen\CodeSpecs\Expectation\Matcher\ValueMatcher
      */
     public function see($variable): ValueMatcher {
         return $this->dispatch($variable)
-            ->isMixed();
+                    ->isMixed();
     }
 
     /**
      * Starts a chain of asserts from {@link StringMatcher}.
      *
      * @param string $variable variable to be tested
+     *
      * @return \PHPKitchen\CodeSpecs\Expectation\Matcher\StringMatcher
      */
     public function seeString($string): StringMatcher {
         return $this->dispatch($string)
-            ->isString();
+                    ->isString();
     }
 
     /**
      * Starts a chain of asserts from {@link ArrayMatcher}.
      *
      * @param array|\ArrayAccess $variable variable to be tested
+     *
      * @return \PHPKitchen\CodeSpecs\Expectation\Matcher\ArrayMatcher
      */
     public function seeArray($variable): ArrayMatcher {
         return $this->dispatch($variable)
-            ->isArray();
+                    ->isArray();
     }
 
     /**
      * Starts a chain of asserts from {@link BooleanMatcher}.
      *
      * @param boolean $variable variable to be tested
+     *
      * @return \PHPKitchen\CodeSpecs\Expectation\Matcher\BooleanMatcher
      */
     public function seeBool($variable): BooleanMatcher {
         return $this->dispatch($variable)
-            ->isBoolean();
+                    ->isBoolean();
     }
 
     /**
      * Starts a chain of asserts from {@link NumberMatcher}.
      *
      * @param int|float $variable variable to be tested
+     *
      * @return \PHPKitchen\CodeSpecs\Expectation\Matcher\NumberMatcher
      */
     public function seeNumber($variable): NumberMatcher {
         return $this->dispatch($variable)
-            ->isNumber();
+                    ->isNumber();
     }
 
     /**
      * Starts a chain of asserts from {@link ObjectMatcher}.
      *
      * @param object $variable variable to be tested
+     *
      * @return \PHPKitchen\CodeSpecs\Expectation\Matcher\ObjectMatcher
      */
     public function seeObject($variable): ObjectMatcher {
         return $this->dispatch($variable)
-            ->isObject();
+                    ->isObject();
     }
 
     /**
      * Starts a chain of asserts from {@link ClassMatcher}.
      *
      * @param string $variable variable to be tested
+     *
      * @return \PHPKitchen\CodeSpecs\Expectation\Matcher\ClassMatcher
      */
     public function seeClass($variable): ClassMatcher {
         return $this->dispatch($variable)
-            ->isClass();
+                    ->isClass();
     }
 
     /**
      * Starts a chain of asserts from {@link FileMatcher}.
      *
      * @param string $variable variable to be tested
+     *
      * @return \PHPKitchen\CodeSpecs\Expectation\Matcher\FileMatcher
      */
     public function seeFile($variable): FileMatcher {
         return $this->dispatch($variable)
-            ->isFile();
+                    ->isFile();
     }
 
     /**
      * Starts a chain of asserts from {@link DirectoryMatcher}.
      *
      * @param string $variable variable to be tested
+     *
      * @return \PHPKitchen\CodeSpecs\Expectation\Matcher\DirectoryMatcher
      */
     public function seeDirectory($variable): DirectoryMatcher {
         return $this->dispatch($variable)
-            ->isDirectory();
+                    ->isDirectory();
     }
     //endregion
 
@@ -244,6 +261,7 @@ trait TestGuyMethods {
     private function createDispatcher($class, $actualValue): Dispatcher {
         $dispatcher = new $class($this->context, $actualValue, $this->variableName);
         $this->variableName = '';
+
         return $dispatcher;
     }
     //endregion

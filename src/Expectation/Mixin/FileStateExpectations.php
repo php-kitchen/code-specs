@@ -21,7 +21,8 @@ trait FileStateExpectations {
     public function isReadable() {
         $this->isExist();
         $this->startStep('is readable')
-            ->assertIsReadable();
+             ->assertIsReadable();
+
         return $this;
     }
 
@@ -31,7 +32,8 @@ trait FileStateExpectations {
     public function isNotReadable() {
         $this->isExist();
         $this->startStep('is not readable')
-            ->assertNotIsReadable();
+             ->assertNotIsReadable();
+
         return $this;
     }
 
@@ -41,7 +43,8 @@ trait FileStateExpectations {
     public function isWritable() {
         $this->isExist();
         $this->startStep('is writable')
-            ->assertIsWritable();
+             ->assertIsWritable();
+
         return $this;
     }
 
@@ -51,7 +54,8 @@ trait FileStateExpectations {
     public function isNotWritable() {
         $this->isExist();
         $this->startStep('is not writable')
-            ->assertNotIsWritable();
+             ->assertNotIsWritable();
+
         return $this;
     }
 }

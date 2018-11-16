@@ -14,7 +14,8 @@ class StringMatcher extends ValueMatcher {
      */
     public function isJson(): self {
         $this->startStep('is JSON')
-            ->assertJson();
+             ->assertJson();
+
         return $this;
     }
 
@@ -23,7 +24,8 @@ class StringMatcher extends ValueMatcher {
      */
     public function isEqualToJsonFile($file): self {
         $this->startStep('is equal to JSON file "' . $file . '"')
-            ->assertJsonStringEqualsJsonFile($file);
+             ->assertJsonStringEqualsJsonFile($file);
+
         return $this;
     }
 
@@ -32,7 +34,8 @@ class StringMatcher extends ValueMatcher {
      */
     public function isNotEqualToJsonFile($file): self {
         $this->startStep('is not equal to JSON file "' . $file . '"')
-            ->assertJsonStringNotEqualsJsonFile($file);
+             ->assertJsonStringNotEqualsJsonFile($file);
+
         return $this;
     }
 
@@ -41,7 +44,8 @@ class StringMatcher extends ValueMatcher {
      */
     public function isEqualToJsonString($string): self {
         $this->startStep('is equal to JSON string "' . $string . '"')
-            ->assertJsonStringEqualsJsonString($string);
+             ->assertJsonStringEqualsJsonString($string);
+
         return $this;
     }
 
@@ -50,7 +54,8 @@ class StringMatcher extends ValueMatcher {
      */
     public function isNotEqualToJsonString($string): self {
         $this->startStep('is not equal to JSON string "' . $string . '"')
-            ->assertJsonStringNotEqualsJsonString($string);
+             ->assertJsonStringNotEqualsJsonString($string);
+
         return $this;
     }
 
@@ -59,7 +64,8 @@ class StringMatcher extends ValueMatcher {
      */
     public function isEqualToFile($file): self {
         $this->startStep('is equal to file "' . $file . '"')
-            ->assertStringEqualsFile($file);
+             ->assertStringEqualsFile($file);
+
         return $this;
     }
 
@@ -68,7 +74,8 @@ class StringMatcher extends ValueMatcher {
      */
     public function isNotEqualToFile($file): self {
         $this->startStep('is not equal to file "' . $file . '"')
-            ->assertStringNotEqualsFile($file);
+             ->assertStringNotEqualsFile($file);
+
         return $this;
     }
 
@@ -77,7 +84,8 @@ class StringMatcher extends ValueMatcher {
      */
     public function isEqualToXmlFile($file): self {
         $this->startStep('is equal to XML file "' . $file . '"')
-            ->assertXmlStringEqualsXmlFile($file);
+             ->assertXmlStringEqualsXmlFile($file);
+
         return $this;
     }
 
@@ -86,7 +94,8 @@ class StringMatcher extends ValueMatcher {
      */
     public function isNotEqualToXmlFile($file): self {
         $this->startStep('is not equal to XML file "' . $file . '"')
-            ->assertXmlStringNotEqualsXmlFile($file);
+             ->assertXmlStringNotEqualsXmlFile($file);
+
         return $this;
     }
 
@@ -95,7 +104,8 @@ class StringMatcher extends ValueMatcher {
      */
     public function isEqualToXmlString($xmlString): self {
         $this->startStep('is equal to XML string "' . $xmlString . '"')
-            ->assertXmlStringEqualsXmlString($xmlString);
+             ->assertXmlStringEqualsXmlString($xmlString);
+
         return $this;
     }
 
@@ -104,7 +114,8 @@ class StringMatcher extends ValueMatcher {
      */
     public function isNotEqualToXmlString($xmlString): self {
         $this->startStep('is not equal to XML string "' . $xmlString . '"')
-            ->assertXmlStringNotEqualsXmlString($xmlString);
+             ->assertXmlStringNotEqualsXmlString($xmlString);
+
         return $this;
     }
 
@@ -113,7 +124,8 @@ class StringMatcher extends ValueMatcher {
      */
     public function startsWith($prefix): self {
         $this->startStep('starts with "' . $prefix . '"')
-            ->assertStringStartsWith($prefix);
+             ->assertStringStartsWith($prefix);
+
         return $this;
     }
 
@@ -122,7 +134,8 @@ class StringMatcher extends ValueMatcher {
      */
     public function doesNotStartWith($prefix): self {
         $this->startStep('does not start with "' . $prefix . '"')
-            ->assertStringStartsNotWith($prefix);
+             ->assertStringStartsNotWith($prefix);
+
         return $this;
     }
 
@@ -131,7 +144,8 @@ class StringMatcher extends ValueMatcher {
      */
     public function endsWith($suffix): self {
         $this->startStep('ends with "' . $suffix . '"')
-            ->assertStringEndsWith($suffix);
+             ->assertStringEndsWith($suffix);
+
         return $this;
     }
 
@@ -140,7 +154,8 @@ class StringMatcher extends ValueMatcher {
      */
     public function doesNotEndWith($suffix): self {
         $this->startStep('does not end with "' . $suffix . '"')
-            ->assertStringEndsNotWith($suffix);
+             ->assertStringEndsNotWith($suffix);
+
         return $this;
     }
 
@@ -149,7 +164,8 @@ class StringMatcher extends ValueMatcher {
      */
     public function matchesRegExp($expression): self {
         $this->startStep('matches regular expression "' . $expression . '"')
-            ->assertRegExp($expression);
+             ->assertRegExp($expression);
+
         return $this;
     }
 
@@ -158,7 +174,8 @@ class StringMatcher extends ValueMatcher {
      */
     public function matchesFormat($format): self {
         $this->startStep('matches format "' . $format . '"')
-            ->assertStringMatchesFormat($format);
+             ->assertStringMatchesFormat($format);
+
         return $this;
     }
 
@@ -167,7 +184,8 @@ class StringMatcher extends ValueMatcher {
      */
     public function doesNotMatchFormat($format): self {
         $this->startStep('does not match format "' . $format . '"')
-            ->assertStringNotMatchesFormat($format);
+             ->assertStringNotMatchesFormat($format);
+
         return $this;
     }
 
@@ -176,7 +194,8 @@ class StringMatcher extends ValueMatcher {
      */
     public function matchesFormatFromFile($formatFile): self {
         $this->startStep('matches format from file "' . $formatFile . '"')
-            ->assertStringMatchesFormatFile($formatFile);
+             ->assertStringMatchesFormatFile($formatFile);
+
         return $this;
     }
 
@@ -185,7 +204,8 @@ class StringMatcher extends ValueMatcher {
      */
     public function doesNotMatchFormatFromFile($formatFile): self {
         $this->startStep('does not match format from file "' . $formatFile . '"')
-            ->assertStringNotMatchesFormatFile($formatFile);
+             ->assertStringNotMatchesFormatFile($formatFile);
+
         return $this;
     }
 
@@ -194,7 +214,8 @@ class StringMatcher extends ValueMatcher {
      */
     public function contains($needle): self {
         $this->startStep('contains "' . $needle . '"')
-            ->assertContains($needle);
+             ->assertContains($needle);
+
         return $this;
     }
 
@@ -203,7 +224,8 @@ class StringMatcher extends ValueMatcher {
      */
     public function doesNotContain($needle): self {
         $this->startStep('does not contain "' . $needle . '"')
-            ->assertNotContains($needle);
+             ->assertNotContains($needle);
+
         return $this;
     }
 }

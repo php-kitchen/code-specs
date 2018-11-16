@@ -18,7 +18,8 @@ class DirectoryMatcher extends Matcher {
      */
     public function isExist() {
         $this->startStep('is exist')
-            ->assertDirectoryExists();
+             ->assertDirectoryExists();
+
         return $this;
     }
 
@@ -27,7 +28,8 @@ class DirectoryMatcher extends Matcher {
      */
     public function isNotExist() {
         $this->startStep('is not exist')
-            ->assertDirectoryNotExists();
+             ->assertDirectoryNotExists();
+
         return $this;
     }
 }

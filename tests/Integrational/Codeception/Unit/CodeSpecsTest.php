@@ -18,5 +18,4 @@ class CodeSpecsTest extends Unit {
      * @var \UnitTester
      */
     protected $tester;
-
 }

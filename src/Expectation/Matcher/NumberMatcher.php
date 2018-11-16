@@ -13,7 +13,8 @@ class NumberMatcher extends ValueMatcher {
      */
     public function isFinite(): self {
         $this->startStep('is finite')
-            ->assertFinite();
+             ->assertFinite();
+
         return $this;
     }
 
@@ -22,7 +23,8 @@ class NumberMatcher extends ValueMatcher {
      */
     public function isInfinite(): self {
         $this->startStep('is infinite')
-            ->assertInfinite();
+             ->assertInfinite();
+
         return $this;
     }
 
@@ -31,7 +33,8 @@ class NumberMatcher extends ValueMatcher {
      */
     public function isNan(): self {
         $this->startStep('is nan')
-            ->assertNan();
+             ->assertNan();
+
         return $this;
     }
 }

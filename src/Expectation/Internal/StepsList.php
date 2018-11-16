@@ -19,6 +19,7 @@ class StepsList {
         if (null === static::$instance) {
             static::$instance = new static();
         }
+
         return static::$instance;
     }
 
@@ -33,6 +34,7 @@ class StepsList {
     public function convertToString(): string {
         $message = implode(PHP_EOL, $this->steps);
         $message = $message ? $message . PHP_EOL : $message;
+
         return (string)$message;
     }
 

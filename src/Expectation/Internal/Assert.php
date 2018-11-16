@@ -3,7 +3,6 @@
 namespace PHPKitchen\CodeSpecs\Expectation\Internal;
 
 use ArrayAccess;
-use PHPKitchen\CodeSpecs\Module\CodeSpecs;
 use PHPUnit\Framework\Test;
 
 /**
@@ -109,9 +108,15 @@ class Assert {
     protected function executeAssertMethod($method, $config, $stepName) {
         $this->registerExpectation($stepName);
         if (is_callable([$this->test, $method])) {
-            call_user_func_array([$this->test, $method], $this->buildAssertMethodParamsFromConfig($config));
+            call_user_func_array([
+                $this->test,
+                $method,
+            ], $this->buildAssertMethodParamsFromConfig($config));
         } elseif (method_exists($this, $method)) {
-            call_user_func_array([$this, $method], $this->buildAssertMethodParamsFromConfig($config));
+            call_user_func_array([
+                $this,
+                $method,
+            ], $this->buildAssertMethodParamsFromConfig($config));
         } else {
             throw new \InvalidArgumentException("Assert method '{$method}' does not exist");
         }
@@ -152,6 +157,15 @@ class Assert {
     public function expectException($exception) {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $exception,
+        ]);
+    }
+
+    /**
+     * @param string $exception
+     */
+    public function expectExceptionObject($exceptionObject) {
+        $this->callAssertMethod(__FUNCTION__, [
+            'expected' => $exceptionObject,
         ]);
     }
 

@@ -3,6 +3,7 @@
 namespace PHPKitchen\CodeSpecs\Expectation\Internal;
 
 use PHPKitchen\CodeSpecs\Expectation\Matcher\Base\Matcher;
+use PHPKitchen\CodeSpecs\Expectation\Matcher\ObjectMatcher;
 
 /**
  * ExceptionMatcher is designed to check that object throws valid exception.
@@ -14,21 +15,25 @@ use PHPKitchen\CodeSpecs\Expectation\Matcher\Base\Matcher;
  * @author Dmitry Kolodko <prowwid@gmail.com>
  */
 class ObjectExceptionMatcher extends Matcher {
+    public $exceptionClassOrObject;
     public function withMessage($message) {
         $this->startStep('has message "' . $message . '"')
-            ->expectExceptionMessage($message);
+             ->expectExceptionMessage($message);
+
         return $this;
     }
 
     public function withMessageMatchesPattern($messagePattern) {
         $this->startStep('has message matching pattern "' . $messagePattern . '"')
-            ->expectExceptionMessage($messagePattern);
+             ->expectExceptionMessageRegExp($messagePattern);
+
         return $this;
     }
 
     public function withCode($code) {
         $this->startStep('has code "' . $code . '"')
-            ->expectExceptionCode($code);
+             ->expectExceptionCode($code);
+
         return $this;
     }
 
@@ -44,6 +49,17 @@ class ObjectExceptionMatcher extends Matcher {
      * and finish scenario.
      */
     public function when(callable $callback) {
+        $exceptionClassOrObject = $this->exceptionClassOrObject;
+        if (is_string($exceptionClassOrObject)) {
+            $this->startStep('throws exception "' . $exceptionClassOrObject . '"')
+                 ->expectException($this->exceptionClassOrObject);
+        } else {
+            $this->startStep('throws exception "' . get_class($exceptionClassOrObject) . '"')
+                 ->expectExceptionObject($this->exceptionClassOrObject);
+        }
+
         call_user_func_array($callback, [$this->getActualValue()]);
     }
 }
+
+

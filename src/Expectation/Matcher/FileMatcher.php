@@ -19,7 +19,8 @@ class FileMatcher extends Matcher {
      */
     public function isExist(): self {
         $this->startStep('is exist')
-            ->assertFileExists();
+             ->assertFileExists();
+
         return $this;
     }
 
@@ -28,7 +29,8 @@ class FileMatcher extends Matcher {
      */
     public function isNotExist(): self {
         $this->startStep('is not exist')
-            ->assertFileNotExists();
+             ->assertFileNotExists();
+
         return $this;
     }
 
@@ -37,7 +39,8 @@ class FileMatcher extends Matcher {
      */
     public function isEqualTo($file): self {
         $this->startStep('is equal to file "' . $file . '"')
-            ->assertFileEquals($file);
+             ->assertFileEquals($file);
+
         return $this;
     }
 
@@ -46,7 +49,8 @@ class FileMatcher extends Matcher {
      */
     public function isNotEqualTo($file): self {
         $this->startStep('is not equal to file "' . $file . '"')
-            ->assertFileNotEquals($file);
+             ->assertFileNotEquals($file);
+
         return $this;
     }
 
@@ -55,7 +59,8 @@ class FileMatcher extends Matcher {
      */
     public function isEqualToJsonFile($file): self {
         $this->startStep('is equal to json file "' . $file . '"')
-            ->assertJsonFileEqualsJsonFile($file);
+             ->assertJsonFileEqualsJsonFile($file);
+
         return $this;
     }
 
@@ -64,7 +69,8 @@ class FileMatcher extends Matcher {
      */
     public function isNotEqualToJsonFile($file): self {
         $this->startStep('is not equal to json file "' . $file . '"')
-            ->assertJsonFileNotEqualsJsonFile($file);
+             ->assertJsonFileNotEqualsJsonFile($file);
+
         return $this;
     }
 
@@ -73,7 +79,8 @@ class FileMatcher extends Matcher {
      */
     public function isEqualToXmlFile($file): self {
         $this->startStep('is equal to xml file "' . $file . '"')
-            ->assertXmlFileEqualsXmlFile($file);
+             ->assertXmlFileEqualsXmlFile($file);
+
         return $this;
     }
 
@@ -82,7 +89,8 @@ class FileMatcher extends Matcher {
      */
     public function isNotEqualToXmlFile($file): self {
         $this->startStep('is not equal to xml file "' . $file . '"')
-            ->assertXmlFileNotEqualsXmlFile($file);
+             ->assertXmlFileNotEqualsXmlFile($file);
+
         return $this;
     }
 }

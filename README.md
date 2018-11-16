@@ -7,8 +7,8 @@
     <a href="https://coveralls.io/github/php-kitchen/code-specs?branch=master"><img src="https://coveralls.io/repos/github/php-kitchen/code-specs/badge.svg?branch=master" alt="Code Coverage"></a>
     <a href="https://scrutinizer-ci.com/g/php-kitchen/code-specs/?branch=master"><img src="https://scrutinizer-ci.com/g/php-kitchen/code-specs/badges/quality-score.png?b=master" alt="Code Quality"></a>
     <a href="https://packagist.org/packages/php-kitchen/code-specs"><img src="https://poser.pugx.org/php-kitchen/code-specs/v/stable.svg" alt="Latest Stable Version"></a>
-    <a href="https://packagist.org/packages/lphp-kitchen/code-specs"><img src="https://poser.pugx.org/php-kitchen/code-specs/d/monthly" alt="Monthly Downloads"></a>
-    <a href="https://packagist.org/packages/lphp-kitchen/code-specs"><img src="https://poser.pugx.org/php-kitchen/code-specs/d/total.svg" alt="Total Downloads"></a>
+    <a href="https://packagist.org/packages/php-kitchen/code-specs"><img src="https://poser.pugx.org/php-kitchen/code-specs/d/monthly" alt="Monthly Downloads"></a>
+    <a href="https://packagist.org/packages/php-kitchen/code-specs"><img src="https://poser.pugx.org/php-kitchen/code-specs/d/total.svg" alt="Total Downloads"></a>
     <a href="https://packagist.org/packages/php-kitchen/code-specs"><img src="https://poser.pugx.org/php-kitchen/code-specs/license.svg" alt="License"></a>
 </p>
 

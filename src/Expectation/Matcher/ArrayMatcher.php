@@ -14,7 +14,8 @@ class ArrayMatcher extends ValueMatcher {
      */
     public function hasKey($key) {
         $this->startStep('has key "' . $key . '"')
-            ->assertArrayHasKey($key);
+             ->assertArrayHasKey($key);
+
         return $this;
     }
 
@@ -26,7 +27,8 @@ class ArrayMatcher extends ValueMatcher {
      */
     public function doesNotHaveKey($key) {
         $this->startStep('does not have key "' . $key . '"')
-            ->assertArrayNotHasKey($key);
+             ->assertArrayNotHasKey($key);
+
         return $this;
     }
 
@@ -36,7 +38,8 @@ class ArrayMatcher extends ValueMatcher {
     public function hasSubset($subset, $subsetName = '') {
         $stepName = $subsetName ? "has subset \"{$subsetName}\"" : 'has expected subset';
         $this->startStep($stepName)
-            ->assertArraySubset($subset, false);
+             ->assertArraySubset($subset, false);
+
         return $this;
     }
 
@@ -44,6 +47,7 @@ class ArrayMatcher extends ValueMatcher {
      * In addition of verification that the array has subset check for object identity in subset and actual array.
      *
      * @param array|\ArrayAccess $subset
+     *
      * @return $this
      */
     /**
@@ -53,7 +57,8 @@ class ArrayMatcher extends ValueMatcher {
         $stepName = $subsetName ? "has exactly the same subset \"{$subsetName}\"" : 'has exactly the same expected subset';
 
         $this->startStep($stepName)
-            ->assertArraySubset($subset, true);
+             ->assertArraySubset($subset, true);
+
         return $this;
     }
 
@@ -64,7 +69,8 @@ class ArrayMatcher extends ValueMatcher {
         $stepName = $expectedValueName ? "has same size as {$expectedValueName}" : "has same size as expected";
 
         $this->startStep($stepName)
-            ->assertSameSize($expected);
+             ->assertSameSize($expected);
+
         return $this;
     }
 
@@ -75,7 +81,8 @@ class ArrayMatcher extends ValueMatcher {
         $stepName = $expectedValueName ? "does not have same size as {$expectedValueName}" : "does not have same size as expected";
 
         $this->startStep($stepName)
-            ->assertNotSameSize($expected);
+             ->assertNotSameSize($expected);
+
         return $this;
     }
 
@@ -86,7 +93,8 @@ class ArrayMatcher extends ValueMatcher {
         $stepName = $needleName ? "contains {$needleName}" : "contains expected needle";
 
         $this->startStep($stepName)
-            ->assertContains($needle);
+             ->assertContains($needle);
+
         return $this;
     }
 
@@ -97,7 +105,8 @@ class ArrayMatcher extends ValueMatcher {
         $stepName = $needleName ? "does not contain {$needleName}" : "does not contain expected needle";
 
         $this->startStep($stepName)
-            ->assertNotContains($needle);
+             ->assertNotContains($needle);
+
         return $this;
     }
 
@@ -106,7 +115,8 @@ class ArrayMatcher extends ValueMatcher {
      */
     public function containsOnlyValuesOfType($type) {
         $this->startStep('contains only values of type "' . $type . '"')
-            ->assertContainsOnly($type);
+             ->assertContainsOnly($type);
+
         return $this;
     }
 
@@ -115,7 +125,8 @@ class ArrayMatcher extends ValueMatcher {
      */
     public function containsOnlyValuesOfNativeType($type) {
         $this->startStep('contains only values of native type "' . $type . '"')
-            ->assertContainsOnly($type, true);
+             ->assertContainsOnly($type, true);
+
         return $this;
     }
 
@@ -124,7 +135,8 @@ class ArrayMatcher extends ValueMatcher {
      */
     public function containsOnlyInstancesOf($class) {
         $this->startStep('contains only instances of "' . $class . '"')
-            ->assertContainsOnlyInstancesOf($class);
+             ->assertContainsOnlyInstancesOf($class);
+
         return $this;
     }
 
@@ -133,7 +145,8 @@ class ArrayMatcher extends ValueMatcher {
      */
     public function doesNotContainOnlyValuesOfType($type) {
         $this->startStep('does not contain only values of type "' . $type . '"')
-            ->assertNotContainsOnly($type, null);
+             ->assertNotContainsOnly($type, null);
+
         return $this;
     }
 
@@ -142,7 +155,8 @@ class ArrayMatcher extends ValueMatcher {
      */
     public function doesNotContainOnlyValuesOfNativeType($type) {
         $this->startStep('does not contain only values of native type "' . $type . '"')
-            ->assertNotContainsOnly($type, true);
+             ->assertNotContainsOnly($type, true);
+
         return $this;
     }
 
@@ -153,7 +167,8 @@ class ArrayMatcher extends ValueMatcher {
         $stepName = $expectedValueName ? "has count equal to count of {$expectedValueName}" : "has count equal to count of expected";
 
         $this->startStep($stepName)
-            ->assertCount($this->convertToCount($countOrCountable));
+             ->assertCount($this->convertToCount($countOrCountable));
+
         return $this;
     }
 
@@ -164,7 +179,8 @@ class ArrayMatcher extends ValueMatcher {
         $stepName = $expectedValueName ? "does not have count equal count of {$expectedValueName}" : "does not have count equal count of expected";
 
         $this->startStep($stepName)
-            ->assertNotCount($this->convertToCount($countOrCountable));
+             ->assertNotCount($this->convertToCount($countOrCountable));
+
         return $this;
     }
 
@@ -174,6 +190,7 @@ class ArrayMatcher extends ValueMatcher {
         } else {
             $count = $value;
         }
+
         return $count;
     }
 }

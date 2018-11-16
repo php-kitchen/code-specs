@@ -24,6 +24,7 @@ abstract class Matcher implements ExpectationMatcher {
 
     protected function startStep($stepName) {
         $this->assert->changeCurrentStepTo($stepName);
+
         return $this->assert;
     }
 
@@ -32,12 +33,14 @@ abstract class Matcher implements ExpectationMatcher {
 
         $newMatcher->assert->switchToInTimeExecutionStrategy();
         $newMatcher->assert->runStepsWithActualValue($actualValue);
+
         return $newMatcher;
     }
 
     protected function createInternalMatcherWithDescription($matcherClass, $description) {
         $assert = clone $this->assert;
         $assert->changeDescriptionTo($description);
+
         return new $matcherClass($assert);
     }
 

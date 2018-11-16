@@ -117,10 +117,23 @@ XML;
     public function testThrowsException() {
         $object = $this->createMatcherWithActualValue(new TestDataClass());
         $object->throwsException(\InvalidArgumentException::class)
-            ->withMessage('test exception')
-            ->when(function (TestDataClass $object) {
-                $object->throwException();
-            });
+               ->withMessage('test exception')
+               ->when(function (TestDataClass $object) {
+                   $object->throwException();
+               });
+    }
+
+    /**
+     * @covers ::throwsException
+     * @covers  \PHPKitchen\CodeSpecs\Expectation\Internal\ObjectExceptionMatcher::withMessage
+     * @covers  \PHPKitchen\CodeSpecs\Expectation\Internal\ObjectExceptionMatcher::when
+     */
+    public function testThrowsExceptionWithObject() {
+        $object = $this->createMatcherWithActualValue(new TestDataClass());
+        $object->throwsException(new \InvalidArgumentException('test exception'))
+               ->when(function (TestDataClass $object) {
+                   $object->throwException();
+               });
     }
 }
 

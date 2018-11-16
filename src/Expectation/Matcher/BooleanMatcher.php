@@ -14,7 +14,8 @@ class BooleanMatcher extends ValueMatcher {
      */
     public function isTrue() {
         $this->startStep('is true')
-            ->assertTrue();
+             ->assertTrue();
+
         return $this;
     }
 
@@ -23,7 +24,8 @@ class BooleanMatcher extends ValueMatcher {
      */
     public function isNotTrue() {
         $this->startStep('is not true')
-            ->assertNotTrue();
+             ->assertNotTrue();
+
         return $this;
     }
 
@@ -32,7 +34,8 @@ class BooleanMatcher extends ValueMatcher {
      */
     public function isFalse() {
         $this->startStep('is false')
-            ->assertFalse();
+             ->assertFalse();
+
         return $this;
     }
 
@@ -41,7 +44,8 @@ class BooleanMatcher extends ValueMatcher {
      */
     public function isNotFalse() {
         $this->startStep('is not false')
-            ->assertNotFalse();
+             ->assertNotFalse();
+
         return $this;
     }
 }

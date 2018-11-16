@@ -17,7 +17,8 @@ class ObjectMatcher extends ValueMatcher {
      */
     public function isInstanceOf($class): self {
         $this->startStep('is instance of "' . $class . '"')
-            ->assertInstanceOf($class);
+             ->assertInstanceOf($class);
+
         return $this;
     }
 
@@ -26,7 +27,8 @@ class ObjectMatcher extends ValueMatcher {
      */
     public function isNotInstanceOf($class): self {
         $this->startStep('is not instance of "' . $class . '"')
-            ->assertNotInstanceOf($class);
+             ->assertNotInstanceOf($class);
+
         return $this;
     }
 
@@ -39,7 +41,8 @@ class ObjectMatcher extends ValueMatcher {
     public function isEqualToXmlStructure($expectedElement): self {
         $this->isInstanceOf(DOMElement::class);
         $this->startStep('is equal to expected DOMElement')
-            ->assertEqualXMLStructure($expectedElement, false);
+             ->assertEqualXMLStructure($expectedElement, false);
+
         return $this;
     }
 
@@ -47,6 +50,7 @@ class ObjectMatcher extends ValueMatcher {
      * Asserts that a hierarchy of DOMElements matches and ensures attributes of structures also equals.
      *
      * @param DOMElement $expectedElement
+     *
      * @return $this
      */
     /**
@@ -55,7 +59,8 @@ class ObjectMatcher extends ValueMatcher {
     public function isEqualToXmlStructureAndItsAttributes($expectedElement): self {
         $this->isInstanceOf(DOMElement::class);
         $this->startStep('is equal to xml structure and it\'s attributes in DOMElement')
-            ->assertEqualXMLStructure($expectedElement, true);
+             ->assertEqualXMLStructure($expectedElement, true);
+
         return $this;
     }
 
@@ -64,7 +69,8 @@ class ObjectMatcher extends ValueMatcher {
      */
     public function hasAttribute($attribute): self {
         $this->startStep('has attribute "' . $attribute . '"')
-            ->assertObjectHasAttribute($attribute);
+             ->assertObjectHasAttribute($attribute);
+
         return $this;
     }
 
@@ -73,14 +79,24 @@ class ObjectMatcher extends ValueMatcher {
      */
     public function doesNotHaveAttribute($attribute): self {
         $this->startStep('does not have attribute "' . $attribute . '"')
-            ->assertObjectNotHasAttribute($attribute);
+             ->assertObjectNotHasAttribute($attribute);
+
         return $this;
     }
 
-    public function throwsException($exceptionClass): ObjectExceptionMatcher {
-        $this->startStep('throws exception "' . $exceptionClass . '"')
-            ->expectException($exceptionClass);
+    /**
+     * Start sub-chain of exception matcher.
+     *
+     * @param \Exception|string $exceptionClassOrObject exception class or object that going to be thrown by object
+     *
+     * @return ObjectExceptionMatcher
+     */
+    public function throwsException($exceptionClassOrObject): ObjectExceptionMatcher {
+        $class = is_string($exceptionClassOrObject) ? $exceptionClassOrObject : get_class($exceptionClassOrObject);
+        $matcher = $this->createInternalMatcherWithDescription(ObjectExceptionMatcher::class, 'I see that exception "' . $class . '"');
 
-        return $this->createInternalMatcherWithDescription(ObjectExceptionMatcher::class, 'I see that exception "' . $exceptionClass . '"');
+        $matcher->exceptionClassOrObject = $exceptionClassOrObject;
+
+        return $matcher;
     }
 }

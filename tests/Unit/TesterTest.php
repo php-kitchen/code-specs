@@ -13,5 +13,5 @@ use Tests\Base\TestGuyTests;
  * @author Dmitry Kolodko <prowwid@gmail.com>
  */
 class TesterTest extends Specification {
-   use TestGuyTests;
+    use TestGuyTests;
 }
