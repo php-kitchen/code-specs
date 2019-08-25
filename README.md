@@ -12,10 +12,13 @@
     <a href="https://packagist.org/packages/php-kitchen/code-specs"><img src="https://poser.pugx.org/php-kitchen/code-specs/license.svg" alt="License"></a>
 </p>
 
+Code Specs isn't just another tests library - it's the way you design your soultions. The Specs Way.
 
-Code Specs is a PHPUnit plugin with support of Codeception for BDD style Unit tests that allows to writes test in a specification way using human-readable format. 
-Goal of this library is to add a bunch of cool methods for unit testing and show a way of representing unit tests as a behavior specifications of a specific class and a test of specific method as a specification of the method.
-Tester represents an actor who test you code(yes, like in [Codeception](https://github.com/Codeception/Codeception) - because of Codeception this library exists). See by yourself:
+Code Specs is built as a PHPUnit plugin(with Codeception support aswell) for writing BDD style Unit tests in a specification way using human-readable format. 
+
+Goal of Code Specs is to add a bunch of cool tools for unit testing and show a way of representing unit tests as a behavior specifications that describes specific class behavior in variety of use-cases.
+
+The min hero of Code Specs that does the magic is Tester. Tester represents an actor who ensures you code pass specifications(yes, like in [Codeception](https://github.com/Codeception/Codeception) - this library expired by Codeception). See iy by yourself:
 ```php
 namespace Specs\Unit;
 
@@ -25,7 +28,7 @@ use PHPKitchen\CodeSpecs\Contract\TestGuy;
 /**
  * Specification of {@link IncomeCalculator}
  *
- * @author Dmitry Kolodko <prowwid@gmail.com>
+ * @author Dima Kolodko <prowwid@gmail.com>
  */
 class IncomeCalculatorTest extends Specification {
     private const EXPECTED_TAX_FOR_FIRST_LEVEL_TAX_RULE = 4500;
