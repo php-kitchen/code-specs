@@ -61,8 +61,7 @@ class DirectoryMatcherTest extends BaseMatcherTest {
      * @covers ::isNotReadable
      */
     public function testIsNotReadable() {
-        // @TODO: this is a bad approach. Need to refactor to not depend on the fact that root dir is not accessible(as it actually might be accessible)
-        $directory = $this->createMatcherWithActualValue('/root');
+        $directory = $this->createMatcherWithActualValue('/etc');
         $directory->isNotReadable();
     }
 
@@ -78,8 +77,7 @@ class DirectoryMatcherTest extends BaseMatcherTest {
      * @covers ::isNotWritable
      */
     public function testIsNotWritable() {
-        // @TODO: this is a bad approach. Need to refactor to not depend on the fact that root dir is not accessible(as it actually might be accessible)
-        $directory = $this->createMatcherWithActualValue('/root');
+        $directory = $this->createMatcherWithActualValue('/dgfdg');
         $directory->isNotWritable();
     }
 }

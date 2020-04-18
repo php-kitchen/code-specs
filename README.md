@@ -12,9 +12,11 @@
     <a href="https://packagist.org/packages/php-kitchen/code-specs"><img src="https://poser.pugx.org/php-kitchen/code-specs/license.svg" alt="License"></a>
 </p>
 
-Code Specs isn't just another tests library - it's the way you design your soultions. The Specs Way.
+# NOTICE: Library is under refactoring for release of V5.0.0 and docs reflect the new style of specs
 
-Code Specs is built as a PHPUnit plugin(with Codeception support aswell) for writing BDD style Unit tests in a specification way using human-readable format. 
+Code Specs isn't just another tests library - it's the way you design your solutions. The Specs Way.
+
+Code Specs is built as a PHPUnit plugin(with Codeception support as well) for writing BDD style Unit tests in a specification way using human-readable format. 
 
 Goal of Code Specs is to add a bunch of cool tools for unit testing and show a way of representing unit tests as a behavior specifications that describes specific class behavior in variety of use-cases.
 
@@ -23,7 +25,7 @@ The min hero of Code Specs that does the magic is Tester. Tester represents an a
 namespace Specs\Unit;
 
 use PHPKitchen\CodeSpecs\Base\Specification;
-use PHPKitchen\CodeSpecs\Contract\TestGuy;
+use PHPKitchen\CodeSpecs\Actor\I;
 
 /**
  * Specification of {@link IncomeCalculator}
@@ -43,26 +45,25 @@ class IncomeCalculatorTest extends Specification {
         $clientsPayments = []; // dummy variable, just for example
         $hoursSpentWorking = 160; // dummy variable, just for example
         $service = new IncomeCalculator($clientsPayments, $hoursSpentWorking);
-        $I = $this->tester;
-        $I->describe('income tax calculations');
+        I::describe('income tax calculations');
 
-        $I->verifyThat('income calculator honors tax rules for different ranges of income', function (TestGuy $I) use ($service) {
-
-            $I->expectThat('for income less that 50 000 calculator use 10% tax rule');
-            $I->lookAt('first level income tax');
-            $I->seeNumber($service->calculateTax())
+        I::expect('for income less that 50 000 calculator use 10% tax rule', function () use ($service) {
+            I::lookAt('first level income tax')
+                ->seeNumber($service->calculateTax())
                 ->isNotEmpty()
                 ->isEqualTo(self::EXPECTED_TAX_FOR_FIRST_LEVEL_TAX_RULE);
+        });
 
-            $I->expectThat('for income between 50 000 and 100 000 calculator use 12% tax rule');
-            $I->lookAt('second level income tax');
-            $I->seeNumber($service->calculateTax())
+        I::expect('for income between 50 000 and 100 000 calculator use 12% tax rule', function () use ($service) {
+            I::lookAt('second level income tax')
+                ->seeNumber($service->calculateTax())
                 ->isNotEmpty()
                 ->isEqualTo(self::EXPECTED_TAX_FOR_SECOND_LEVEL_TAX_RULE);
+        });
 
-            $I->expectThat('for income more than 100 000 calculator use 20% tax rule');
-            $I->lookAt('third level income tax');
-            $I->seeNumber('income tax', $service->calculateTax())
+        I::expect('for income more than 100 000 calculator use 20% tax rule', function () use ($service) {
+            I::lookAt('second level income tax')
+                ->seeNumber($service->calculateTax())
                 ->isNotEmpty()
                 ->isEqualTo(self::EXPECTED_TAX_FOR_THIRD_LEVEL_TAX_RULE);
         });
@@ -76,16 +77,15 @@ class IncomeCalculatorTest extends Specification {
         $hoursSpentWorking = 160; // dummy variable, just for example
         $service = new IncomeCalculator($clientsPayments, $hoursSpentWorking);
 
-        $I = $this->tester;
-        $I->describe('income calculation');
+        I::describe('Net income calculation');
+        I::expect('calculator calculates income with tax using 10% tax rule for income less that 50 000');
 
-        $I->lookAt('income tax');
-
-        $I->expectThat('calculator calculates income with tax using 10% tax rule for income less that 50 000');
-
-        $I->seeNumber($service->calculateWithTax())
+        I::lookAt('income tax')
+            ->seeNumber($service->calculateWithTax())
             ->isNotEmpty()
             ->isEqualTo(self::INCOME_AFTER_APPLYING_FIRST_LEVEL_TAX_RULE);
+
+
     }
 }
 ```
@@ -96,9 +96,9 @@ CodeSpecs also decorates errors output so, for example, if "IncomeCalculator" se
 
 ## Requirements
 
-**`PHP >= 7.1` is required.**
+**`PHP >= 7.4` is required.**
 
-**`PHPUnit >= 6.0` is required but `PHPUnit >= 6.2` is recommended.**
+**`PHPUnit >= 9.1` is required.**
 
 ## Getting Started
 
@@ -122,35 +122,14 @@ class YourTest extends Specification {
      * @test
      */
     public function myMethodBehavior() {
-        $I = $this->tester;
-        ......
-        $I->lookAt('my dummy variable');
-        $I->seeBool(true)->isFalse();
+        I::lookAt('my dummy variable')
+            ->seeBool(true)
+            ->isFalse();
     }
 }
 
 ```
 
-or by using "TesterInitialization" trait in your test case
-
-```php
-use PHPUnit\Framework\TestCase;
-use PHPKitchen\CodeSpecs\Mixin\TesterInitialization;
-
-class YourTest extends TestCase {
-    use TesterInitialization;
-
-    /**
-     * @test
-     */
-    public function myMethodBehavior() {
-        $I = $this->tester;
-        ......
-        $I->lookAt('my dummy variable');
-        $I->seeBool(true)->isFalse();
-    }
-}
-```
 **Note:** *If you want to use CodeSpecs with Codeception read [Codeception integration guide](docs/en/integrations/codeception.md)*
 
 For additional information and guides go to the [project documentation](docs/README.md)

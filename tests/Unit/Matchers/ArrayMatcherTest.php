@@ -56,7 +56,7 @@ class ArrayMatcherTest extends BaseMatcherTest {
      */
     public function testContains() {
         $array = $this->createMatcherWithActualValue([0, 1, $this]);
-        $array->contains(static::class);
+        $array->contains(1);
         $array->contains($this);
         $array->contains(0);
     }

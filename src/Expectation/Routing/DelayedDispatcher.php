@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPKitchen\CodeSpecs\Expectation\Dispatcher;
+namespace PHPKitchen\CodeSpecs\Expectation\Routing;
 
 /**
  * Extends base dispatcher to delay asserts.

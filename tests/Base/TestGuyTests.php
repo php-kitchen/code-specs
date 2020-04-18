@@ -113,6 +113,8 @@ trait TestGuyTests {
 
 Failed asserting that 1 is null.
 TEXT;
+        // hack to test in windows Docker containers
+        $expectedOutput = str_replace("\r", "", $expectedOutput);
 
         $this->assertEquals($expectedOutput, $message);
     }

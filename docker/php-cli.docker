@@ -1,0 +1,26 @@
+FROM php:7.4-cli
+
+RUN apt-get update
+
+# Install git
+RUN apt-get install -y git
+
+# Install dependencies for php extensions
+RUN apt-get install -y --no-install-recommends libmagickwand-dev zlib1g-dev libpng-dev libxml2-dev libxslt-dev libzip-dev zip
+
+# Install php extensions
+RUN docker-php-ext-configure intl
+RUN	docker-php-ext-install xml xsl zip
+
+RUN docker-php-ext-enable xml zip
+
+# Install composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/bin --filename=composer --quiet
+ENV COMPOSER_ALLOW_SUPERUSER 1
+
+# CLean apt get cash
+RUN apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
+
+WORKDIR /opt/project
+

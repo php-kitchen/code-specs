@@ -14,5 +14,5 @@ use PHPUnit\Framework\TestCase;
  * @author Dmitry Kolodko <prowwid@gmail.com>
  */
 abstract class Specification extends TestCase {
-    use TesterInitialization;
+
 }

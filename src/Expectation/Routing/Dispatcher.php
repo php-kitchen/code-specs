@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPKitchen\CodeSpecs\Expectation\Dispatcher;
+namespace PHPKitchen\CodeSpecs\Expectation\Routing;
 
 use PHPKitchen\CodeSpecs\Contract\ExpectationMatcher;
 use PHPKitchen\CodeSpecs\Expectation\Internal\Assert;

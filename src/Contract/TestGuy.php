@@ -3,7 +3,7 @@
 namespace PHPKitchen\CodeSpecs\Contract;
 
 use PHPKitchen\CodeSpecs\Directive\Wait;
-use PHPKitchen\CodeSpecs\Expectation\Dispatcher\DelayedDispatcher;
+use PHPKitchen\CodeSpecs\Expectation\Routing\DelayedDispatcher;
 use PHPKitchen\CodeSpecs\Expectation\Matcher\ArrayMatcher;
 use PHPKitchen\CodeSpecs\Expectation\Matcher\BooleanMatcher;
 use PHPKitchen\CodeSpecs\Expectation\Matcher\ClassMatcher;
@@ -84,7 +84,7 @@ interface TestGuy {
      *
      * @param string $variableName name of a variable to look at.
      *
-     * @return \PHPKitchen\CodeSpecs\Expectation\Dispatcher\DelayedDispatcher
+     * @return \PHPKitchen\CodeSpecs\Expectation\Routing\DelayedDispatcher
      */
     public function match(string $variableName): DelayedDispatcher;
 

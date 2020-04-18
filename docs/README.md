@@ -82,3 +82,4 @@ Documentation contains following paragraphs:
 * [Directives](en/directives.md)
 * [Runtime matchers](en/runtime-matchers.md)
 * [Examples](en/examples-list.md)
+* [For developers](en/for-developers.md)

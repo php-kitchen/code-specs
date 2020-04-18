@@ -1,0 +1,13 @@
+version: '3.1'
+
+services:
+  php-cli:
+    working_dir: /opt/project
+    build:
+      context: docker
+      dockerfile: php-cli.docker
+    volumes:
+      - .:/opt/project
+      - composer:/root/.composer/cache
+volumes:
+  composer:

@@ -1,0 +1,22 @@
+# IDE project files
+/.idea
+/nbproject
+
+# linux cache
+/.directory
+
+# composer vendor dir
+/vendor
+
+# node modules dir
+/node_modules
+
+# docker
+/docker/dev/httpd/logs
+/docker/dev/mariadb
+/docker/dev/ssh/id_rsa
+
+/data
+/data_remote
+/runtime
+

@@ -22,7 +22,7 @@ abstract class BaseMatcherTest extends TestCase {
      */
     abstract protected function initMatcherClass();
 
-    protected function setUp() {
+    protected function setUp(): void {
         parent::setUp();
         $this->initMatcherClass();
     }
