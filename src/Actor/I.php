@@ -5,40 +5,39 @@ namespace PHPKitchen\CodeSpecs\Actor;
 use PHPKitchen\CodeSpecs\Directive\Wait;
 use PHPKitchen\CodeSpecs\Expectation\Routing\Router;
 
+/**
+ * Spec Actor
+ *
+ * @method static void describe(string $scenario)
+ * @method static void verify(string $scenario, callable $verificationSteps = null)
+ * @method static void expect(string $scenario, callable $verificationSteps = null)
+ * @method static Router match(string $variableName)
+ * @method static Router lookAt(string $variableName)
+ * @method static Wait wait($numberOfTimeUnits)
+ * @method static void usePlugin($plugin)
+ *
+ * @package PHPKitchen\CodeSpecs\Actor
+ */
 class I {
-    public static function describe(string $scenario) {
+    private static $actor = SpecActor::class;
 
+    public static function __callStatic($name, $arguments) {
+        $actor = static::getActor();
+        if (method_exists($actor, $name)) {
+            return $actor->{$name}(...$arguments);
+        }
+        throw new \BadMethodCallException("Method {$name} does not exist at " . self::class);
     }
 
-    public static function verify(string $scenario,  callable $verificationSteps = null) {
+    private static function getActor(): SpecActor {
+        if (is_string(self::$actor)) {
+            self::$actor = new self::$actor;
+        }
 
+        return self::$actor;
     }
 
-    public static function expect(string $scenario,  callable $verificationSteps = null) {
-
-    }
-
-    public static function match(string $variableName) {
-
-    }
-
-    /**
-     * Stops execution for specified number of units of time.
-     *
-     * @param int $numberOfTimeUnits number of units of time.
-     * {@link Wait} specifies what unit should be used.
-     *
-     * @return Wait
-     */
-    public static function wait($numberOfTimeUnits): Wait {
-
-    }
-
-    public static function lookAt(string $variableName): Router {
-        return new Router();
-    }
-
-    public static function usePlugin($plugin) {
-
+    public static function changeActor($actor) {
+        self::$actor = $actor;
     }
 }

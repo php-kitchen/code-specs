@@ -6,7 +6,7 @@ namespace PHPKitchen\CodeSpecs\Expectation\Matcher;
  * BooleanMatcher is designed to check given boolean variable matches expectation.
  *
  * @package PHPKitchen\CodeSpecs\Expectation
- * @author Dmitry Kolodko <prowwid@gmail.com>
+ * @author Dima Kolodko <dima@kolodko.pro>
  */
 class BooleanMatcher extends ValueMatcher {
     /**

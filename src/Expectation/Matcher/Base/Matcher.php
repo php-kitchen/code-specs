@@ -9,7 +9,7 @@ use PHPKitchen\CodeSpecs\Expectation\Internal\Assert;
  * Matcher is a base class for all of the expectation matchers.
  *
  * @package PHPKitchen\CodeSpecs\Base
- * @author Dmitry Kolodko <prowwid@gmail.com>
+ * @author Dima Kolodko <dima@kolodko.pro>
  */
 abstract class Matcher implements ExpectationMatcher {
     private $assert;

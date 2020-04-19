@@ -12,10 +12,11 @@ use PHPKitchen\CodeSpecs\Expectation\Matcher\ObjectMatcher;
  * @property \Exception $actual
  *
  * @package PHPKitchen\CodeSpecs\Expectation
- * @author Dmitry Kolodko <prowwid@gmail.com>
+ * @author Dima Kolodko <dima@kolodko.pro>
  */
 class ObjectExceptionMatcher extends Matcher {
     public $exceptionClassOrObject;
+
     public function withMessage($message) {
         $this->startStep('has message "' . $message . '"')
              ->expectExceptionMessage($message);

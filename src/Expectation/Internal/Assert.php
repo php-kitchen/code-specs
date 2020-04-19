@@ -3,7 +3,6 @@
 namespace PHPKitchen\CodeSpecs\Expectation\Internal;
 
 use ArrayAccess;
-use PHPUnit\Framework\Test;
 
 /**
  * Represents PHPUnit Assert facade.
@@ -13,7 +12,7 @@ use PHPUnit\Framework\Test;
  * @codeCoverageIgnore
  *
  * @package PHPKitchen\CodeSpecs\Expectation\Internal
- * @author Dmitry Kolodko <prowwid@gmail.com>
+ * @author Dima Kolodko <dima@kolodko.pro>
  */
 class Assert {
     const IN_TIME_EXECUTION_STRATEGY = 1;
@@ -26,10 +25,6 @@ class Assert {
      * @var StepsList list of steps that was made prior current assert.
      */
     protected $stepsList;
-    /**
-     * @var Test the test object.
-     */
-    protected $test;
     /**
      * @var string description of expectation. If expectation fails this description will be displayed in console.
      */
@@ -48,9 +43,8 @@ class Assert {
      */
     private $currentStepName = '';
 
-    public function __construct(StepsList $stepsList, Test $test, $actual, $description = '', $strategy = self::IN_TIME_EXECUTION_STRATEGY) {
+    public function __construct(StepsList $stepsList, $actual, $description = '', $strategy = self::IN_TIME_EXECUTION_STRATEGY) {
         $this->stepsList = $stepsList;
-        $this->test = $test;
         $this->actual = $actual;
         $this->description = $description;
         $this->delayedAssertSteps = new \SplQueue();
@@ -107,9 +101,9 @@ class Assert {
 
     protected function executeAssertMethod($method, $config, $stepName) {
         $this->registerExpectation($stepName);
-        if (is_callable([$this->test, $method])) {
+        if (is_callable([\PHPUnit\Framework\Assert::class, $method])) {
             call_user_func_array([
-                $this->test,
+                \PHPUnit\Framework\Assert::class,
                 $method,
             ], $this->buildAssertMethodParamsFromConfig($config));
         } elseif (method_exists($this, $method)) {
@@ -970,7 +964,7 @@ class Assert {
     }
 
     protected function classExists($class, $message) {
-        $this->test->assertTrue(class_exists($class), $message);
+        \PHPUnit\Framework\Assert::assertTrue(class_exists($class), $message);
     }
 
     /**
@@ -981,7 +975,7 @@ class Assert {
     }
 
     protected function classDoesNotExist($class, $message) {
-        $this->test->assertFalse(class_exists($class), $message);
+        \PHPUnit\Framework\Assert::assertFalse(class_exists($class), $message);
     }
 
     /**
@@ -992,7 +986,7 @@ class Assert {
     }
 
     protected function classIsInterface($class, $message) {
-        $this->test->assertTrue(interface_exists($class), $message);
+        \PHPUnit\Framework\Assert::assertTrue(interface_exists($class), $message);
     }
 
     /**
@@ -1003,7 +997,7 @@ class Assert {
     }
 
     protected function classIsNotInterface($class, $message) {
-        $this->test->assertFalse(interface_exists($class), $message);
+        \PHPUnit\Framework\Assert::assertFalse(interface_exists($class), $message);
     }
 
     /**

@@ -3,7 +3,6 @@
 namespace PHPKitchen\CodeSpecs\Contract;
 
 use PHPKitchen\CodeSpecs\Directive\Wait;
-use PHPKitchen\CodeSpecs\Expectation\Routing\DelayedDispatcher;
 use PHPKitchen\CodeSpecs\Expectation\Matcher\ArrayMatcher;
 use PHPKitchen\CodeSpecs\Expectation\Matcher\BooleanMatcher;
 use PHPKitchen\CodeSpecs\Expectation\Matcher\ClassMatcher;
@@ -13,13 +12,14 @@ use PHPKitchen\CodeSpecs\Expectation\Matcher\NumberMatcher;
 use PHPKitchen\CodeSpecs\Expectation\Matcher\ObjectMatcher;
 use PHPKitchen\CodeSpecs\Expectation\Matcher\StringMatcher;
 use PHPKitchen\CodeSpecs\Expectation\Matcher\ValueMatcher;
+use PHPKitchen\CodeSpecs\Expectation\Routing\DeferredDispatcher;
 
 /**
  * Represents a test-guy who is testing your code, so tests writes as a story of what tester is doing.
  *
  * @method TestGuy expectTo(string $expectation)
  *
- * @author Dmitry Kolodko <prowwid@gmail.com>
+ * @author Dima Kolodko <dima@kolodko.pro>
  */
 interface TestGuy {
     /**
@@ -84,9 +84,9 @@ interface TestGuy {
      *
      * @param string $variableName name of a variable to look at.
      *
-     * @return \PHPKitchen\CodeSpecs\Expectation\Routing\DelayedDispatcher
+     * @return \PHPKitchen\CodeSpecs\Expectation\Routing\DeferredDispatcher
      */
-    public function match(string $variableName): DelayedDispatcher;
+    public function match(string $variableName): DeferredDispatcher;
 
     /**
      * Stops execution for specified number of units of time.

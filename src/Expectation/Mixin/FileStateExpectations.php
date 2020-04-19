@@ -8,7 +8,7 @@ namespace PHPKitchen\CodeSpecs\Expectation\Mixin;
  * @method \PHPKitchen\CodeSpecs\Expectation\Internal\Assert startStep($stepName)
  *
  * @package PHPKitchen\CodeSpecs\Matchers\Mixins
- * @author Dmitry Kolodko <prowwid@gmail.com>
+ * @author Dima Kolodko <dima@kolodko.pro>
  */
 trait FileStateExpectations {
     abstract public function isExist();

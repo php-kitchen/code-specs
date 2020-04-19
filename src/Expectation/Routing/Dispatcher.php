@@ -14,7 +14,6 @@ use PHPKitchen\CodeSpecs\Expectation\Matcher\NumberMatcher;
 use PHPKitchen\CodeSpecs\Expectation\Matcher\ObjectMatcher;
 use PHPKitchen\CodeSpecs\Expectation\Matcher\StringMatcher;
 use PHPKitchen\CodeSpecs\Expectation\Matcher\ValueMatcher;
-use PHPUnit\Framework\Test;
 
 /**
  * Represents matchers dispatcher.
@@ -22,7 +21,7 @@ use PHPUnit\Framework\Test;
  * Required to dispatch asserts to specific matchers.
  *
  * @package PHPKitchen\CodeSpecs\Expectation
- * @author Dmitry Kolodko <prowwid@gmail.com>
+ * @author Dima Kolodko <dima@kolodko.pro>
  */
 class Dispatcher {
     /**
@@ -30,19 +29,15 @@ class Dispatcher {
      */
     protected $actual;
     /**
-     * @var \PHPUnit\Framework\Test
-     */
-    protected $test;
-    /**
      * @var string description of expectation. If expectation fails this description will be displayed in console.
      */
     protected $variableName;
-    protected $useDelayedAsserts = false;
+    protected $deferAsserts = false;
 
-    public function __construct(Test $test, $actual, $variableName = '') {
-        $this->test = $test;
+    public function __construct($actual, $variableName = '', $deferAsserts) {
         $this->actual = $actual;
         $this->variableName = $variableName;
+        $this->deferAsserts = $deferAsserts;
         $this->init();
     }
 
@@ -92,9 +87,9 @@ class Dispatcher {
         $variableName = $this->variableName ?: $id;
 
         $stepsList = StepsList::getInstance();
-        $assert = new Assert($stepsList, $this->test, $this->actual, "I see that {$variableName}");
+        $assert = new Assert($stepsList, $this->actual, "I see that {$variableName}");
 
-        if ($this->useDelayedAsserts) {
+        if ($this->deferAsserts) {
             $assert->switchToDelayedExecutionStrategy();
         }
 

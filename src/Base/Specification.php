@@ -11,8 +11,10 @@ use PHPUnit\Framework\TestCase;
  * @codeCoverageIgnore
  *
  * @package PHPKitchen\CodeSpecs\Base
- * @author Dmitry Kolodko <prowwid@gmail.com>
+ * @author Dima Kolodko <dima@kolodko.pro>
  */
 abstract class Specification extends TestCase {
+    protected function clearSteps() {
 
+    }
 }

@@ -6,7 +6,7 @@ namespace PHPKitchen\CodeSpecs\Expectation\Internal;
  * Represents a list of steps performed during a specification.
  *
  * @package PHPKitchen\CodeSpecs\Expectation\Internal
- * @author Dmitry Kolodko <prowwid@gmail.com>
+ * @author Dima Kolodko <dima@kolodko.pro>
  */
 class StepsList {
     /**

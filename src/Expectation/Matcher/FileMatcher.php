@@ -9,7 +9,7 @@ use PHPKitchen\CodeSpecs\Expectation\Mixin\FileStateExpectations;
  * FileMatcher is designed to check given file matches expectation.
  *
  * @package PHPKitchen\CodeSpecs\Expectation
- * @author Dmitry Kolodko <prowwid@gmail.com>
+ * @author Dima Kolodko <dima@kolodko.pro>
  */
 class FileMatcher extends Matcher {
     use FileStateExpectations;

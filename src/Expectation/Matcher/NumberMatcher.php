@@ -5,7 +5,7 @@ namespace PHPKitchen\CodeSpecs\Expectation\Matcher;
 /**
  * NumberMatcher is designed to check given number matches expectation.
  *
- * @author Dmitry Kolodko <prowwid@gmail.com>
+ * @author Dima Kolodko <dima@kolodko.pro>
  */
 class NumberMatcher extends ValueMatcher {
     /**

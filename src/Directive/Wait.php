@@ -8,15 +8,15 @@ use PHPKitchen\CodeSpecs\Expectation\Internal\StepsList;
  * Represents a helper that allows to wait with a specified convention.
  *
  * @package PHPKitchen\CodeSpecs\Expectation
- * @author Dmitry Kolodko <prowwid@gmail.com>
+ * @author Dima Kolodko <dima@kolodko.pro>
  */
 class Wait {
-    private $microSecondMultiplier = 1;
-    private $milliSecondMultiplier = 100000;
-    private $secondMultiplier = 1000000;
-    private $minuteMultiplier = 60000000;
-    private $timeToWait;
-    private $steps;
+    private const MICROSECOND_MULTIPLIER = 1;
+    private const MILLISECOND_MULTIPLIER = 100000;
+    private const SECOND_MULTIPLIER = 1000000;
+    private const MINUTE_MULTIPLIER = 60000000;
+    private int $timeToWait;
+    private StepsList $steps;
 
     public function __construct(int $timeToWait, StepsList $stepsList) {
         $this->timeToWait = $timeToWait;
@@ -24,19 +24,19 @@ class Wait {
     }
 
     public function microseconds() {
-        $this->wait('seconds', $this->microSecondMultiplier);
+        $this->wait('seconds', self::MICROSECOND_MULTIPLIER);
     }
 
     public function milliseconds() {
-        $this->wait('seconds', $this->milliSecondMultiplier);
+        $this->wait('seconds', self::MILLISECOND_MULTIPLIER);
     }
 
     public function seconds() {
-        $this->wait('seconds', $this->secondMultiplier);
+        $this->wait('seconds', self::SECOND_MULTIPLIER);
     }
 
     public function minutes() {
-        $this->wait('minutes', $this->minuteMultiplier);
+        $this->wait('minutes', self::MINUTE_MULTIPLIER);
     }
 
     protected function wait($unitOfTime, $multiplier) {

@@ -6,7 +6,7 @@ namespace PHPKitchen\CodeSpecs\Expectation\Matcher;
  * StringMatcher is designed to check given string matches expectation.
  *
  * @package PHPKitchen\CodeSpecs\Expectation
- * @author Dmitry Kolodko <prowwid@gmail.com>
+ * @author Dima Kolodko <dima@kolodko.pro>
  */
 class StringMatcher extends ValueMatcher {
     /**

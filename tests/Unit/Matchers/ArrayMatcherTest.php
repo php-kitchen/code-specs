@@ -133,6 +133,7 @@ class ArrayMatcherTest extends BaseMatcherTest {
      * @covers ::hasSubset
      */
     public function testHasSubset() {
+        // need to implement missing subset method
         $array = $this->createMatcherWithActualValue([2, '1', 0]);
 
         $array->hasSubset([2, 1]);

@@ -8,7 +8,7 @@ use PHPKitchen\CodeSpecs\Expectation\Matcher\Base\Matcher;
  * ValueMatcher is designed to check given value matches expectation.
  *
  * @package PHPKitchen\CodeSpecs\Expectation
- * @author Dmitry Kolodko <prowwid@gmail.com>
+ * @author Dima Kolodko <dima@kolodko.pro>
  */
 class ValueMatcher extends Matcher {
     /**

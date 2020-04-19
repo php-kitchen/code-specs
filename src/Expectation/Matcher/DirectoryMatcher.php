@@ -8,7 +8,7 @@ use PHPKitchen\CodeSpecs\Expectation\Mixin\FileStateExpectations;
 /**
  * DirectoryMatcher is designed to check given directory matches expectation.
  *
- * @author Dmitry Kolodko <prowwid@gmail.com>
+ * @author Dima Kolodko <dima@kolodko.pro>
  */
 class DirectoryMatcher extends Matcher {
     use FileStateExpectations;

@@ -8,7 +8,7 @@ use PHPKitchen\CodeSpecs\Expectation\Matcher\Base\Matcher;
  * ClassMatcher is designed to check given class matches expectation.
  *
  * @package PHPKitchen\CodeSpecs\Expectation
- * @author Dmitry Kolodko <prowwid@gmail.com>
+ * @author Dima Kolodko <dima@kolodko.pro>
  */
 class ClassMatcher extends Matcher {
     /**

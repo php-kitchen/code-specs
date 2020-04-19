@@ -7,7 +7,7 @@ namespace PHPKitchen\CodeSpecs\Expectation\Internal;
  * Calling any if matcher assert methods produce new instance of this class.
  *
  * @package PHPKitchen\CodeSpecs\Module
- * @author Dmitry Kolodko <prowwid@gmail.com>
+ * @author Dima Kolodko <dima@kolodko.pro>
  */
 class Step {
     /**
@@ -33,7 +33,7 @@ class Step {
     }
 
     public function toString() {
-        $stepResult = $this->isChecked() ? "\u{2713} " : '- ';
+        $stepResult = $this->isChecked() ? "[\u{2713}] " : '[-] ';
 
         return $stepResult . $this->name;
     }

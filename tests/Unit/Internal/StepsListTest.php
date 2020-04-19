@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Internal;
+namespace Tests\Unit\Internal;
 
 use PHPKitchen\CodeSpecs\Expectation\Internal\StepsList;
 use Tests\Base\TestCase;
@@ -13,7 +13,7 @@ use Tests\Base\TestCase;
  * @package Test\Internal
  * @author Dmitry Kolodko <prowwid@gmail.com>
  */
-class StepsTest extends TestCase {
+class StepsListTest extends TestCase {
     /**
      * @covers ::add
      * @covers ::convertToString
@@ -22,7 +22,7 @@ class StepsTest extends TestCase {
     public function testAdd() {
         $list = $this->createListWithTwoSteps();
         $stepsListString = $list->convertToString();
-        $expectedStepsStringRepresentation = "✓ checked step\n- un-checked step\n";
+        $expectedStepsStringRepresentation = "[✓] checked step\n[-] un-checked step\n";
 
         $this->assertEquals($expectedStepsStringRepresentation, $stepsListString, 'Steps list should mark all of the steps prior to the last one as checked');
     }

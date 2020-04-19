@@ -2,8 +2,6 @@
 
 namespace PHPKitchen\CodeSpecs\Expectation\Routing;
 
-use PHPKitchen\CodeSpecs\Contract\TestGuy;
-use PHPKitchen\CodeSpecs\Directive\Wait;
 use PHPKitchen\CodeSpecs\Expectation\Internal\StepsList;
 use PHPKitchen\CodeSpecs\Expectation\Matcher\ArrayMatcher;
 use PHPKitchen\CodeSpecs\Expectation\Matcher\BooleanMatcher;
@@ -13,19 +11,18 @@ use PHPKitchen\CodeSpecs\Expectation\Matcher\FileMatcher;
 use PHPKitchen\CodeSpecs\Expectation\Matcher\NumberMatcher;
 use PHPKitchen\CodeSpecs\Expectation\Matcher\ObjectMatcher;
 use PHPKitchen\CodeSpecs\Expectation\Matcher\StringMatcher;
-use PHPKitchen\CodeSpecs\Expectation\Matcher\ValueMatcher;
 use PHPKitchen\CodeSpecs\Mixin\TestGuyMethods;
 
 class Router {
-    /**
-     * @var StepsList
-     */
-    private $steps;
-    /**
-     * @var \PHPUnit\Framework\Test
-     */
-    protected $context;
+    public const IN_TIME_EXPECTATION_MODE = 1;
+    public const DEFERRED_EXPECTATION_MODE = 0;
     protected $variableName = '';
+    protected $mode;
+
+    public function __construct(string $variableName, int $mode = self::IN_TIME_EXPECTATION_MODE) {
+        $this->variableName = $variableName;
+        $this->mode = $mode;
+    }
     //region ----------------------- SPECIFICATION METHODS -----------------------
 
     /**
@@ -133,11 +130,7 @@ class Router {
     }
 
     private function dispatch($actualValue): Dispatcher {
-        return $this->createDispatcher(Dispatcher::class, $actualValue);
-    }
-
-    private function createDispatcher($class, $actualValue): Dispatcher {
-        $dispatcher = new $class($this->context, $actualValue, $this->variableName);
+        $dispatcher = new Dispatcher($actualValue, $this->variableName, $this->mode);
         $this->variableName = '';
 
         return $dispatcher;

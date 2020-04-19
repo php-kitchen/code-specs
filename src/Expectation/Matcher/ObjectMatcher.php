@@ -9,7 +9,7 @@ use PHPKitchen\CodeSpecs\Expectation\Internal\ObjectExceptionMatcher;
  * ObjectMatcher is designed to check given object matches expectation.
  *
  * @package PHPKitchen\CodeSpecs\Expectation
- * @author Dmitry Kolodko <prowwid@gmail.com>
+ * @author Dima Kolodko <dima@kolodko.pro>
  */
 class ObjectMatcher extends ValueMatcher {
     /**
