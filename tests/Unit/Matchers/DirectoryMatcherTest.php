@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Matchers;
 
+use Exception;
 use PHPKitchen\CodeSpecs\Expectation\Matcher\DirectoryMatcher;
 use Tests\Base\BaseMatcherTest;
 
@@ -13,21 +14,21 @@ use Tests\Base\BaseMatcherTest;
  * @coversDefaultClass \PHPKitchen\CodeSpecs\Expectation\Matcher\DirectoryMatcher
  *
  * @package Tests\Expectation
- * @author Dmitry Kolodko <prowwid@gmail.com>
+ * @author Dima Kolodko <dima@kolodko.pro>
  */
 class DirectoryMatcherTest extends BaseMatcherTest {
-    protected function initMatcherClass() {
+    protected function initMatcherClass(): void {
         $this->matcherClass = DirectoryMatcher::class;
     }
 
     /**
      * @covers ::__construct
      */
-    public function testCreate() {
+    public function testCreate(): void {
         try {
             $this->createMatcherWithActualValue('');
             $matcherCreated = true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $matcherCreated = false;
         }
         $this->assertTrue($matcherCreated, 'Unable to instantiate ' . DirectoryMatcher::class);
@@ -36,7 +37,7 @@ class DirectoryMatcherTest extends BaseMatcherTest {
     /**
      * @covers ::isExist
      */
-    public function testIsExist() {
+    public function testIsExist(): void {
         $directory = $this->createMatcherWithActualValue(__DIR__);
         $directory->isExist();
     }
@@ -44,7 +45,7 @@ class DirectoryMatcherTest extends BaseMatcherTest {
     /**
      * @covers ::isNotExist
      */
-    public function testIsNotExist() {
+    public function testIsNotExist(): void {
         $directory = $this->createMatcherWithActualValue(__DIR__ . 'notExistingDirectory');
         $directory->isNotExist();
     }
@@ -52,7 +53,7 @@ class DirectoryMatcherTest extends BaseMatcherTest {
     /**
      * @covers ::isReadable
      */
-    public function testIsReadable() {
+    public function testIsReadable(): void {
         $directory = $this->createMatcherWithActualValue(__DIR__);
         $directory->isReadable();
     }
@@ -60,7 +61,7 @@ class DirectoryMatcherTest extends BaseMatcherTest {
     /**
      * @covers ::isNotReadable
      */
-    public function testIsNotReadable() {
+    public function testIsNotReadable(): void {
         $directory = $this->createMatcherWithActualValue('/etc');
         $directory->isNotReadable();
     }
@@ -68,7 +69,7 @@ class DirectoryMatcherTest extends BaseMatcherTest {
     /**
      * @covers ::isWritable
      */
-    public function testIsWritable() {
+    public function testIsWritable(): void {
         $directory = $this->createMatcherWithActualValue('/tmp');
         $directory->isWritable();
     }
@@ -76,7 +77,7 @@ class DirectoryMatcherTest extends BaseMatcherTest {
     /**
      * @covers ::isNotWritable
      */
-    public function testIsNotWritable() {
+    public function testIsNotWritable(): void {
         $directory = $this->createMatcherWithActualValue('/dgfdg');
         $directory->isNotWritable();
     }

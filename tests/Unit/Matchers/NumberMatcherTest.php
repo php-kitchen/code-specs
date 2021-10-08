@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Matchers;
 
+use Exception;
 use PHPKitchen\CodeSpecs\Expectation\Matcher\NumberMatcher;
 use Tests\Base\BaseMatcherTest;
 
@@ -13,21 +14,21 @@ use Tests\Base\BaseMatcherTest;
  * @coversDefaultClass \PHPKitchen\CodeSpecs\Expectation\Matcher\NumberMatcher
  *
  * @package Tests\Expectation
- * @author Dmitry Kolodko <prowwid@gmail.com>
+ * @author Dima Kolodko <dima@kolodko.pro>
  */
 class NumberMatcherTest extends BaseMatcherTest {
-    protected function initMatcherClass() {
+    protected function initMatcherClass(): void {
         $this->matcherClass = NumberMatcher::class;
     }
 
     /**
      * @covers ::__construct
      */
-    public function testCreate() {
+    public function testCreate(): void {
         try {
             $this->createMatcherWithActualValue(true);
             $matcherCreated = true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $matcherCreated = false;
         }
         $this->assertTrue($matcherCreated, 'Unable to instantiate ' . NumberMatcher::class);
@@ -36,7 +37,7 @@ class NumberMatcherTest extends BaseMatcherTest {
     /**
      * @covers ::isFinite
      */
-    public function testIsFinite() {
+    public function testIsFinite(): void {
         $number = $this->createMatcherWithActualValue(1);
         $number->isFinite();
     }
@@ -44,7 +45,7 @@ class NumberMatcherTest extends BaseMatcherTest {
     /**
      * @covers ::isInfinite
      */
-    public function testIsInfinite() {
+    public function testIsInfinite(): void {
         $number = $this->createMatcherWithActualValue(INF);
         $number->isInfinite();
     }
@@ -52,7 +53,7 @@ class NumberMatcherTest extends BaseMatcherTest {
     /**
      * @covers ::isNan
      */
-    public function testIsNan() {
+    public function testIsNan(): void {
         $number = $this->createMatcherWithActualValue(NAN);
         $number->isNan();
     }

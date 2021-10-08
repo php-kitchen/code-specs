@@ -3,6 +3,7 @@
 namespace PHPKitchen\CodeSpecs\Expectation\Matcher;
 
 use DOMElement;
+use Exception;
 use PHPKitchen\CodeSpecs\Expectation\Internal\ObjectExceptionMatcher;
 
 /**
@@ -12,33 +13,21 @@ use PHPKitchen\CodeSpecs\Expectation\Internal\ObjectExceptionMatcher;
  * @author Dima Kolodko <dima@kolodko.pro>
  */
 class ObjectMatcher extends ValueMatcher {
-    /**
-     * @return $this
-     */
-    public function isInstanceOf($class): self {
+    public function isInstanceOf(string $class): self {
         $this->startStep('is instance of "' . $class . '"')
              ->assertInstanceOf($class);
 
         return $this;
     }
 
-    /**
-     * @return $this
-     */
-    public function isNotInstanceOf($class): self {
+    public function isNotInstanceOf(string $class): self {
         $this->startStep('is not instance of "' . $class . '"')
              ->assertNotInstanceOf($class);
 
         return $this;
     }
 
-    /**
-     * Asserts that a hierarchy of DOMElements matches.
-     */
-    /**
-     * @return $this
-     */
-    public function isEqualToXmlStructure($expectedElement): self {
+    public function isEqualToXmlStructure(DOMElement $expectedElement): self {
         $this->isInstanceOf(DOMElement::class);
         $this->startStep('is equal to expected DOMElement')
              ->assertEqualXMLStructure($expectedElement, false);
@@ -46,17 +35,7 @@ class ObjectMatcher extends ValueMatcher {
         return $this;
     }
 
-    /**
-     * Asserts that a hierarchy of DOMElements matches and ensures attributes of structures also equals.
-     *
-     * @param DOMElement $expectedElement
-     *
-     * @return $this
-     */
-    /**
-     * @return $this
-     */
-    public function isEqualToXmlStructureAndItsAttributes($expectedElement): self {
+    public function isEqualToXmlStructureAndItsAttributes(DOMElement $expectedElement): self {
         $this->isInstanceOf(DOMElement::class);
         $this->startStep('is equal to xml structure and it\'s attributes in DOMElement')
              ->assertEqualXMLStructure($expectedElement, true);
@@ -64,20 +43,14 @@ class ObjectMatcher extends ValueMatcher {
         return $this;
     }
 
-    /**
-     * @return $this
-     */
-    public function hasAttribute($attribute): self {
+    public function hasAttribute(string $attribute): self {
         $this->startStep('has attribute "' . $attribute . '"')
              ->assertObjectHasAttribute($attribute);
 
         return $this;
     }
 
-    /**
-     * @return $this
-     */
-    public function doesNotHaveAttribute($attribute): self {
+    public function doesNotHaveAttribute(string $attribute): self {
         $this->startStep('does not have attribute "' . $attribute . '"')
              ->assertObjectNotHasAttribute($attribute);
 
@@ -87,7 +60,7 @@ class ObjectMatcher extends ValueMatcher {
     /**
      * Start sub-chain of exception matcher.
      *
-     * @param \Exception|string $exceptionClassOrObject exception class or object that going to be thrown by object
+     * @param Exception|string $exceptionClassOrObject exception class or object that going to be thrown by object
      *
      * @return ObjectExceptionMatcher
      */

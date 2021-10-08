@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Matchers;
 
+use Exception;
 use PHPKitchen\CodeSpecs\Expectation\Matcher\FileMatcher;
 use Tests\Base\BaseMatcherTest;
 
@@ -13,21 +14,21 @@ use Tests\Base\BaseMatcherTest;
  * @coversDefaultClass \PHPKitchen\CodeSpecs\Expectation\Matcher\FileMatcher
  *
  * @package Tests\Expectation
- * @author Dmitry Kolodko <prowwid@gmail.com>
+ * @author Dima Kolodko <dima@kolodko.pro>
  */
 class FileMatcherTest extends BaseMatcherTest {
-    protected function initMatcherClass() {
+    protected function initMatcherClass(): void {
         $this->matcherClass = FileMatcher::class;
     }
 
     /**
      * @covers ::__construct
      */
-    public function testCreate() {
+    public function testCreate(): void {
         try {
             $this->createMatcherWithActualValue('');
             $matcherCreated = true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $matcherCreated = false;
         }
         $this->assertTrue($matcherCreated, 'Unable to instantiate ' . FileMatcher::class);
@@ -36,7 +37,7 @@ class FileMatcherTest extends BaseMatcherTest {
     /**
      * @covers ::isExist
      */
-    public function testIsExist() {
+    public function testIsExist(): void {
         $file = $this->createMatcherWithActualValue(__FILE__);
         $file->isExist();
     }
@@ -44,7 +45,7 @@ class FileMatcherTest extends BaseMatcherTest {
     /**
      * @covers ::isNotExist
      */
-    public function testIsNotExist() {
+    public function testIsNotExist(): void {
         $file = $this->createMatcherWithActualValue(__FILE__ . 'notExisting');
         $file->isNotExist();
     }
@@ -52,23 +53,55 @@ class FileMatcherTest extends BaseMatcherTest {
     /**
      * @covers ::isEqualTo
      */
-    public function testIsEqualTo() {
+    public function testIsEqualTo(): void {
         $file = $this->createMatcherWithActualValue(__FILE__);
         $file->isEqualTo(__FILE__);
     }
 
     /**
+     * @covers ::isEqualCanonicalizingTo
+     */
+    public function testIsEqualCanonicalizingTo(): void {
+        $file = $this->createMatcherWithActualValue(__FILE__);
+        $file->isEqualCanonicalizingTo(__FILE__);
+    }
+
+    /**
+     * @covers ::isEqualIgnoringCaseTo
+     */
+    public function testIsEqualIgnoringCaseTo(): void {
+        $file = $this->createMatcherWithActualValue(__FILE__);
+        $file->isEqualIgnoringCaseTo(__FILE__);
+    }
+
+    /**
      * @covers ::isNotEqualTo
      */
-    public function testIsNotEqualTo() {
+    public function testIsNotEqualTo(): void {
         $file = $this->createMatcherWithActualValue(__FILE__);
         $file->isNotEqualTo(__DIR__ . DIRECTORY_SEPARATOR . 'ObjectMatcherTest.php');
     }
 
     /**
+     * @covers ::isNotEqualCanonicalizingTo
+     */
+    public function testIsNotEqualCanonicalizingTo(): void {
+        $file = $this->createMatcherWithActualValue(__FILE__);
+        $file->isNotEqualCanonicalizingTo(__DIR__ . DIRECTORY_SEPARATOR . 'ObjectMatcherTest.php');
+    }
+
+    /**
+     * @covers ::isNotEqualIgnoringCaseTo
+     */
+    public function testIsNotEqualIgnoringCaseTo(): void {
+        $file = $this->createMatcherWithActualValue(__FILE__);
+        $file->isNotEqualIgnoringCaseTo(__DIR__ . DIRECTORY_SEPARATOR . 'ObjectMatcherTest.php');
+    }
+
+    /**
      * @covers ::isEqualToJsonFile
      */
-    public function testIsEqualToJsonFile() {
+    public function testIsEqualToJsonFile(): void {
         $jsonFile = self::FIXTURES_DIR . 'jsonFile.json';
         $file = $this->createMatcherWithActualValue($jsonFile);
         $file->isEqualToJsonFile($jsonFile);
@@ -77,7 +110,7 @@ class FileMatcherTest extends BaseMatcherTest {
     /**
      * @covers ::isNotEqualToJsonFile
      */
-    public function testIsNotEqualToJsonFile() {
+    public function testIsNotEqualToJsonFile(): void {
         $jsonFile = self::FIXTURES_DIR . 'jsonFile.json';
         $anotherJsonFile = self::FIXTURES_DIR . 'jsonFile2.json';
         $file = $this->createMatcherWithActualValue($jsonFile);
@@ -87,7 +120,7 @@ class FileMatcherTest extends BaseMatcherTest {
     /**
      * @covers ::isEqualToXmlFile
      */
-    public function testIsEqualToXmlFile() {
+    public function testIsEqualToXmlFile(): void {
         $jsonFile = self::FIXTURES_DIR . 'xmlFile.xml';
         $file = $this->createMatcherWithActualValue($jsonFile);
         $file->isEqualToXmlFile($jsonFile);
@@ -96,7 +129,7 @@ class FileMatcherTest extends BaseMatcherTest {
     /**
      * @covers ::isNotEqualToXmlFile
      */
-    public function testIsNotEqualToXmlFile() {
+    public function testIsNotEqualToXmlFile(): void {
         $jsonFile = self::FIXTURES_DIR . 'xmlFile.xml';
         $anotherJsonFile = self::FIXTURES_DIR . 'xmlFile2.xml';
         $file = $this->createMatcherWithActualValue($jsonFile);
@@ -106,7 +139,7 @@ class FileMatcherTest extends BaseMatcherTest {
     /**
      * @covers ::isReadable
      */
-    public function testIsReadable() {
+    public function testIsReadable(): void {
         $file = $this->createMatcherWithActualValue(__FILE__);
         $file->isReadable();
     }
@@ -114,7 +147,7 @@ class FileMatcherTest extends BaseMatcherTest {
     /**
      * @covers ::isNotReadable
      */
-    public function testIsNotReadable() {
+    public function testIsNotReadable(): void {
         // @TODO: this is a bad approach. Need to refactor to not depend on the fact that root dir is not accessible(as it actually might be accessible)
         $file = $this->createMatcherWithActualValue('/root');
         $file->isNotReadable();
@@ -123,7 +156,7 @@ class FileMatcherTest extends BaseMatcherTest {
     /**
      * @covers ::isWritable
      */
-    public function testIsWritable() {
+    public function testIsWritable(): void {
         $file = $this->createMatcherWithActualValue(tempnam('/tmp', 'tester'));
         $file->isWritable();
     }
@@ -131,7 +164,7 @@ class FileMatcherTest extends BaseMatcherTest {
     /**
      * @covers ::isNotWritable
      */
-    public function testIsNotWritable() {
+    public function testIsNotWritable(): void {
         // @TODO: this is a bad approach. Need to refactor to not depend on the fact that root dir is not accessible(as it actually might be accessible)
         $file = $this->createMatcherWithActualValue('/root');
         $file->isNotWritable();

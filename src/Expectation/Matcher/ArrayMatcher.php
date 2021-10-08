@@ -9,33 +9,21 @@ namespace PHPKitchen\CodeSpecs\Expectation\Matcher;
  * @author Dima Kolodko <dima@kolodko.pro>
  */
 class ArrayMatcher extends ValueMatcher {
-    /**
-     * @return $this
-     */
-    public function hasKey($key) {
+    public function hasKey($key): self {
         $this->startStep('has key "' . $key . '"')
              ->assertArrayHasKey($key);
 
         return $this;
     }
 
-    /**
-     * @return $this
-     */
-    /**
-     * @return $this
-     */
-    public function doesNotHaveKey($key) {
+    public function doesNotHaveKey($key): self {
         $this->startStep('does not have key "' . $key . '"')
              ->assertArrayNotHasKey($key);
 
         return $this;
     }
 
-    /**
-     * @return $this
-     */
-    public function hasSubset($subset, $subsetName = '') {
+    public function hasSubset($subset, $subsetName = ''): self {
         $stepName = $subsetName ? "has subset \"{$subsetName}\"" : 'has expected subset';
         $this->startStep($stepName)
              ->assertArraySubset($subset, false);
@@ -43,17 +31,7 @@ class ArrayMatcher extends ValueMatcher {
         return $this;
     }
 
-    /**
-     * In addition of verification that the array has subset check for object identity in subset and actual array.
-     *
-     * @param array|\ArrayAccess $subset
-     *
-     * @return $this
-     */
-    /**
-     * @return $this
-     */
-    public function hasExactlyTheSameSubset($subset, $subsetName = '') {
+    public function hasExactlyTheSameSubset($subset, $subsetName = ''): self {
         $stepName = $subsetName ? "has exactly the same subset \"{$subsetName}\"" : 'has exactly the same expected subset';
 
         $this->startStep($stepName)
@@ -62,10 +40,7 @@ class ArrayMatcher extends ValueMatcher {
         return $this;
     }
 
-    /**
-     * @return $this
-     */
-    public function hasSameSizeAs($expected, $expectedValueName = '') {
+    public function hasSameSizeAs($expected, $expectedValueName = ''): self {
         $stepName = $expectedValueName ? "has same size as {$expectedValueName}" : "has same size as expected";
 
         $this->startStep($stepName)
@@ -74,10 +49,7 @@ class ArrayMatcher extends ValueMatcher {
         return $this;
     }
 
-    /**
-     * @return $this
-     */
-    public function doesNotHaveSameSizeAs($expected, $expectedValueName = '') {
+    public function doesNotHaveSameSizeAs($expected, $expectedValueName = ''): self {
         $stepName = $expectedValueName ? "does not have same size as {$expectedValueName}" : "does not have same size as expected";
 
         $this->startStep($stepName)
@@ -86,10 +58,7 @@ class ArrayMatcher extends ValueMatcher {
         return $this;
     }
 
-    /**
-     * @return $this
-     */
-    public function contains($needle, $needleName = '') {
+    public function contains($needle, $needleName = ''): self {
         $stepName = $needleName ? "contains {$needleName}" : "contains expected needle";
 
         $this->startStep($stepName)
@@ -98,10 +67,7 @@ class ArrayMatcher extends ValueMatcher {
         return $this;
     }
 
-    /**
-     * @return $this
-     */
-    public function doesNotContain($needle, $needleName = '') {
+    public function doesNotContain($needle, $needleName = ''): self {
         $stepName = $needleName ? "does not contain {$needleName}" : "does not contain expected needle";
 
         $this->startStep($stepName)
@@ -110,60 +76,60 @@ class ArrayMatcher extends ValueMatcher {
         return $this;
     }
 
-    /**
-     * @return $this
-     */
-    public function containsOnlyValuesOfType($type) {
+    public function containsEqual($needle, $needleName = ''): self {
+        $stepName = $needleName ? "contains {$needleName}" : "contains expected needle";
+
+        $this->startStep($stepName)
+             ->assertContainsEquals($needle);
+
+        return $this;
+    }
+
+    public function doesNotContainsEqual($needle, $needleName = ''): self {
+        $stepName = $needleName ? "does not contain {$needleName}" : "does not contain expected needle";
+
+        $this->startStep($stepName)
+             ->assertNotContainsEquals($needle);
+
+        return $this;
+    }
+
+    public function containsOnlyValuesOfType(string $type): self {
         $this->startStep('contains only values of type "' . $type . '"')
              ->assertContainsOnly($type);
 
         return $this;
     }
 
-    /**
-     * @return $this
-     */
-    public function containsOnlyValuesOfNativeType($type) {
+    public function containsOnlyValuesOfNativeType(string $type): self {
         $this->startStep('contains only values of native type "' . $type . '"')
              ->assertContainsOnly($type, true);
 
         return $this;
     }
 
-    /**
-     * @return $this
-     */
-    public function containsOnlyInstancesOf($class) {
+    public function containsOnlyInstancesOf(string $class): self {
         $this->startStep('contains only instances of "' . $class . '"')
              ->assertContainsOnlyInstancesOf($class);
 
         return $this;
     }
 
-    /**
-     * @return $this
-     */
-    public function doesNotContainOnlyValuesOfType($type) {
+    public function doesNotContainOnlyValuesOfType(string $type): self {
         $this->startStep('does not contain only values of type "' . $type . '"')
              ->assertNotContainsOnly($type, null);
 
         return $this;
     }
 
-    /**
-     * @return $this
-     */
-    public function doesNotContainOnlyValuesOfNativeType($type) {
+    public function doesNotContainOnlyValuesOfNativeType(string $type): self {
         $this->startStep('does not contain only values of native type "' . $type . '"')
              ->assertNotContainsOnly($type, true);
 
         return $this;
     }
 
-    /**
-     * @return $this
-     */
-    public function countIsEqualToCountOf($countOrCountable, $expectedValueName = '') {
+    public function countIsEqualToCountOf($countOrCountable, $expectedValueName = ''): self {
         $stepName = $expectedValueName ? "has count equal to count of {$expectedValueName}" : "has count equal to count of expected";
 
         $this->startStep($stepName)
@@ -172,10 +138,7 @@ class ArrayMatcher extends ValueMatcher {
         return $this;
     }
 
-    /**
-     * @return $this
-     */
-    public function countIsNotEqualToCountOf($countOrCountable, $expectedValueName = '') {
+    public function countIsNotEqualToCountOf($countOrCountable, $expectedValueName = ''): self {
         $stepName = $expectedValueName ? "does not have count equal count of {$expectedValueName}" : "does not have count equal count of expected";
 
         $this->startStep($stepName)
@@ -184,8 +147,8 @@ class ArrayMatcher extends ValueMatcher {
         return $this;
     }
 
-    protected function convertToCount($value) {
-        if (is_array($value) || $value instanceof \Countable || $value instanceof \Traversable) {
+    protected function convertToCount($value): int {
+        if (is_iterable($value)) {
             $count = count($value);
         } else {
             $count = $value;

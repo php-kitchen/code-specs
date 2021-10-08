@@ -24,21 +24,21 @@ class Step {
         $this->name = $name;
     }
 
-    public function check() {
+    public function check(): void {
         $this->checked = true;
     }
 
-    public function __toString() {
+    public function __toString(): string {
         return $this->toString();
     }
 
-    public function toString() {
+    public function toString(): string {
         $stepResult = $this->isChecked() ? "[\u{2713}] " : '[-] ';
 
         return $stepResult . $this->name;
     }
 
-    protected function isChecked() {
+    protected function isChecked(): bool {
         return $this->checked;
     }
 }

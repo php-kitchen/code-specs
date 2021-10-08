@@ -2,6 +2,7 @@
 
 namespace PHPKitchen\CodeSpecs\Actor;
 
+use BadMethodCallException;
 use PHPKitchen\CodeSpecs\Directive\Wait;
 use PHPKitchen\CodeSpecs\Expectation\Routing\Router;
 
@@ -26,7 +27,7 @@ class I {
         if (method_exists($actor, $name)) {
             return $actor->{$name}(...$arguments);
         }
-        throw new \BadMethodCallException("Method {$name} does not exist at " . self::class);
+        throw new BadMethodCallException("Method {$name} does not exist at " . self::class);
     }
 
     private static function getActor(): SpecActor {
@@ -37,7 +38,7 @@ class I {
         return self::$actor;
     }
 
-    public static function changeActor($actor) {
+    public static function changeActor($actor): void {
         self::$actor = $actor;
     }
 }

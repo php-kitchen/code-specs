@@ -6,11 +6,11 @@ use PHPKitchen\CodeSpecs\Base\Specification;
 use Tests\Base\TestGuyTests;
 
 /**
- * Unit test for {@link \PHPKitchen\CodeSpecs\Specification\Tester}
+ * Unit test for {@link \PHPKitchen\CodeSpecs\Actor\SpecActor
  *
- * @coversDefaultClass \PHPKitchen\CodeSpecs\Specification\Tester
+ * @coversDefaultClass \PHPKitchen\CodeSpecs\Actor\SpecActor
  *
- * @author Dmitry Kolodko <prowwid@gmail.com>
+ * @author Dima Kolodko <dima@kolodko.pro>
  */
 class TesterTest extends Specification {
     use TestGuyTests;

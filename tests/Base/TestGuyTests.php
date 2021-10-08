@@ -2,15 +2,19 @@
 
 namespace Tests\Base;
 
+use PHPKitchen\CodeSpecs\Actor\I;
+use Tests\Unit\TesterTest;
+use Throwable;
+
 /**
- * Represents tests of {@link \PHPKitchen\CodeSpecs\Mixin\TestGuyMethods}
+ * Represents tests of {@link \PHPKitchen\CodeSpecs\Actor\SpecActor}
  *
  * This trait designed to be used in PHPUnit and Codeception integration tests.
  *
- * @property \PHPKitchen\CodeSpecs\Contract\TestGuy $tester
+ * @property TesterTest $this
  *
  * @package Tests\Base
- * @author Dmitry Kolodko <prowwid@gmail.com>
+ * @author Dima Kolodko <dima@kolodko.pro>
  */
 trait TestGuyTests {
     /**
@@ -27,7 +31,7 @@ trait TestGuyTests {
      * @covers ::seeClass
      * @covers ::<protected>
      */
-    public function testSeeClass() {
+    public function testSeeClass(): void {
         $I = $this->tester;
         $thisClass = get_class($this);
         $I->seeClass($thisClass)->isExist();
@@ -37,72 +41,72 @@ trait TestGuyTests {
      * @covers ::see
      * @covers ::<protected>
      */
-    public function testSee() {
+    public function testSee(): void {
         $I = $this->tester;
-        $I->see(1)->isNotEmpty();
+        I::see(1)->isNotEmpty();
     }
 
     /**
      * @covers ::seeString
      * @covers ::<protected>
      */
-    public function testSeeString() {
+    public function testSeeString(): void {
         $I = $this->tester;
-        $I->seeString('')->isEmpty();
+        I::seeString('')->isEmpty();
     }
 
     /**
      * @covers ::seeArray
      * @covers ::<protected>
      */
-    public function testSeeTheArray() {
+    public function testSeeTheArray(): void {
         $I = $this->tester;
-        $I->seeArray([])->isEmpty();
+        I::seeArray([])->isEmpty();
     }
 
     /**
      * @covers ::seeObject
      * @covers ::<protected>
      */
-    public function testSeeObject() {
+    public function testSeeObject(): void {
         $I = $this->tester;
-        $I->seeObject($this)->isNotEmpty();
+        I::seeObject($this)->isNotEmpty();
     }
 
     /**
      * @covers ::seeFile
      * @covers ::<protected>
      */
-    public function testSeeFile() {
+    public function testSeeFile(): void {
         $I = $this->tester;
-        $I->seeFile(__FILE__)->isExist()->isEqualTo(__FILE__);
+        I::seeFile(__FILE__)->isExist()->isEqualTo(__FILE__);
     }
 
     /**
      * @covers ::seeDirectory
      * @covers ::<protected>
      */
-    public function testSeeDirectory() {
+    public function testSeeDirectory(): void {
         $I = $this->tester;
-        $I->seeDirectory(__DIR__)->isExist();
+        I::seeDirectory(__DIR__)->isExist();
     }
 
     /**
      * @covers ::seeNumber
      * @covers ::<protected>
      */
-    public function testSeeNumber() {
+    public function testSeeNumber(): void {
         $I = $this->tester;
-        $I->seeNumber(1)->isFinite();
+        I::seeNumber(1)->isFinite();
     }
 
-    public function testErrorOutput() {
+    public function testErrorOutput(): void {
         $I = $this->tester;
         $message = 'nothing cached';
         try {
-            $I->expectThat('output contains all of the steps and mark checked expectations as succeeded');
-            $I->seeNumber(1)->isNotEmpty()->isNull();
-        } catch (\Throwable $e) {
+            I::expectThat('output contains all of the steps and mark checked expectations as succeeded');
+            I::seeNumber(1)->isNotEmpty()->isNull();
+        } catch (Throwable $e) {
             $message = $e->getMessage();
         }
 
@@ -123,12 +127,12 @@ TEXT;
      * @covers ::match
      * @covers ::<protected>
      */
-    public function testMatch() {
+    public function testMatch(): void {
         $I = $this->tester;
 
         try {
-            $matchArrayHasName = $I->match('dummy variable')->isArray()->hasKey('name');
-        } catch (\Throwable $e) {
+            $matchArrayHasName = I::match('dummy variable')->isArray()->hasKey('name');
+        } catch (Throwable $e) {
             $this->fail('Failed to create runtime matcher. Error is:' . $e->getMessage());
         }
 
@@ -136,7 +140,7 @@ TEXT;
         $message = 'Matcher did not executed correctly.';
         try {
             $matchArrayHasName([]);
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $message = $e->getMessage();
         }
 

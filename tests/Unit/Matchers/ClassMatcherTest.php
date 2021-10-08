@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Matchers;
 
+use Exception;
 use PHPKitchen\CodeSpecs\Expectation\Matcher\ClassMatcher;
 use Tests\Base\BaseMatcherTest;
 
@@ -13,21 +14,21 @@ use Tests\Base\BaseMatcherTest;
  * @coversDefaultClass \PHPKitchen\CodeSpecs\Expectation\Matcher\ClassMatcher
  *
  * @package Tests\Expectation
- * @author Dmitry Kolodko <prowwid@gmail.com>
+ * @author Dima Kolodko <dima@kolodko.pro>
  */
 class ClassMatcherTest extends BaseMatcherTest {
-    protected function initMatcherClass() {
+    protected function initMatcherClass(): void {
         $this->matcherClass = ClassMatcher::class;
     }
 
     /**
      * @covers ::__construct
      */
-    public function testCreate() {
+    public function testCreate(): void {
         try {
             $this->createMatcherWithActualValue(static::class);
             $matcherCreated = true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $matcherCreated = false;
         }
         $this->assertTrue($matcherCreated, 'Unable to instantiate ' . ClassMatcher::class);
@@ -36,7 +37,7 @@ class ClassMatcherTest extends BaseMatcherTest {
     /**
      * @covers ::isExist
      */
-    public function testIsExist() {
+    public function testIsExist(): void {
         $class = $this->createMatcherWithActualValue(static::class);
         $class->isExist();
     }
@@ -44,7 +45,7 @@ class ClassMatcherTest extends BaseMatcherTest {
     /**
      * @covers ::isNotExist
      */
-    public function testIsNotExist() {
+    public function testIsNotExist(): void {
         $class = $this->createMatcherWithActualValue('not existing class');
         $class->isNotExist();
     }
@@ -52,7 +53,7 @@ class ClassMatcherTest extends BaseMatcherTest {
     /**
      * @covers ::isInterface
      */
-    public function testIsInterface() {
+    public function testIsInterface(): void {
         $class = $this->createMatcherWithActualValue(TestInterface::class);
         $class->isInterface();
     }
@@ -60,7 +61,7 @@ class ClassMatcherTest extends BaseMatcherTest {
     /**
      * @covers ::isNotInterface
      */
-    public function testIsNotInterface() {
+    public function testIsNotInterface(): void {
         $class = $this->createMatcherWithActualValue(static::class);
         $class->isNotInterface();
     }
@@ -68,7 +69,7 @@ class ClassMatcherTest extends BaseMatcherTest {
     /**
      * @covers ::hasStaticAttribute
      */
-    public function testHasStaticAttribute() {
+    public function testHasStaticAttribute(): void {
         $class = $this->createMatcherWithActualValue(TestClass::class);
         $class->hasStaticAttribute('staticAttribute');
     }
@@ -76,7 +77,7 @@ class ClassMatcherTest extends BaseMatcherTest {
     /**
      * @covers ::doesNotHaveStaticAttribute
      */
-    public function testDoesNotHaveStaticAttribute() {
+    public function testDoesNotHaveStaticAttribute(): void {
         $class = $this->createMatcherWithActualValue(TestClass::class);
         $class->doesNotHaveStaticAttribute('notExistingStaticAttribute');
     }
@@ -84,7 +85,7 @@ class ClassMatcherTest extends BaseMatcherTest {
     /**
      * @covers ::hasAttribute
      */
-    public function testHasAttribute() {
+    public function testHasAttribute(): void {
         $class = $this->createMatcherWithActualValue(TestClass::class);
         $class->hasAttribute('notStaticAttribute');
     }
@@ -92,7 +93,7 @@ class ClassMatcherTest extends BaseMatcherTest {
     /**
      * @covers ::doesNotHaveAttribute
      */
-    public function testDoesNotHaveAttribute() {
+    public function testDoesNotHaveAttribute(): void {
         $class = $this->createMatcherWithActualValue(TestClass::class);
         $class->doesNotHaveAttribute('notExistingAttribute');
     }
