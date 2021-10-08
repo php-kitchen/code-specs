@@ -20,7 +20,7 @@ composer.phar
 
 # phpunit itself is not needed
 phpunit.phar
-
+.phpunit.result.cache
 
 #Vagrant files and directories
 /.vagrant

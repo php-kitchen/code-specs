@@ -11,7 +11,7 @@ use Tests\Base\TestCase;
  * @coversDefaultClass \PHPKitchen\CodeSpecs\Expectation\Internal\StepsList
  *
  * @package Test\Internal
- * @author Dmitry Kolodko <prowwid@gmail.com>
+ * @author Dima Kolodko <dima@kolodko.pro>
  */
 class StepsListTest extends TestCase {
     /**
@@ -19,7 +19,7 @@ class StepsListTest extends TestCase {
      * @covers ::convertToString
      * @covers ::getInstance
      */
-    public function testAdd() {
+    public function testAdd(): void {
         $list = $this->createListWithTwoSteps();
         $stepsListString = $list->convertToString();
         $expectedStepsStringRepresentation = "[✓] checked step\n[-] un-checked step\n";
@@ -30,7 +30,7 @@ class StepsListTest extends TestCase {
     /**
      * @covers ::clear
      */
-    public function testClear() {
+    public function testClear(): void {
         $list = $this->createListWithTwoSteps();
 
         $list->clear();

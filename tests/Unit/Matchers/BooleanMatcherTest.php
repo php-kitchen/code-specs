@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Matchers;
 
+use Exception;
 use PHPKitchen\CodeSpecs\Expectation\Matcher\BooleanMatcher;
 use Tests\Base\BaseMatcherTest;
 
@@ -13,21 +14,21 @@ use Tests\Base\BaseMatcherTest;
  * @coversDefaultClass \PHPKitchen\CodeSpecs\Expectation\Matcher\BooleanMatcher
  *
  * @package Tests\Expectation
- * @author Dmitry Kolodko <prowwid@gmail.com>
+ * @author Dima Kolodko <dima@kolodko.pro>
  */
 class BooleanMatcherTest extends BaseMatcherTest {
-    protected function initMatcherClass() {
+    protected function initMatcherClass(): void {
         $this->matcherClass = BooleanMatcher::class;
     }
 
     /**
      * @covers ::__construct
      */
-    public function testCreate() {
+    public function testCreate(): void {
         try {
             $this->createMatcherWithActualValue(true);
             $matcherCreated = true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $matcherCreated = false;
         }
         $this->assertTrue($matcherCreated, 'Unable to instantiate ' . BooleanMatcher::class);
@@ -36,7 +37,7 @@ class BooleanMatcherTest extends BaseMatcherTest {
     /**
      * @covers ::isTrue
      */
-    public function testIsTrue() {
+    public function testIsTrue(): void {
         $bool = $this->createMatcherWithActualValue(true);
         $bool->isTrue();
     }
@@ -44,7 +45,7 @@ class BooleanMatcherTest extends BaseMatcherTest {
     /**
      * @covers ::isFalse
      */
-    public function testIsFalse() {
+    public function testIsFalse(): void {
         $bool = $this->createMatcherWithActualValue(false);
         $bool->isFalse();
     }
@@ -52,7 +53,7 @@ class BooleanMatcherTest extends BaseMatcherTest {
     /**
      * @covers ::isNotTrue
      */
-    public function testIsNotTrue() {
+    public function testIsNotTrue(): void {
         $bool = $this->createMatcherWithActualValue(1);
         $bool->isNotTrue();
     }
@@ -60,7 +61,7 @@ class BooleanMatcherTest extends BaseMatcherTest {
     /**
      * @covers ::isNotFalse
      */
-    public function testIsNotFalse() {
+    public function testIsNotFalse(): void {
         $bool = $this->createMatcherWithActualValue(0);
         $bool->isNotFalse();
     }

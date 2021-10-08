@@ -8,9 +8,6 @@ namespace PHPKitchen\CodeSpecs\Expectation\Matcher;
  * @author Dima Kolodko <dima@kolodko.pro>
  */
 class NumberMatcher extends ValueMatcher {
-    /**
-     * @return $this
-     */
     public function isFinite(): self {
         $this->startStep('is finite')
              ->assertFinite();
@@ -18,9 +15,6 @@ class NumberMatcher extends ValueMatcher {
         return $this;
     }
 
-    /**
-     * @return $this
-     */
     public function isInfinite(): self {
         $this->startStep('is infinite')
              ->assertInfinite();
@@ -28,9 +22,6 @@ class NumberMatcher extends ValueMatcher {
         return $this;
     }
 
-    /**
-     * @return $this
-     */
     public function isNan(): self {
         $this->startStep('is nan')
              ->assertNan();

@@ -10,7 +10,7 @@ use PHPKitchen\CodeSpecs\Contract\TestGuy;
 /**
  * Specification of {@link IncomeCalculator}
  *
- * @author Dmitry Kolodko <prowwid@gmail.com>
+ * @author Dima Kolodko <dima@kolodko.pro>
  */
 class IncomeCalculatorTest extends Specification {
     private const EXPECTED_TAX_FOR_FIRST_LEVEL_TAX_RULE = 4500;

@@ -3,32 +3,55 @@
 namespace PHPKitchen\CodeSpecs\Expectation\Matcher;
 
 use PHPKitchen\CodeSpecs\Expectation\Matcher\Base\Matcher;
-use PHPKitchen\CodeSpecs\Expectation\Mixin\FileStateExpectations;
 
 /**
  * DirectoryMatcher is designed to check given directory matches expectation.
  *
- * @author Dima Kolodko <dima@kolodko.pro>
+ * @author Dmitry Kolodko <prowwid@gmail.com>
  */
 class DirectoryMatcher extends Matcher {
-    use FileStateExpectations;
-
-    /**
-     * @return $this
-     */
-    public function isExist() {
+    public function isExist(): self {
         $this->startStep('is exist')
              ->assertDirectoryExists();
 
         return $this;
     }
 
-    /**
-     * @return $this
-     */
-    public function isNotExist() {
+    public function isNotExist(): self {
         $this->startStep('is not exist')
-             ->assertDirectoryNotExists();
+             ->assertDirectoryDoesNotExist();
+
+        return $this;
+    }
+
+    public function isReadable(): self {
+        $this->isExist();
+        $this->startStep('is readable')
+             ->assertDirectoryIsReadable();
+
+        return $this;
+    }
+
+    public function isNotReadable(): self {
+        $this->isExist();
+        $this->startStep('is not readable')
+             ->assertDirectoryIsNotReadable();
+
+        return $this;
+    }
+
+    public function isWritable(): self {
+        $this->isExist();
+        $this->startStep('is writable')
+             ->assertDirectoryIsWritable();
+
+        return $this;
+    }
+
+    public function isNotWritable(): self {
+        $this->isExist();
+        $this->startStep('is not writable')
+             ->assertDirectoryIsNotWritable();
 
         return $this;
     }

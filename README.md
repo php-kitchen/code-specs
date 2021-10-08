@@ -30,7 +30,7 @@ use PHPKitchen\CodeSpecs\Actor\I;
 /**
  * Specification of {@link IncomeCalculator}
  *
- * @author Dima Kolodko <prowwid@gmail.com>
+ * @author Dima Kolodko <dima@kolodko.pro>
  */
 class IncomeCalculatorTest extends Specification {
     private const EXPECTED_TAX_FOR_FIRST_LEVEL_TAX_RULE = 4500;
@@ -155,3 +155,4 @@ or use regular HTML:
 ```markdown
 <a href="https://github.com/php-kitchen/code-specs"><img src="https://img.shields.io/badge/Tested_By-CodeSpecs-brightgreen.svg" alt="Tested By"></a>
 ```
+

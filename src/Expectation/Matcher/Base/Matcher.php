@@ -22,13 +22,13 @@ abstract class Matcher implements ExpectationMatcher {
         $this->assert = clone $this->assert;
     }
 
-    protected function startStep($stepName) {
+    protected function startStep($stepName): Assert {
         $this->assert->changeCurrentStepTo($stepName);
 
         return $this->assert;
     }
 
-    public function __invoke($actualValue) {
+    public function __invoke($actualValue): Matcher {
         $newMatcher = clone $this;
 
         $newMatcher->assert->switchToInTimeExecutionStrategy();

@@ -23,23 +23,23 @@ class Wait {
         $this->steps = $stepsList;
     }
 
-    public function microseconds() {
+    public function microseconds(): void {
         $this->wait('seconds', self::MICROSECOND_MULTIPLIER);
     }
 
-    public function milliseconds() {
+    public function milliseconds(): void {
         $this->wait('seconds', self::MILLISECOND_MULTIPLIER);
     }
 
-    public function seconds() {
+    public function seconds(): void {
         $this->wait('seconds', self::SECOND_MULTIPLIER);
     }
 
-    public function minutes() {
+    public function minutes(): void {
         $this->wait('minutes', self::MINUTE_MULTIPLIER);
     }
 
-    protected function wait($unitOfTime, $multiplier) {
+    protected function wait($unitOfTime, $multiplier): void {
         $this->steps->add("I wait {$this->timeToWait} {$unitOfTime}");
 
         usleep($this->timeToWait * $multiplier);

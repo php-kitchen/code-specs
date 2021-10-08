@@ -2,7 +2,6 @@
 
 namespace PHPKitchen\CodeSpecs\Base;
 
-use PHPKitchen\CodeSpecs\Mixin\TesterInitialization;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -14,7 +13,7 @@ use PHPUnit\Framework\TestCase;
  * @author Dima Kolodko <dima@kolodko.pro>
  */
 abstract class Specification extends TestCase {
-    protected function clearSteps() {
+    protected function clearSteps(): void {
 
     }
 }

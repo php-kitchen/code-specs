@@ -23,7 +23,7 @@ class StepsList {
         return static::$instance;
     }
 
-    public function add(string $step) {
+    public function add(string $step): void {
         $lastStep = end($this->steps);
         if ($lastStep) {
             $lastStep->check();
@@ -38,7 +38,7 @@ class StepsList {
         return (string)$message;
     }
 
-    public function clear() {
+    public function clear(): void {
         $this->steps = [];
     }
 }

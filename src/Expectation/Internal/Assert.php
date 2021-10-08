@@ -3,6 +3,15 @@
 namespace PHPKitchen\CodeSpecs\Expectation\Internal;
 
 use ArrayAccess;
+use Countable;
+use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
+use DOMDocument;
+use DOMElement;
+use Exception;
+use PHPUnit\Framework\ExpectationFailedException;
+use SebastianBergmann\RecursionContext\InvalidArgumentException;
+use SplQueue;
+use Traversable;
 
 /**
  * Represents PHPUnit Assert facade.
@@ -15,8 +24,12 @@ use ArrayAccess;
  * @author Dima Kolodko <dima@kolodko.pro>
  */
 class Assert {
-    const IN_TIME_EXECUTION_STRATEGY = 1;
-    const DELAYED_EXECUTION_STRATEGY = 2;
+    use ArraySubsetAsserts {
+        ArraySubsetAsserts::assertArraySubset as assertArraySubsetDMS;
+    }
+
+    protected const IN_TIME_EXECUTION_STRATEGY = 1;
+    protected const DELAYED_EXECUTION_STRATEGY = 2;
     /**
      * @var mixed actual value or variable that will be matched to expectations.
      */
@@ -30,7 +43,7 @@ class Assert {
      */
     protected $description;
     /**
-     * @var \SplQueue list of steps that was delayed to be executed after definition.
+     * @var SplQueue list of steps that was delayed to be executed after definition.
      */
     protected $delayedAssertSteps;
     /**
@@ -47,7 +60,7 @@ class Assert {
         $this->stepsList = $stepsList;
         $this->actual = $actual;
         $this->description = $description;
-        $this->delayedAssertSteps = new \SplQueue();
+        $this->delayedAssertSteps = new SplQueue();
         $this->strategy = $strategy;
     }
 
@@ -61,36 +74,36 @@ class Assert {
         return $this->actual;
     }
 
-    public function changeDescriptionTo($newDescription) {
+    public function changeDescriptionTo(string $newDescription): void {
         $this->description = $newDescription;
     }
 
-    public function changeCurrentStepTo($stepName) {
+    public function changeCurrentStepTo(string $stepName): void {
         $this->currentStepName = $stepName;
     }
 
-    public function switchToInTimeExecutionStrategy() {
+    public function switchToInTimeExecutionStrategy(): void {
         $this->strategy = self::IN_TIME_EXECUTION_STRATEGY;
     }
 
-    public function switchToDelayedExecutionStrategy() {
+    public function switchToDelayedExecutionStrategy(): void {
         $this->strategy = self::DELAYED_EXECUTION_STRATEGY;
     }
 
-    public function runStepsWithActualValue($actualValue) {
+    public function runStepsWithActualValue($actualValue): void {
         if ($this->strategy === self::DELAYED_EXECUTION_STRATEGY) {
             return;
         }
         $this->actual = $actualValue;
         while (!$this->delayedAssertSteps->isEmpty()) {
             $step = $this->delayedAssertSteps->dequeue();
-            array_push($step[1], $this->getMessageForAssert());
+            $step[1][] = $this->getMessageForAssert();
             array_unshift($step[1], $this->actual);
             $this->executeAssertMethod($step[0], $step[1], $step[2]);
         }
     }
 
-    protected function callAssertMethod($method, $config = []) {
+    protected function callAssertMethod(string $method, array $config = []): void {
         $stepName = $this->currentStepName;
         if ($this->strategy === self::IN_TIME_EXECUTION_STRATEGY) {
             $this->executeAssertMethod($method, $config, $stepName);
@@ -99,7 +112,7 @@ class Assert {
         }
     }
 
-    protected function executeAssertMethod($method, $config, $stepName) {
+    protected function executeAssertMethod(string $method, array $config, string $stepName): void {
         $this->registerExpectation($stepName);
         if (is_callable([\PHPUnit\Framework\Assert::class, $method])) {
             call_user_func_array([
@@ -116,7 +129,7 @@ class Assert {
         }
     }
 
-    protected function buildAssertMethodParamsFromConfig($config) {
+    protected function buildAssertMethodParamsFromConfig(array $config): array {
         $params = [];
         if (array_key_exists('expected', $config)) {
             $params[] = $config['expected'];
@@ -135,11 +148,11 @@ class Assert {
         return $params;
     }
 
-    protected function registerExpectation($message) {
+    protected function registerExpectation(string $message): void {
         $this->stepsList->add("$this->description {$message}.");
     }
 
-    protected function getMessageForAssert() {
+    protected function getMessageForAssert(): string {
         return $this->stepsList->convertToString();
     }
 
@@ -148,16 +161,16 @@ class Assert {
     /**
      * @param string $exception
      */
-    public function expectException($exception) {
+    public function expectException(string $exception): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $exception,
         ]);
     }
 
     /**
-     * @param string $exception
+     * @param object $exceptionObject
      */
-    public function expectExceptionObject($exceptionObject) {
+    public function expectExceptionObject($exceptionObject): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $exceptionObject,
         ]);
@@ -166,9 +179,9 @@ class Assert {
     /**
      * @param int|string $code
      *
-     * @throws \Exception
+     * @throws Exception
      */
-    public function expectExceptionCode($code) {
+    public function expectExceptionCode($code): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $code,
         ]);
@@ -177,9 +190,9 @@ class Assert {
     /**
      * @param string $message
      *
-     * @throws \Exception
+     * @throws Exception
      */
-    public function expectExceptionMessage($message) {
+    public function expectExceptionMessage(string $message): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $message,
         ]);
@@ -188,9 +201,9 @@ class Assert {
     /**
      * @param string $messageRegExp
      *
-     * @throws \Exception
+     * @throws Exception
      */
-    public function expectExceptionMessageRegExp($messageRegExp) {
+    public function expectExceptionMessageRegExp(string $messageRegExp): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $messageRegExp,
         ]);
@@ -200,8 +213,11 @@ class Assert {
      * Asserts that an array has a specified key.
      *
      * @param mixed $key
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertArrayHasKey($key) {
+    public function assertArrayHasKey($key): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $key,
         ]);
@@ -209,14 +225,20 @@ class Assert {
 
     /**
      * Asserts that an array has a specified subset.
+     * Deprecated at PhpUnit https://github.com/sebastianbergmann/phpunit/issues/3494
+     * Can use only with https://github.com/rdohms/phpunit-arraysubset-asserts
      *
      * @param array|ArrayAccess $subset
+     * @param bool $checkForObjectIdentity
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertArraySubset($subset, $useStrictMatch) {
-        $this->callAssertMethod(__FUNCTION__, [
+    public function assertArraySubset($subset, bool $checkForObjectIdentity): void {
+        $this->callAssertMethod('assertArraySubsetDMS', [
             'expected' => $subset,
             'options' => [
-                $useStrictMatch,
+                $checkForObjectIdentity,
             ],
         ]);
     }
@@ -225,10 +247,11 @@ class Assert {
      * Asserts that an array does not have a specified key.
      *
      * @param mixed $key
-     * @param array|ArrayAccess $array
-     * @param string $message
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertArrayNotHasKey($key) {
+    public function assertArrayNotHasKey($key): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $key,
         ]);
@@ -238,18 +261,27 @@ class Assert {
      * Asserts that a haystack contains a needle.
      *
      * @param mixed $needle
-     * @param bool $ignoreCase
-     * @param bool $checkForObjectIdentity
-     * @param bool $checkForNonObjectIdentity
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertContains($needle, $ignoreCase = false, $checkForObjectIdentity = true, $checkForNonObjectIdentity = false) {
+    public function assertContains($needle): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $needle,
-            'additionalParams' => [
-                $ignoreCase,
-                $checkForObjectIdentity,
-                $checkForNonObjectIdentity,
-            ],
+        ]);
+    }
+
+    /**
+     * Asserts that a haystack contains a needle.
+     *
+     * @param mixed $needle
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     */
+    public function assertContainsEquals($needle): void {
+        $this->callAssertMethod(__FUNCTION__, [
+            'expected' => $needle,
         ]);
     }
 
@@ -257,18 +289,27 @@ class Assert {
      * Asserts that a haystack does not contain a needle.
      *
      * @param mixed $needle
-     * @param bool $ignoreCase
-     * @param bool $checkForObjectIdentity
-     * @param bool $checkForNonObjectIdentity
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertNotContains($needle, $ignoreCase = false, $checkForObjectIdentity = true, $checkForNonObjectIdentity = false) {
+    public function assertNotContains($needle): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $needle,
-            'additionalParams' => [
-                $ignoreCase,
-                $checkForObjectIdentity,
-                $checkForNonObjectIdentity,
-            ],
+        ]);
+    }
+
+    /**
+     * Asserts that a haystack not contains a needle.
+     *
+     * @param $needle
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     */
+    public function assertNotContainsEquals($needle): void {
+        $this->callAssertMethod(__FUNCTION__, [
+            'expected' => $needle,
         ]);
     }
 
@@ -277,13 +318,30 @@ class Assert {
      *
      * @param string $type
      * @param bool $isNativeType
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertContainsOnly($type, $isNativeType = null) {
+    public function assertContainsOnly(string $type, ?bool $isNativeType = null): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $type,
             'options' => [
                 $isNativeType,
             ],
+        ]);
+    }
+
+    /**
+     * Asserts that a haystack contains only instances of a given classname
+     *
+     * @param string $className
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     */
+    public function assertContainsOnlyInstancesOf(string $className): void {
+        $this->callAssertMethod(__FUNCTION__, [
+            'expected' => $className,
         ]);
     }
 
@@ -292,8 +350,11 @@ class Assert {
      *
      * @param string $type
      * @param bool $isNativeType
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertNotContainsOnly($type, $isNativeType = null) {
+    public function assertNotContainsOnly(string $type, ?bool $isNativeType = null): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $type,
             'options' => [
@@ -303,136 +364,30 @@ class Assert {
     }
 
     /**
-     * Asserts that a haystack that is stored in a static attribute of a class
-     * or an attribute of an object contains a needle.
-     *
-     * @param mixed $needle
-     * @param string $haystackAttributeName
-     * @param string|object $haystackClassOrObject
-     * @param string $message
-     * @param bool $ignoreCase
-     * @param bool $checkForObjectIdentity
-     * @param bool $checkForNonObjectIdentity
-     */
-    public function assertAttributeContains($needle, $haystackAttributeName, $haystackClassOrObject, $message = '', $ignoreCase = false, $checkForObjectIdentity = true, $checkForNonObjectIdentity = false) {
-        $this->callAssertMethod(__FUNCTION__, [
-            'expected' => $key,
-        ]);
-    }
-
-    /**
-     * Asserts that a haystack that is stored in a static attribute of a class
-     * or an attribute of an object does not contain a needle.
-     *
-     * @param mixed $needle
-     * @param string $haystackAttributeName
-     * @param string|object $haystackClassOrObject
-     * @param string $message
-     * @param bool $ignoreCase
-     * @param bool $checkForObjectIdentity
-     * @param bool $checkForNonObjectIdentity
-     */
-    public function assertAttributeNotContains($needle, $haystackAttributeName, $haystackClassOrObject, $message = '', $ignoreCase = false, $checkForObjectIdentity = true, $checkForNonObjectIdentity = false) {
-        $this->callAssertMethod(__FUNCTION__, [
-            'expected' => $key,
-        ]);
-    }
-
-    /**
-     * Asserts that a haystack contains only instances of a given classname
-     *
-     * @param string $className
-     */
-    public function assertContainsOnlyInstancesOf($className) {
-        $this->callAssertMethod(__FUNCTION__, [
-            'expected' => $className,
-        ]);
-    }
-
-    /**
-     * Asserts that a haystack that is stored in a static attribute of a class
-     * or an attribute of an object contains only values of a given type.
-     *
-     * @param string $type
-     * @param string $haystackAttributeName
-     * @param string|object $haystackClassOrObject
-     * @param bool $isNativeType
-     * @param string $message
-     */
-    public function assertAttributeContainsOnly($type, $haystackAttributeName, $haystackClassOrObject, $isNativeType = null) {
-        $this->callAssertMethod(__FUNCTION__, [
-            'expected' => $key,
-        ]);
-    }
-
-    /**
-     * Asserts that a haystack that is stored in a static attribute of a class
-     * or an attribute of an object does not contain only values of a given
-     * type.
-     *
-     * @param string $type
-     * @param string $haystackAttributeName
-     * @param string|object $haystackClassOrObject
-     * @param bool $isNativeType
-     * @param string $message
-     */
-    public function assertAttributeNotContainsOnly($type, $haystackAttributeName, $haystackClassOrObject, $isNativeType = null) {
-        $this->callAssertMethod(__FUNCTION__, [
-            'expected' => $key,
-        ]);
-    }
-
-    /**
-     * Asserts the number of elements of an array, \Countable or \Traversable.
+     * Asserts the number of elements of an array, Countable or Traversable.
      *
      * @param int $expectedCount
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertCount($expectedCount) {
+    public function assertCount(int $expectedCount): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $expectedCount,
         ]);
     }
 
     /**
-     * Asserts the number of elements of an array, \Countable or \Traversable
-     * that is stored in an attribute.
+     * Asserts the number of elements of an array, Countable or Traversable.
      *
      * @param int $expectedCount
-     * @param string $haystackAttributeName
-     * @param string|object $haystackClassOrObject
-     * @param string $message
-     */
-    public function assertAttributeCount($expectedCount, $haystackAttributeName, $haystackClassOrObject) {
-        $this->callAssertMethod(__FUNCTION__, [
-            'expected' => $key,
-        ]);
-    }
-
-    /**
-     * Asserts the number of elements of an array, \Countable or \Traversable.
      *
-     * @param int $expectedCount
-     * @param mixed $haystack
-     * @param string $message
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertNotCount($expectedCount) {
+    public function assertNotCount(int $expectedCount): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $expectedCount,
-        ]);
-    }
-
-    /**
-     * Asserts the number of elements of an array, \Countable or \Traversable
-     * that is stored in an attribute.
-     *
-     * @param int $expectedCount
-     * @param string $haystackAttributeName
-     * @param string|object $haystackClassOrObject
-     * @param string $message
-     */
-    public function assertAttributeNotCount($expectedCount, $haystackAttributeName, $haystackClassOrObject) {
-        $this->callAssertMethod(__FUNCTION__, [
-            'expected' => $key,
         ]);
     }
 
@@ -440,38 +395,59 @@ class Assert {
      * Asserts that two variables are equal.
      *
      * @param mixed $expected
-     * @param float $delta
-     * @param int $maxDepth
-     * @param bool $canonicalize
-     * @param bool $ignoreCase
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertEquals($expected, $delta = 0.0, $maxDepth = 10, $canonicalize = false, $ignoreCase = false) {
+    public function assertEquals($expected): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $expected,
-            'additionalParams' => [
-                $delta,
-                $maxDepth,
-                $canonicalize,
-                $ignoreCase,
-            ],
         ]);
     }
 
     /**
-     * Asserts that a variable is equal to an attribute of an object.
+     * Asserts that two variables are equal (canonicalizing).
      *
      * @param mixed $expected
-     * @param string $actualAttributeName
-     * @param string|object $actualClassOrObject
-     * @param string $message
-     * @param float $delta
-     * @param int $maxDepth
-     * @param bool $canonicalize
-     * @param bool $ignoreCase
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertAttributeEquals($expected, $actualAttributeName, $actualClassOrObject, $message = '', $delta = 0.0, $maxDepth = 10, $canonicalize = false, $ignoreCase = false) {
+    public function assertEqualsCanonicalizing($expected): void {
         $this->callAssertMethod(__FUNCTION__, [
-            'expected' => $key,
+            'expected' => $expected,
+        ]);
+    }
+
+    /**
+     * Asserts that two variables are equal (ignoring case).
+     *
+     * @param mixed $expected
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     */
+    public function assertEqualsIgnoringCase($expected): void {
+        $this->callAssertMethod(__FUNCTION__, [
+            'expected' => $expected,
+        ]);
+    }
+
+    /**
+     * Asserts that two variables are equal (with delta).
+     *
+     * @param mixed $expected
+     * @param float $delta
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     */
+    public function assertEqualsWithDelta($expected, float $delta): void {
+        $this->callAssertMethod(__FUNCTION__, [
+            'expected' => $expected,
+            'options' => [
+                $delta,
+            ],
         ]);
     }
 
@@ -479,113 +455,93 @@ class Assert {
      * Asserts that two variables are not equal.
      *
      * @param mixed $expected
-     * @param float $delta
-     * @param int $maxDepth
-     * @param bool $canonicalize
-     * @param bool $ignoreCase
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertNotEquals($expected, $delta = 0.0, $maxDepth = 10, $canonicalize = false, $ignoreCase = false) {
+    public function assertNotEquals($expected): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $expected,
-            'additionalParams' => [
-                $delta,
-                $maxDepth,
-                $canonicalize,
-                $ignoreCase,
-            ],
         ]);
     }
 
     /**
-     * Asserts that a variable is not equal to an attribute of an object.
+     * Asserts that two variables are not equal (canonicalizing).
      *
      * @param mixed $expected
-     * @param string $actualAttributeName
-     * @param string|object $actualClassOrObject
-     * @param string $message
-     * @param float $delta
-     * @param int $maxDepth
-     * @param bool $canonicalize
-     * @param bool $ignoreCase
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertAttributeNotEquals($expected, $actualAttributeName, $actualClassOrObject, $message = '', $delta = 0.0, $maxDepth = 10, $canonicalize = false, $ignoreCase = false) {
+    public function assertNotEqualsCanonicalizing($expected): void {
         $this->callAssertMethod(__FUNCTION__, [
-            'expected' => $key,
+            'expected' => $expected,
+        ]);
+    }
+
+    /**
+     * Asserts that two variables are not equal (ignoring case).
+     *
+     * @param mixed $expected
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     */
+    public function assertNotEqualsIgnoringCase($expected): void {
+        $this->callAssertMethod(__FUNCTION__, [
+            'expected' => $expected,
+        ]);
+    }
+
+    /**
+     * Asserts that two variables are not equal (with delta).
+     *
+     * @param mixed $expected
+     * @param float $delta
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     */
+    public function assertNotEqualsWithDelta($expected, float $delta): void {
+        $this->callAssertMethod(__FUNCTION__, [
+            'expected' => $expected,
+            'options' => [
+                $delta,
+            ],
         ]);
     }
 
     /**
      * Asserts that a variable is empty.
      *
-     *
-     * @throws AssertionFailedError
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertEmpty() {
+    public function assertEmpty(): void {
         $this->callAssertMethod(__FUNCTION__);
-    }
-
-    /**
-     * Asserts that a static attribute of a class or an attribute of an object
-     * is empty.
-     *
-     * @param string $haystackAttributeName
-     * @param string|object $haystackClassOrObject
-     * @param string $message
-     */
-    public function assertAttributeEmpty($haystackAttributeName, $haystackClassOrObject) {
-        $this->callAssertMethod(__FUNCTION__, [
-            'expected' => $key,
-        ]);
     }
 
     /**
      * Asserts that a variable is not empty.
      *
-     * @param mixed $actual
-     * @param string $message
-     *
-     * @throws AssertionFailedError
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertNotEmpty() {
-        $this->callAssertMethod(__FUNCTION__, []);
-    }
-
-    /**
-     * Asserts that a static attribute of a class or an attribute of an object
-     * is not empty.
-     *
-     * @param string $haystackAttributeName
-     * @param string|object $haystackClassOrObject
-     * @param string $message
-     */
-    public function assertAttributeNotEmpty($haystackAttributeName, $haystackClassOrObject) {
-        $this->callAssertMethod(__FUNCTION__, [
-            'expected' => $key,
-        ]);
+    public function assertNotEmpty(): void {
+        $this->callAssertMethod(__FUNCTION__);
     }
 
     /**
      * Asserts that a value is greater than another value.
      *
      * @param mixed $expected
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertGreaterThan($expected) {
+    public function assertGreaterThan($expected): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $expected,
-        ]);
-    }
-
-    /**
-     * Asserts that an attribute is greater than another value.
-     *
-     * @param mixed $expected
-     * @param string $actualAttributeName
-     * @param string|object $actualClassOrObject
-     * @param string $message
-     */
-    public function assertAttributeGreaterThan($expected, $actualAttributeName, $actualClassOrObject) {
-        $this->callAssertMethod(__FUNCTION__, [
-            'expected' => $key,
         ]);
     }
 
@@ -593,24 +549,13 @@ class Assert {
      * Asserts that a value is greater than or equal to another value.
      *
      * @param mixed $expected
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertGreaterThanOrEqual($expected) {
+    public function assertGreaterThanOrEqual($expected): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $expected,
-        ]);
-    }
-
-    /**
-     * Asserts that an attribute is greater than or equal to another value.
-     *
-     * @param mixed $expected
-     * @param string $actualAttributeName
-     * @param string|object $actualClassOrObject
-     * @param string $message
-     */
-    public function assertAttributeGreaterThanOrEqual($expected, $actualAttributeName, $actualClassOrObject) {
-        $this->callAssertMethod(__FUNCTION__, [
-            'expected' => $key,
         ]);
     }
 
@@ -618,24 +563,13 @@ class Assert {
      * Asserts that a value is smaller than another value.
      *
      * @param mixed $expected
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertLessThan($expected) {
+    public function assertLessThan($expected): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $expected,
-        ]);
-    }
-
-    /**
-     * Asserts that an attribute is smaller than another value.
-     *
-     * @param mixed $expected
-     * @param string $actualAttributeName
-     * @param string|object $actualClassOrObject
-     * @param string $message
-     */
-    public function assertAttributeLessThan($expected, $actualAttributeName, $actualClassOrObject) {
-        $this->callAssertMethod(__FUNCTION__, [
-            'expected' => $key,
         ]);
     }
 
@@ -643,360 +577,491 @@ class Assert {
      * Asserts that a value is smaller than or equal to another value.
      *
      * @param mixed $expected
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertLessThanOrEqual($expected) {
+    public function assertLessThanOrEqual($expected): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $expected,
         ]);
     }
 
     /**
-     * Asserts that an attribute is smaller than or equal to another value.
+     * Asserts that the contents of one file is equal to the contents of another file.
      *
-     * @param mixed $expected
-     * @param string $actualAttributeName
-     * @param string|object $actualClassOrObject
-     * @param string $message
+     * @param string $expected
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertAttributeLessThanOrEqual($expected, $actualAttributeName, $actualClassOrObject) {
+    public function assertFileEquals(string $expected): void {
         $this->callAssertMethod(__FUNCTION__, [
-            'expected' => $key,
+            'expected' => $expected,
         ]);
     }
 
     /**
      * Asserts that the contents of one file is equal to the contents of another
-     * file.
+     * file (canonicalizing).
      *
      * @param string $expected
-     * @param bool $canonicalize
-     * @param bool $ignoreCase
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertFileEquals($expected, $canonicalize = false, $ignoreCase = false) {
+    public function assertFileEqualsCanonicalizing(string $expected): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $expected,
-            'additionalParams' => [
-                $canonicalize,
-                $ignoreCase,
-            ],
         ]);
     }
 
     /**
-     * Asserts that the contents of one file is not equal to the contents of
-     * another file.
+     * Asserts that the contents of one file is equal to the contents of another
+     * file (ignoring case).
      *
      * @param string $expected
-     * @param bool $canonicalize
-     * @param bool $ignoreCase
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertFileNotEquals($expected, $canonicalize = false, $ignoreCase = false) {
+    public function assertFileEqualsIgnoringCase(string $expected): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $expected,
-            'additionalParams' => [
-                $canonicalize,
-                $ignoreCase,
-            ],
         ]);
     }
 
     /**
-     * Asserts that the contents of a string is equal
-     * to the contents of a file.
+     * Asserts that the contents of one file is not equal to the contents of another file.
      *
-     * @param string $expectedFile
-     * @param bool $canonicalize
-     * @param bool $ignoreCase
+     * @param string $expected
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertStringEqualsFile($expectedFile, $canonicalize = false, $ignoreCase = false) {
+    public function assertFileNotEquals(string $expected): void {
         $this->callAssertMethod(__FUNCTION__, [
-            'expected' => $expectedFile,
-            'additionalParams' => [
-                $canonicalize,
-                $ignoreCase,
-            ],
+            'expected' => $expected,
         ]);
     }
 
     /**
-     * Asserts that the contents of a string is not equal
-     * to the contents of a file.
+     * Asserts that the contents of one file is not equal to the contents of another
+     * file (canonicalizing).
+     *
+     * @param string $expected
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     */
+    public function assertFileNotEqualsCanonicalizing(string $expected): void {
+        $this->callAssertMethod(__FUNCTION__, [
+            'expected' => $expected,
+        ]);
+    }
+
+    /**
+     * Asserts that the contents of one file is not equal to the contents of another
+     * file (ignoring case).
+     *
+     * @param string $expected
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     */
+    public function assertFileNotEqualsIgnoringCase(string $expected): void {
+        $this->callAssertMethod(__FUNCTION__, [
+            'expected' => $expected,
+        ]);
+    }
+
+    /**
+     * Asserts that the contents of a string is equal to the contents of a file.
      *
      * @param string $expectedFile
-     * @param bool $canonicalize
-     * @param bool $ignoreCase
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertStringNotEqualsFile($expectedFile, $canonicalize = false, $ignoreCase = false) {
+    public function assertStringEqualsFile(string $expectedFile): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $expectedFile,
-            'additionalParams' => [
-                $canonicalize,
-                $ignoreCase,
-            ],
+        ]);
+    }
+
+    /**
+     * Asserts that the contents of a string is equal to the contents of a file (canonicalizing).
+     *
+     * @param string $expectedFile
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     */
+    public function assertStringEqualsFileCanonicalizing(string $expectedFile): void {
+        $this->callAssertMethod(__FUNCTION__, [
+            'expected' => $expectedFile,
+        ]);
+    }
+
+    /**
+     * Asserts that the contents of a string is equal to the contents of a file (ignoring case).
+     *
+     * @param string $expectedFile
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     */
+    public function assertStringEqualsFileIgnoringCase(string $expectedFile): void {
+        $this->callAssertMethod(__FUNCTION__, [
+            'expected' => $expectedFile,
+        ]);
+    }
+
+    /**
+     * Asserts that the contents of a string is not equal to the contents of a file.
+     *
+     * @param string $expectedFile
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     */
+    public function assertStringNotEqualsFile(string $expectedFile): void {
+        $this->callAssertMethod(__FUNCTION__, [
+            'expected' => $expectedFile,
+        ]);
+    }
+
+    /**
+     * Asserts that the contents of a string is not equal to the contents of a file (canonicalizing).
+     *
+     * @param string $expectedFile
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     */
+    public function assertStringNotEqualsFileCanonicalizing(string $expectedFile): void {
+        $this->callAssertMethod(__FUNCTION__, [
+            'expected' => $expectedFile,
+        ]);
+    }
+
+    /**
+     * Asserts that the contents of a string is not equal to the contents of a file (ignoring case).
+     *
+     * @param string $expectedFile
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     */
+    public function assertStringNotEqualsFileIgnoringCase(string $expectedFile): void {
+        $this->callAssertMethod(__FUNCTION__, [
+            'expected' => $expectedFile,
         ]);
     }
 
     /**
      * Asserts that a file/dir is readable.
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertIsReadable() {
+    public function assertIsReadable(): void {
         $this->callAssertMethod(__FUNCTION__);
     }
 
     /**
      * Asserts that a file/dir exists and is not readable.
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertNotIsReadable() {
+    public function assertIsNotReadable(): void {
         $this->callAssertMethod(__FUNCTION__);
     }
 
     /**
      * Asserts that a file/dir exists and is writable.
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertIsWritable() {
+    public function assertIsWritable(): void {
         $this->callAssertMethod(__FUNCTION__);
     }
 
     /**
      * Asserts that a file/dir exists and is not writable.
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertNotIsWritable() {
+    public function assertIsNotWritable(): void {
         $this->callAssertMethod(__FUNCTION__);
     }
 
     /**
      * Asserts that a directory exists.
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertDirectoryExists() {
+    public function assertDirectoryExists(): void {
         $this->callAssertMethod(__FUNCTION__);
     }
 
     /**
      * Asserts that a directory does not exist.
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertDirectoryNotExists() {
+    public function assertDirectoryDoesNotExist(): void {
         $this->callAssertMethod(__FUNCTION__);
     }
 
     /**
      * Asserts that a directory exists and is readable.
      *
-     * @param string $directory
-     * @param string $message
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertDirectoryIsReadable($directory) {
-        $this->callAssertMethod(__FUNCTION__, [
-            'expected' => $key,
-        ]);
+    public function assertDirectoryIsReadable(): void {
+        $this->callAssertMethod(__FUNCTION__);
     }
 
     /**
      * Asserts that a directory exists and is not readable.
      *
-     * @param string $directory
-     * @param string $message
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertDirectoryNotIsReadable($directory) {
-        $this->callAssertMethod(__FUNCTION__, [
-            'expected' => $key,
-        ]);
+    public function assertDirectoryIsNotReadable(): void {
+        $this->callAssertMethod(__FUNCTION__);
     }
 
     /**
      * Asserts that a directory exists and is writable.
      *
-     * @param string $directory
-     * @param string $message
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertDirectoryIsWritable($directory) {
-        $this->callAssertMethod(__FUNCTION__, [
-            'expected' => $key,
-        ]);
+    public function assertDirectoryIsWritable(): void {
+        $this->callAssertMethod(__FUNCTION__);
     }
 
     /**
      * Asserts that a directory exists and is not writable.
      *
-     * @param string $directory
-     * @param string $message
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertDirectoryNotIsWritable($directory) {
-        $this->callAssertMethod(__FUNCTION__, [
-            'expected' => $key,
-        ]);
+    public function assertDirectoryIsNotWritable(): void {
+        $this->callAssertMethod(__FUNCTION__);
     }
 
     /**
      * Asserts that a file exists.
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertFileExists() {
+    public function assertFileExists(): void {
         $this->callAssertMethod(__FUNCTION__);
     }
 
     /**
      * Asserts that a file does not exist.
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertFileNotExists() {
+    public function assertFileDoesNotExist(): void {
         $this->callAssertMethod(__FUNCTION__);
     }
 
     /**
      * Asserts that a file exists and is readable.
      *
-     * @param string $file
-     * @param string $message
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertFileIsReadable($file) {
-        $this->callAssertMethod(__FUNCTION__, [
-            'expected' => $key,
-        ]);
+    public function assertFileIsReadable(): void {
+        $this->callAssertMethod(__FUNCTION__);
     }
 
     /**
      * Asserts that a file exists and is not readable.
      *
-     * @param string $file
-     * @param string $message
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertFileNotIsReadable($file) {
-        $this->callAssertMethod(__FUNCTION__, [
-            'expected' => $key,
-        ]);
+    public function assertFileIsNotReadable(): void {
+        $this->callAssertMethod(__FUNCTION__);
     }
 
     /**
      * Asserts that a file exists and is writable.
      *
-     * @param string $file
-     * @param string $message
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertFileIsWritable($file) {
-        $this->callAssertMethod(__FUNCTION__, [
-            'expected' => $key,
-        ]);
+    public function assertFileIsWritable(): void {
+        $this->callAssertMethod(__FUNCTION__);
     }
 
     /**
      * Asserts that a file exists and is not writable.
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertFileNotIsWritable() {
+    public function assertFileIsNotWritable(): void {
         $this->callAssertMethod(__FUNCTION__);
     }
 
     /**
      * Asserts that a condition is true.
      *
-     * @throws AssertionFailedError
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertTrue() {
+    public function assertTrue(): void {
         $this->callAssertMethod(__FUNCTION__);
     }
 
     /**
      * Asserts that a condition is not true.
      *
-     * @throws AssertionFailedError
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertNotTrue() {
+    public function assertNotTrue(): void {
         $this->callAssertMethod(__FUNCTION__);
     }
 
     /**
      * Asserts that a condition is false.
      *
-     * @throws AssertionFailedError
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertFalse() {
+    public function assertFalse(): void {
         $this->callAssertMethod(__FUNCTION__);
     }
 
     /**
      * Asserts that a condition is not false
      *
-     * @throws AssertionFailedError
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertNotFalse() {
+    public function assertNotFalse(): void {
         $this->callAssertMethod(__FUNCTION__);
     }
 
     /**
      * Asserts that a variable is null.
      *
-     * @param mixed $actual
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertNull() {
+    public function assertNull(): void {
         $this->callAssertMethod(__FUNCTION__);
     }
 
     /**
      * Asserts that a variable is not null.
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertNotNull() {
+    public function assertNotNull(): void {
         $this->callAssertMethod(__FUNCTION__);
     }
 
     /**
      * Asserts that a variable is finite.
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertFinite() {
+    public function assertFinite(): void {
         $this->callAssertMethod(__FUNCTION__);
     }
 
     /**
      * Asserts that a variable is infinite.
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertInfinite() {
+    public function assertInfinite(): void {
         $this->callAssertMethod(__FUNCTION__);
     }
 
     /**
      * Asserts that a variable is nan.
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertNan() {
+    public function assertNan(): void {
         $this->callAssertMethod(__FUNCTION__);
     }
 
     /**
      * Asserts that a class exists
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertClassExists() {
+    public function assertClassExists(): void {
         $this->callAssertMethod('classExists');
     }
 
-    protected function classExists($class, $message) {
+    protected function classExists($class, $message): void {
         \PHPUnit\Framework\Assert::assertTrue(class_exists($class), $message);
     }
 
     /**
      * Asserts that a class does not exist
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertClassDoesNotExist() {
+    public function assertClassDoesNotExist(): void {
         $this->callAssertMethod('classDoesNotExist');
     }
 
-    protected function classDoesNotExist($class, $message) {
+    protected function classDoesNotExist($class, $message): void {
         \PHPUnit\Framework\Assert::assertFalse(class_exists($class), $message);
     }
 
     /**
      * Asserts that a class does not exist
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertClassIsInterface() {
+    public function assertClassIsInterface(): void {
         $this->callAssertMethod('classIsInterface');
     }
 
-    protected function classIsInterface($class, $message) {
+    protected function classIsInterface($class, $message): void {
         \PHPUnit\Framework\Assert::assertTrue(interface_exists($class), $message);
     }
 
     /**
      * Asserts that a class does not exist
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertClassIsNotInterface() {
+    public function assertClassIsNotInterface(): void {
         $this->callAssertMethod('classIsNotInterface');
     }
 
-    protected function classIsNotInterface($class, $message) {
+    protected function classIsNotInterface($class, $message): void {
         \PHPUnit\Framework\Assert::assertFalse(interface_exists($class), $message);
     }
 
@@ -1005,7 +1070,7 @@ class Assert {
      *
      * @param string $attributeName
      */
-    public function assertClassHasAttribute($attributeName) {
+    public function assertClassHasAttribute(string $attributeName): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $attributeName,
         ]);
@@ -1015,8 +1080,11 @@ class Assert {
      * Asserts that a class does not have a specified attribute.
      *
      * @param string $attributeName
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertClassNotHasAttribute($attributeName) {
+    public function assertClassNotHasAttribute(string $attributeName): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $attributeName,
         ]);
@@ -1026,8 +1094,11 @@ class Assert {
      * Asserts that a class has a specified static attribute.
      *
      * @param string $attributeName
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertClassHasStaticAttribute($attributeName) {
+    public function assertClassHasStaticAttribute(string $attributeName): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $attributeName,
         ]);
@@ -1037,8 +1108,11 @@ class Assert {
      * Asserts that a class does not have a specified static attribute.
      *
      * @param string $attributeName
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertClassNotHasStaticAttribute($attributeName) {
+    public function assertClassNotHasStaticAttribute(string $attributeName): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $attributeName,
         ]);
@@ -1048,8 +1122,11 @@ class Assert {
      * Asserts that an object has a specified attribute.
      *
      * @param string $attributeName
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertObjectHasAttribute($attributeName) {
+    public function assertObjectHasAttribute(string $attributeName): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $attributeName,
         ]);
@@ -1059,8 +1136,11 @@ class Assert {
      * Asserts that an object does not have a specified attribute.
      *
      * @param string $attributeName
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertObjectNotHasAttribute($attributeName) {
+    public function assertObjectNotHasAttribute(string $attributeName): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $attributeName,
         ]);
@@ -1072,25 +1152,13 @@ class Assert {
      * the same object.
      *
      * @param mixed $expected
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertSame($expected) {
+    public function assertSame($expected): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $expected,
-        ]);
-    }
-
-    /**
-     * Asserts that a variable and an attribute of an object have the same type
-     * and value.
-     *
-     * @param mixed $expected
-     * @param string $actualAttributeName
-     * @param string|object $actualClassOrObject
-     * @param string $message
-     */
-    public function assertAttributeSame($expected, $actualAttributeName, $actualClassOrObject) {
-        $this->callAssertMethod(__FUNCTION__, [
-            'expected' => $key,
         ]);
     }
 
@@ -1100,25 +1168,13 @@ class Assert {
      * the same object.
      *
      * @param mixed $expected
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertNotSame($expected) {
+    public function assertNotSame($expected): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $expected,
-        ]);
-    }
-
-    /**
-     * Asserts that a variable and an attribute of an object do not have the
-     * same type and value.
-     *
-     * @param mixed $expected
-     * @param string $actualAttributeName
-     * @param string|object $actualClassOrObject
-     * @param string $message
-     */
-    public function assertAttributeNotSame($expected, $actualAttributeName, $actualClassOrObject) {
-        $this->callAssertMethod(__FUNCTION__, [
-            'expected' => $key,
         ]);
     }
 
@@ -1126,24 +1182,13 @@ class Assert {
      * Asserts that a variable is of a given type.
      *
      * @param string $expected
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertInstanceOf($expected) {
+    public function assertInstanceOf(string $expected): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $expected,
-        ]);
-    }
-
-    /**
-     * Asserts that an attribute is of a given type.
-     *
-     * @param string $expected
-     * @param string $attributeName
-     * @param string|object $classOrObject
-     * @param string $message
-     */
-    public function assertAttributeInstanceOf($expected, $attributeName, $classOrObject) {
-        $this->callAssertMethod(__FUNCTION__, [
-            'expected' => $key,
         ]);
     }
 
@@ -1151,83 +1196,265 @@ class Assert {
      * Asserts that a variable is not of a given type.
      *
      * @param string $expected
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertNotInstanceOf($expected) {
+    public function assertNotInstanceOf(string $expected): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $expected,
         ]);
     }
 
     /**
-     * Asserts that an attribute is of a given type.
+     * Asserts that a variable is of type array.
      *
-     * @param string $expected
-     * @param string $attributeName
-     * @param string|object $classOrObject
-     * @param string $message
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertAttributeNotInstanceOf($expected, $attributeName, $classOrObject) {
-        $this->callAssertMethod(__FUNCTION__, [
-            'expected' => $key,
-        ]);
+    public function assertIsArray(): void {
+        $this->callAssertMethod(__FUNCTION__);
     }
 
     /**
-     * Asserts that a variable is of a given type.
+     * Asserts that a variable is of type bool.
      *
-     * @param string $expected
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertInternalType($expected) {
-        $this->callAssertMethod(__FUNCTION__, [
-            'expected' => $expected,
-        ]);
+    public function assertIsBool(): void {
+        $this->callAssertMethod(__FUNCTION__);
     }
 
     /**
-     * Asserts that an attribute is of a given type.
+     * Asserts that a variable is of type float.
      *
-     * @param string $expected
-     * @param string $attributeName
-     * @param string|object $classOrObject
-     * @param string $message
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertAttributeInternalType($expected, $attributeName, $classOrObject) {
-        $this->callAssertMethod(__FUNCTION__, [
-            'expected' => $key,
-        ]);
+    public function assertIsFloat(): void {
+        $this->callAssertMethod(__FUNCTION__);
     }
 
     /**
-     * Asserts that a variable is not of a given type.
+     * Asserts that a variable is of type int.
      *
-     * @param string $expected
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertNotInternalType($expected) {
-        $this->callAssertMethod(__FUNCTION__, [
-            'expected' => $expected,
-        ]);
+    public function assertIsInt(): void {
+        $this->callAssertMethod(__FUNCTION__);
     }
 
     /**
-     * Asserts that an attribute is of a given type.
+     * Asserts that a variable is of type numeric.
      *
-     * @param string $expected
-     * @param string $attributeName
-     * @param string|object $classOrObject
-     * @param string $message
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertAttributeNotInternalType($expected, $attributeName, $classOrObject) {
-        $this->callAssertMethod(__FUNCTION__, [
-            'expected' => $key,
-        ]);
+    public function assertIsNumeric(): void {
+        $this->callAssertMethod(__FUNCTION__);
+    }
+
+    /**
+     * Asserts that a variable is of type object.
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     */
+    public function assertIsObject(): void {
+        $this->callAssertMethod(__FUNCTION__);
+    }
+
+    /**
+     * Asserts that a variable is of type resource.
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     */
+    public function assertIsResource(): void {
+        $this->callAssertMethod(__FUNCTION__);
+    }
+
+    /**
+     * Asserts that a variable is of type resource and is closed.
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     */
+    public function assertIsClosedResource(): void {
+        $this->callAssertMethod(__FUNCTION__);
+    }
+
+    /**
+     * Asserts that a variable is of type string.
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     */
+    public function assertIsString(): void {
+        $this->callAssertMethod(__FUNCTION__);
+    }
+
+    /**
+     * Asserts that a variable is of type scalar.
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     */
+    public function assertIsScalar(): void {
+        $this->callAssertMethod(__FUNCTION__);
+    }
+
+    /**
+     * Asserts that a variable is of type callable.
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     */
+    public function assertIsCallable(): void {
+        $this->callAssertMethod(__FUNCTION__);
+    }
+
+    /**
+     * Asserts that a variable is of type iterable.
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     */
+    public function assertIsIterable(): void {
+        $this->callAssertMethod(__FUNCTION__);
+    }
+
+    /**
+     * Asserts that a variable is not of type array.
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     */
+    public function assertIsNotArray(): void {
+        $this->callAssertMethod(__FUNCTION__);
+    }
+
+    /**
+     * Asserts that a variable is not of type bool.
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     */
+    public function assertIsNotBool(): void {
+        $this->callAssertMethod(__FUNCTION__);
+    }
+
+    /**
+     * Asserts that a variable is not of type float.
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     */
+    public function assertIsNotFloat(): void {
+        $this->callAssertMethod(__FUNCTION__);
+    }
+
+    /**
+     * Asserts that a variable is not of type int.
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     */
+    public function assertIsNotInt(): void {
+        $this->callAssertMethod(__FUNCTION__);
+    }
+
+    /**
+     * Asserts that a variable is not of type numeric.
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     */
+    public function assertIsNotNumeric(): void {
+        $this->callAssertMethod(__FUNCTION__);
+    }
+
+    /**
+     * Asserts that a variable is not of type object.
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     */
+    public function assertIsNotObject(): void {
+        $this->callAssertMethod(__FUNCTION__);
+    }
+
+    /**
+     * Asserts that a variable is not of type resource.
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     */
+    public function assertIsNotResource(): void {
+        $this->callAssertMethod(__FUNCTION__);
+    }
+
+    /**
+     * Asserts that a variable is not of type resource.
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     */
+    public function assertIsNotClosedResource(): void {
+        $this->callAssertMethod(__FUNCTION__);
+    }
+
+    /**
+     * Asserts that a variable is not of type string.
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     */
+    public function assertIsNotString(): void {
+        $this->callAssertMethod(__FUNCTION__);
+    }
+
+    /**
+     * Asserts that a variable is not of type scalar.
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     */
+    public function assertIsNotScalar(): void {
+        $this->callAssertMethod(__FUNCTION__);
+    }
+
+    /**
+     * Asserts that a variable is not of type callable.
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     */
+    public function assertIsNotCallable(): void {
+        $this->callAssertMethod(__FUNCTION__);
+    }
+
+    /**
+     * Asserts that a variable is not of type iterable.
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     */
+    public function assertIsNotIterable(): void {
+        $this->callAssertMethod(__FUNCTION__);
     }
 
     /**
      * Asserts that a string matches a given regular expression.
      *
      * @param string $pattern
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertRegExp($pattern) {
+    public function assertRegExp(string $pattern): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $pattern,
         ]);
@@ -1237,10 +1464,13 @@ class Assert {
      * Asserts that a string does not match a given regular expression.
      *
      * @param string $pattern
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertNotRegExp($pattern, $string) {
+    public function assertDoesNotMatchRegularExpression(string $pattern): void {
         $this->callAssertMethod(__FUNCTION__, [
-            'expected' => $key,
+            'expected' => $pattern,
         ]);
     }
 
@@ -1248,9 +1478,12 @@ class Assert {
      * Assert that the size of two arrays (or `\Countable` or `\Traversable` objects)
      * is the same.
      *
-     * @param array|\Countable|\Traversable $expected
+     * @param array|Countable|Traversable $expected
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertSameSize($expected) {
+    public function assertSameSize($expected): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $expected,
         ]);
@@ -1260,11 +1493,12 @@ class Assert {
      * Assert that the size of two arrays (or `\Countable` or `\Traversable` objects)
      * is not the same.
      *
-     * @param array|\Countable|\Traversable $expected
-     * @param array|\Countable|\Traversable $actual
-     * @param string $message
+     * @param array|Countable|Traversable $expected
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertNotSameSize($expected) {
+    public function assertNotSameSize($expected): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $expected,
         ]);
@@ -1274,8 +1508,11 @@ class Assert {
      * Asserts that a string matches a given format string.
      *
      * @param string $format
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertStringMatchesFormat($format) {
+    public function assertStringMatchesFormat(string $format): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $format,
         ]);
@@ -1285,8 +1522,11 @@ class Assert {
      * Asserts that a string does not match a given format string.
      *
      * @param string $format
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertStringNotMatchesFormat($format) {
+    public function assertStringNotMatchesFormat(string $format): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $format,
         ]);
@@ -1296,8 +1536,11 @@ class Assert {
      * Asserts that a string matches a given format file.
      *
      * @param string $formatFile
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertStringMatchesFormatFile($formatFile) {
+    public function assertStringMatchesFormatFile(string $formatFile): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $formatFile,
         ]);
@@ -1307,8 +1550,11 @@ class Assert {
      * Asserts that a string does not match a given format string.
      *
      * @param string $formatFile
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertStringNotMatchesFormatFile($formatFile) {
+    public function assertStringNotMatchesFormatFile(string $formatFile): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $formatFile,
         ]);
@@ -1318,8 +1564,11 @@ class Assert {
      * Asserts that a string starts with a given prefix.
      *
      * @param string $prefix
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertStringStartsWith($prefix) {
+    public function assertStringStartsWith(string $prefix): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $prefix,
         ]);
@@ -1329,10 +1578,61 @@ class Assert {
      * Asserts that a string starts not with a given prefix.
      *
      * @param string $prefix
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertStringStartsNotWith($prefix) {
+    public function assertStringStartsNotWith(string $prefix): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $prefix,
+        ]);
+    }
+
+    /**
+     * @param string $needle
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     */
+    public function assertStringContainsString(string $needle): void {
+        $this->callAssertMethod(__FUNCTION__, [
+            'expected' => $needle,
+        ]);
+    }
+
+    /**
+     * @param string $needle
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     */
+    public function assertStringContainsStringIgnoringCase(string $needle): void {
+        $this->callAssertMethod(__FUNCTION__, [
+            'expected' => $needle,
+        ]);
+    }
+
+    /**
+     * @param string $needle
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     */
+    public function assertStringNotContainsString(string $needle): void {
+        $this->callAssertMethod(__FUNCTION__, [
+            'expected' => $needle,
+        ]);
+    }
+
+    /**
+     * @param string $needle
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     */
+    public function assertStringNotContainsStringIgnoringCase(string $needle): void {
+        $this->callAssertMethod(__FUNCTION__, [
+            'expected' => $needle,
         ]);
     }
 
@@ -1340,8 +1640,11 @@ class Assert {
      * Asserts that a string ends with a given suffix.
      *
      * @param string $suffix
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertStringEndsWith($suffix) {
+    public function assertStringEndsWith(string $suffix): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $suffix,
         ]);
@@ -1351,10 +1654,11 @@ class Assert {
      * Asserts that a string ends not with a given suffix.
      *
      * @param string $suffix
-     * @param string $string
-     * @param string $message
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertStringEndsNotWith($suffix) {
+    public function assertStringEndsNotWith(string $suffix): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $suffix,
         ]);
@@ -1364,8 +1668,11 @@ class Assert {
      * Asserts that two XML files are equal.
      *
      * @param string $expectedFile
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertXmlFileEqualsXmlFile($expectedFile) {
+    public function assertXmlFileEqualsXmlFile(string $expectedFile): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $expectedFile,
         ]);
@@ -1375,10 +1682,11 @@ class Assert {
      * Asserts that two XML files are not equal.
      *
      * @param string $expectedFile
-     * @param string $actualFile
-     * @param string $message
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertXmlFileNotEqualsXmlFile($expectedFile) {
+    public function assertXmlFileNotEqualsXmlFile(string $expectedFile): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $expectedFile,
         ]);
@@ -1388,8 +1696,11 @@ class Assert {
      * Asserts that two XML documents are equal.
      *
      * @param string $expectedFile
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertXmlStringEqualsXmlFile($expectedFile) {
+    public function assertXmlStringEqualsXmlFile(string $expectedFile): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $expectedFile,
         ]);
@@ -1399,8 +1710,11 @@ class Assert {
      * Asserts that two XML documents are not equal.
      *
      * @param string $expectedFile
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertXmlStringNotEqualsXmlFile($expectedFile) {
+    public function assertXmlStringNotEqualsXmlFile(string $expectedFile): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $expectedFile,
         ]);
@@ -1409,10 +1723,12 @@ class Assert {
     /**
      * Asserts that two XML documents are equal.
      *
-     * @param string|\DOMDocument $expectedXml
-     * @param string $message
+     * @param string|DOMDocument $expectedXml
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertXmlStringEqualsXmlString($expectedXml) {
+    public function assertXmlStringEqualsXmlString($expectedXml): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $expectedXml,
         ]);
@@ -1421,9 +1737,12 @@ class Assert {
     /**
      * Asserts that two XML documents are not equal.
      *
-     * @param string|\DOMDocument $expectedXml
+     * @param string|DOMDocument $expectedXml
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertXmlStringNotEqualsXmlString($expectedXml) {
+    public function assertXmlStringNotEqualsXmlString($expectedXml): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $expectedXml,
         ]);
@@ -1432,10 +1751,13 @@ class Assert {
     /**
      * Asserts that a hierarchy of DOMElements matches.
      *
-     * @param \DOMElement $expectedElement
+     * @param DOMElement $expectedElement
      * @param bool $checkAttributes
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertEqualXMLStructure(\DOMElement $expectedElement, $checkAttributes = false) {
+    public function assertEqualXMLStructure(DOMElement $expectedElement, $checkAttributes = false): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $expectedElement,
             'options' => [
@@ -1446,8 +1768,11 @@ class Assert {
 
     /**
      * Asserts that a string is a valid JSON string.
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertJson() {
+    public function assertJson(): void {
         $this->callAssertMethod(__FUNCTION__);
     }
 
@@ -1455,8 +1780,11 @@ class Assert {
      * Asserts that two given JSON encoded objects or arrays are equal.
      *
      * @param string $expectedJson
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertJsonStringEqualsJsonString($expectedJson) {
+    public function assertJsonStringEqualsJsonString(string $expectedJson): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $expectedJson,
         ]);
@@ -1466,8 +1794,11 @@ class Assert {
      * Asserts that two given JSON encoded objects or arrays are not equal.
      *
      * @param string $expectedJson
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertJsonStringNotEqualsJsonString($expectedJson) {
+    public function assertJsonStringNotEqualsJsonString(string $expectedJson): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $expectedJson,
         ]);
@@ -1477,8 +1808,11 @@ class Assert {
      * Asserts that the generated JSON encoded object and the content of the given file are equal.
      *
      * @param string $expectedFile
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertJsonStringEqualsJsonFile($expectedFile) {
+    public function assertJsonStringEqualsJsonFile(string $expectedFile): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $expectedFile,
         ]);
@@ -1488,8 +1822,11 @@ class Assert {
      * Asserts that the generated JSON encoded object and the content of the given file are not equal.
      *
      * @param string $expectedFile
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertJsonStringNotEqualsJsonFile($expectedFile) {
+    public function assertJsonStringNotEqualsJsonFile(string $expectedFile): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $expectedFile,
         ]);
@@ -1499,8 +1836,11 @@ class Assert {
      * Asserts that two JSON files are equal.
      *
      * @param string $expectedFile
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertJsonFileEqualsJsonFile($expectedFile) {
+    public function assertJsonFileEqualsJsonFile(string $expectedFile): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $expectedFile,
         ]);
@@ -1510,8 +1850,11 @@ class Assert {
      * Asserts that two JSON files are not equal.
      *
      * @param string $expectedFile
+     *
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
-    public function assertJsonFileNotEqualsJsonFile($expectedFile) {
+    public function assertJsonFileNotEqualsJsonFile(string $expectedFile): void {
         $this->callAssertMethod(__FUNCTION__, [
             'expected' => $expectedFile,
         ]);

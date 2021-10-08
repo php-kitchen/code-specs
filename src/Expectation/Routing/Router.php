@@ -2,6 +2,7 @@
 
 namespace PHPKitchen\CodeSpecs\Expectation\Routing;
 
+use ArrayAccess;
 use PHPKitchen\CodeSpecs\Expectation\Internal\StepsList;
 use PHPKitchen\CodeSpecs\Expectation\Matcher\ArrayMatcher;
 use PHPKitchen\CodeSpecs\Expectation\Matcher\BooleanMatcher;
@@ -11,8 +12,13 @@ use PHPKitchen\CodeSpecs\Expectation\Matcher\FileMatcher;
 use PHPKitchen\CodeSpecs\Expectation\Matcher\NumberMatcher;
 use PHPKitchen\CodeSpecs\Expectation\Matcher\ObjectMatcher;
 use PHPKitchen\CodeSpecs\Expectation\Matcher\StringMatcher;
-use PHPKitchen\CodeSpecs\Mixin\TestGuyMethods;
 
+/**
+ * Represents dispatcher router.
+ *
+ * @package PHPKitchen\CodeSpecs\Expectation
+ * @author Dima Kolodko <dima@kolodko.pro>
+ */
 class Router {
     public const IN_TIME_EXPECTATION_MODE = 1;
     public const DEFERRED_EXPECTATION_MODE = 0;
@@ -30,19 +36,19 @@ class Router {
      *
      * @param string $variable variable to be tested
      *
-     * @return \PHPKitchen\CodeSpecs\Expectation\Matcher\StringMatcher
+     * @return StringMatcher
      */
-    public function seeString($string): StringMatcher {
-        return $this->dispatch($string)
+    public function seeString($variable): StringMatcher {
+        return $this->dispatch($variable)
                     ->isString();
     }
 
     /**
      * Starts a chain of asserts from {@link ArrayMatcher}.
      *
-     * @param array|\ArrayAccess $variable variable to be tested
+     * @param array|ArrayAccess $variable variable to be tested
      *
-     * @return \PHPKitchen\CodeSpecs\Expectation\Matcher\ArrayMatcher
+     * @return ArrayMatcher
      */
     public function seeArray($variable): ArrayMatcher {
         return $this->dispatch($variable)
@@ -54,11 +60,11 @@ class Router {
      *
      * @param boolean $variable variable to be tested
      *
-     * @return \PHPKitchen\CodeSpecs\Expectation\Matcher\BooleanMatcher
+     * @return BooleanMatcher
      */
     public function seeBool($variable): BooleanMatcher {
         return $this->dispatch($variable)
-                    ->isBoolean();
+            ->isBoolean();
     }
 
     /**
@@ -66,11 +72,11 @@ class Router {
      *
      * @param int|float $variable variable to be tested
      *
-     * @return \PHPKitchen\CodeSpecs\Expectation\Matcher\NumberMatcher
+     * @return NumberMatcher
      */
     public function seeNumber($variable): NumberMatcher {
         return $this->dispatch($variable)
-                    ->isNumber();
+            ->isNumber();
     }
 
     /**
@@ -78,11 +84,11 @@ class Router {
      *
      * @param object $variable variable to be tested
      *
-     * @return \PHPKitchen\CodeSpecs\Expectation\Matcher\ObjectMatcher
+     * @return ObjectMatcher
      */
     public function seeObject($variable): ObjectMatcher {
         return $this->dispatch($variable)
-                    ->isObject();
+            ->isObject();
     }
 
     /**
@@ -90,11 +96,11 @@ class Router {
      *
      * @param string $variable variable to be tested
      *
-     * @return \PHPKitchen\CodeSpecs\Expectation\Matcher\ClassMatcher
+     * @return ClassMatcher
      */
     public function seeClass($variable): ClassMatcher {
         return $this->dispatch($variable)
-                    ->isClass();
+            ->isClass();
     }
 
     /**
@@ -102,11 +108,11 @@ class Router {
      *
      * @param string $variable variable to be tested
      *
-     * @return \PHPKitchen\CodeSpecs\Expectation\Matcher\FileMatcher
+     * @return FileMatcher
      */
     public function seeFile($variable): FileMatcher {
         return $this->dispatch($variable)
-                    ->isFile();
+            ->isFile();
     }
 
     /**
@@ -114,11 +120,11 @@ class Router {
      *
      * @param string $variable variable to be tested
      *
-     * @return \PHPKitchen\CodeSpecs\Expectation\Matcher\DirectoryMatcher
+     * @return DirectoryMatcher
      */
     public function seeDirectory($variable): DirectoryMatcher {
         return $this->dispatch($variable)
-                    ->isDirectory();
+            ->isDirectory();
     }
     //endregion
 

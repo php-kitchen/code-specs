@@ -11,14 +11,14 @@ use Tests\Base\TestCase;
  * @coversDefaultClass \PHPKitchen\CodeSpecs\Expectation\Internal\Step
  *
  * @package Test\Internal
- * @author Dmitry Kolodko <prowwid@gmail.com>
+ * @author Dima Kolodko <dima@kolodko.pro>
  */
 class StepTest extends TestCase {
     /**
      * @covers ::toString
      * @covers ::__toString
      */
-    public function testToStringUnchecked() {
+    public function testToStringUnchecked(): void {
         $uncheckedStep = new Step('dummy step');
         $stepString = $uncheckedStep->toString();
         $this->assertEquals('[-] dummy step', $stepString, 'Step should be converted to a string with "-" sign at the beginning to identify that step has not passed');
@@ -30,7 +30,7 @@ class StepTest extends TestCase {
      * @covers ::__toString
      * @covers ::isChecked
      */
-    public function testToStringChecked() {
+    public function testToStringChecked(): void {
         $checkedStep = new Step('dummy step');
         $checkedStep->check();
         $stepString = $checkedStep->toString();

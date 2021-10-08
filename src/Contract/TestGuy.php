@@ -2,6 +2,7 @@
 
 namespace PHPKitchen\CodeSpecs\Contract;
 
+use ArrayAccess;
 use PHPKitchen\CodeSpecs\Directive\Wait;
 use PHPKitchen\CodeSpecs\Expectation\Matcher\ArrayMatcher;
 use PHPKitchen\CodeSpecs\Expectation\Matcher\BooleanMatcher;
@@ -12,7 +13,7 @@ use PHPKitchen\CodeSpecs\Expectation\Matcher\NumberMatcher;
 use PHPKitchen\CodeSpecs\Expectation\Matcher\ObjectMatcher;
 use PHPKitchen\CodeSpecs\Expectation\Matcher\StringMatcher;
 use PHPKitchen\CodeSpecs\Expectation\Matcher\ValueMatcher;
-use PHPKitchen\CodeSpecs\Expectation\Routing\DeferredDispatcher;
+use PHPKitchen\CodeSpecs\Expectation\Routing\Dispatcher;
 
 /**
  * Represents a test-guy who is testing your code, so tests writes as a story of what tester is doing.
@@ -52,7 +53,7 @@ interface TestGuy {
      * @param string $expectation expectation text.
      * Expectation should be a logical ending of "I expect to ". For example: "see user in the DB".
      * Such scenario would result in "I expect to see user in the DB" output in console.
-     * @param callable $verificationSteps callable function with following definition "function (TestGuy $I) { ..." that contains a group of
+     * @param ?callable $verificationSteps callable function with following definition "function (TestGuy $I) { ..." that contains a group of
      * expectations united by one verification topic. All of the expectations would be executed once they
      * are defined.
      *
@@ -84,9 +85,9 @@ interface TestGuy {
      *
      * @param string $variableName name of a variable to look at.
      *
-     * @return \PHPKitchen\CodeSpecs\Expectation\Routing\DeferredDispatcher
+     * @return Dispatcher
      */
-    public function match(string $variableName): DeferredDispatcher;
+    public function match(string $variableName): Dispatcher;
 
     /**
      * Stops execution for specified number of units of time.
@@ -96,14 +97,14 @@ interface TestGuy {
      *
      * @return Wait
      */
-    public function wait($numberOfTimeUnits): Wait;
+    public function wait(int $numberOfTimeUnits): Wait;
 
     /**
      * Starts a chain of asserts from {@link ValueMatcher}.
      *
      * @param mixed $variable variable to be tested
      *
-     * @return \PHPKitchen\CodeSpecs\Expectation\Matcher\ValueMatcher
+     * @return ValueMatcher
      */
     public function see($variable): ValueMatcher;
 
@@ -112,16 +113,16 @@ interface TestGuy {
      *
      * @param string $variable variable to be tested
      *
-     * @return \PHPKitchen\CodeSpecs\Expectation\Matcher\StringMatcher
+     * @return StringMatcher
      */
-    public function seeString($variable): StringMatcher;
+    public function seeString(string $variable): StringMatcher;
 
     /**
      * Starts a chain of asserts from {@link ArrayMatcher}.
      *
-     * @param array|\ArrayAccess $variable variable to be tested
+     * @param array|ArrayAccess $variable variable to be tested
      *
-     * @return \PHPKitchen\CodeSpecs\Expectation\Matcher\ArrayMatcher
+     * @return ArrayMatcher
      */
     public function seeArray($variable): ArrayMatcher;
 
@@ -130,16 +131,16 @@ interface TestGuy {
      *
      * @param boolean $variable variable to be tested
      *
-     * @return \PHPKitchen\CodeSpecs\Expectation\Matcher\BooleanMatcher
+     * @return BooleanMatcher
      */
-    public function seeBool($variable): BooleanMatcher;
+    public function seeBool(bool $variable): BooleanMatcher;
 
     /**
      * Starts a chain of asserts from {@link NumberMatcher}.
      *
      * @param int|float $variable variable to be tested
      *
-     * @return \PHPKitchen\CodeSpecs\Expectation\Matcher\NumberMatcher
+     * @return NumberMatcher
      */
     public function seeNumber($variable): NumberMatcher;
 
@@ -148,34 +149,34 @@ interface TestGuy {
      *
      * @param object $variable variable to be tested
      *
-     * @return \PHPKitchen\CodeSpecs\Expectation\Matcher\ObjectMatcher
+     * @return ObjectMatcher
      */
-    public function seeObject($variable): ObjectMatcher;
+    public function seeObject(object $variable): ObjectMatcher;
 
     /**
      * Starts a chain of asserts from {@link ClassMatcher}.
      *
      * @param string $variable variable to be tested
      *
-     * @return \PHPKitchen\CodeSpecs\Expectation\Matcher\ClassMatcher
+     * @return ClassMatcher
      */
-    public function seeClass($variable): ClassMatcher;
+    public function seeClass(string $variable): ClassMatcher;
 
     /**
      * Starts a chain of asserts from {@link FileMatcher}.
      *
      * @param string $variable variable to be tested
      *
-     * @return \PHPKitchen\CodeSpecs\Expectation\Matcher\FileMatcher
+     * @return FileMatcher
      */
-    public function seeFile($variable): FileMatcher;
+    public function seeFile(string $variable): FileMatcher;
 
     /**
      * Starts a chain of asserts from {@link DirectoryMatcher}.
      *
      * @param string $variable variable to be tested
      *
-     * @return \PHPKitchen\CodeSpecs\Expectation\Matcher\DirectoryMatcher
+     * @return DirectoryMatcher
      */
-    public function seeDirectory($variable): DirectoryMatcher;
+    public function seeDirectory(string $variable): DirectoryMatcher;
 }
